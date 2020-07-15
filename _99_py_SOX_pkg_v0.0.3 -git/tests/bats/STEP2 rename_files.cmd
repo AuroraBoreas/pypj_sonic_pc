@@ -1,0 +1,1 @@
+for %%f in (*.txt) do rename "%%f" "new_%%f"

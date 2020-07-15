@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>readme.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="overview">Overview</h1>
+<p>There is a test/measurement for TV Remote Field Sound, which requires precise and time-consuming work to find results.</p>
+<p>Goal here is to automate this test / measurement to get accurate result and decrease labor time.</p>
+<p>We had explored SOX documentation to get details of each sox command for this automation.</p>
+<p><a href="http://sox.sourceforge.net/Docs/Documentation">SoX - Sound eXhange | Documentation</a></p>
+<h2 id="thoughts">Thoughts</h2>
+<ul>
+<li>Discuss with Producation Design team to achieve <strong>insights</strong> of this test / measurement.</li>
+<li>Draw a <strong>schema</strong> to optimize and arrange work per step.</li>
+<li>Build <strong>modules</strong> for each work, then debug and test.</li>
+<li>Create a <strong>main</strong> module to combine sub modules, test and run.</li>
+</ul>
+<h2 id="schema">Schema</h2>
+<img src="docs/docs/static/schema.png" width="800" />
+<h2 id="confirmation">Confirmation</h2>
+<p>To make this project maintainable and sustainable, some confirmation as follows.</p>
+<ul>
+<li>Create a module to <strong>run batch</strong> files. <code>Python builtin package: subprocess, os</code></li>
+<li>Build a moulde to <strong>convert bytes</strong> data from 32bit to 16bit bytes. <code>Python builtin package: array, numpy</code></li>
+<li>Create a module to log <strong>sox stats</strong> of test .wav files. <code>Python builtin package: subprocess</code></li>
+<li>Build a module to <strong>extract data</strong> from log file. <code>Python builtin File I/O</code></li>
+</ul>
+<h2 id="project-layout">Project layout</h2>
+<pre><code>+---py_SOX_pkg
+    |   core.py
+    |   layout.md
+    |   layout.txt
+    |   main.py
+    |   requirements.txt
+    |   
+    +---data
+    |   |   sox_mic_src_stats
+    |   |   
+    |   +---output
+    |   |       aec_loopback_post.bin
+    |   |       sox_stats_diff
+    |   |       
+    |   +---已转
+    |   |       aec_loopback_post.bin
+    |   |       
+    |   \---未转
+    +---docs
+    |   |   mkdocs.yml
+    |   |   
+    |   \---docs
+    |           about.md
+    |           index.md
+    |          
+    +---pkg
+    |       converter.py
+    |       parser.py
+    |       runbat.py
+    |       stats.py
+    |       __init__.py
+    |       
+    \---tests
+            M5_MicAuto_SRC_Adjust8.py
+            test_convert_bin_file.py
+            test_fmt.py
+            test_get_stats_diff.py
+            test_hash.py
+            test_log.py
+            test_sox_stat_da.py
+</code></pre>
+<h1 id="implementations">Implementations</h1>
+<p>This page covers most of details of this project.</p>
+<h2 id="batch-runner">Batch Runner</h2>
+<p>Build a common module to run batch files.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">#runbat.py</span>
+<span class="hljs-keyword">import</span> subprocess
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">change_src_gain</span><span class="hljs-params">(gain_value)</span>:</span>
+    <span class="hljs-string">"""Author: SHES
+
+    :param gain_value: gain value
+    :type gain_value: float
+    """</span>
+    subprocess.call(<span class="hljs-string">"adb root"</span>, shell=<span class="hljs-literal">True</span>)
+    subprocess.call(<span class="hljs-string">"adb shell setenforce 0"</span>, shell=<span class="hljs-literal">True</span>)
+    subprocess.call(<span class="hljs-string">"adb shell chmod 777 data"</span>, shell=<span class="hljs-literal">True</span>)
+    subprocess.call(<span class="hljs-string">"adb shell setprop vendor.mtk.audio.aec.ref.gain {}"</span>.format(gain_value), shell=<span class="hljs-literal">True</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run_batch</span><span class="hljs-params">(batch_file)</span>:</span>
+    <span class="hljs-string">"""wrapper to run batch file
+
+    :param batch_file: name or path of batch file
+    :type batch_file: string
+    """</span>
+    proc = subprocess.Popen(batch_file, shell=<span class="hljs-literal">True</span>)
+    proc.wait()
+</div></code></pre>
+<h2 id="bit-converter">Bit Converter</h2>
+<p>Build a module to convert bytes data from 32bit to 16bit</p>
+<pre class="hljs"><code><div><span class="hljs-comment">#converter.py</span>
+<span class="hljs-keyword">import</span> array, os
+
+_TYP = <span class="hljs-string">'B'</span> <span class="hljs-comment">#found during data exploration inside of source .bin files, bytes data</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_bin_len_of_file</span><span class="hljs-params">(src_file)</span>:</span>
+    <span class="hljs-string">"""Open a binary file and calculate the length of it.
+
+    :param src_file: name or path of a binary file
+    :type src_file: string
+    """</span>
+    <span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+    <span class="hljs-keyword">with</span> open(src_file, <span class="hljs-string">'rb'</span>) <span class="hljs-keyword">as</span> f:
+        tmp_arr = np.fromfile(f)
+    <span class="hljs-keyword">return</span> len(tmp_arr)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_src_file</span><span class="hljs-params">(src_file)</span>:</span>
+    <span class="hljs-string">"""Read a binary file, and return as array.array()
+
+    :param src: file name or path of the binary file
+    :type src: string
+    """</span>
+    num_lon = <span class="hljs-number">8</span> <span class="hljs-comment">#found during data exploration inside of source .bin files, bytes data</span>
+    num_lat = get_bin_len_of_file(src_file)
+    <span class="hljs-keyword">with</span> open(src_file, <span class="hljs-string">'rb'</span>) <span class="hljs-keyword">as</span> f:
+        tmp_arr = array.array(_TYP)
+        tmp_arr.fromfile(f, num_lon*num_lat)
+    <span class="hljs-keyword">return</span> tmp_arr
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">extract_16_from_32</span><span class="hljs-params">(arr)</span>:</span>
+    <span class="hljs-string">"""Extract 16bit data from 32bit array
+
+    :param arr: an array of 32bit bytes
+    :type arr: list
+
+                            0    1    2    3    4    5    6    7
+    &gt;&gt;&gt; extract_16_from_32(0100 1000 0001 0001 0101 1001 0101 0101)
+        0     2     4     6
+    &gt;&gt;&gt; [0100, 0001, 0101, 0101]
+    """</span>
+    start = <span class="hljs-number">0</span>
+    stop = len(arr)
+    step = <span class="hljs-number">4</span>
+    tmp_list = []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(start, stop, step):
+        tmp_list.extend(arr[i:i+<span class="hljs-number">2</span>])
+    <span class="hljs-keyword">return</span> tmp_list
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_bytes_to_file</span><span class="hljs-params">(seq, new_file)</span>:</span>
+    <span class="hljs-string">"""convert list to array.array() then save as a binary file
+
+    :param seq: a list of bytes
+    :type seq: list
+    """</span>
+    <span class="hljs-keyword">with</span> open(new_file, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:
+        tmp_arr = array.array(_TYP)
+        tmp_arr.fromlist(seq)
+        tmp_arr.tofile(f)
+    <span class="hljs-keyword">return</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">convert_32bit_to_16bit2</span><span class="hljs-params">(src_file, new_file)</span>:</span>
+    <span class="hljs-string">"""
+    Author: @SHES
+    """</span>
+    index = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">with</span> open(src_file, <span class="hljs-string">'rb'</span>) <span class="hljs-keyword">as</span> sf, open(new_file, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> nf:
+        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+            buf = sf.read(<span class="hljs-number">2</span>)
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> buf:
+                <span class="hljs-keyword">break</span>
+            <span class="hljs-keyword">if</span>(index % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>):
+                nf.write(buf)
+            index += <span class="hljs-number">1</span>
+    os.remove(src_file)
+    file_name = <span class="hljs-string">"aec_loopback_post.bin"</span>
+    os.rename(new_file, os.path.join(os.path.split(new_file)[<span class="hljs-number">0</span>], file_name))
+    <span class="hljs-keyword">return</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">convert_32bit_to_16bit</span><span class="hljs-params">(src_file, new_file)</span>:</span>
+    <span class="hljs-string">"""Convert a binary file that is 32bit to 16bit
+
+    :param src_file: file name or path of a source binary file
+    :type src_file: string
+    :param new_file: file name or path of a new binary file
+    :type new_file: string
+    """</span>
+    <span class="hljs-comment"># read a source file as binary</span>
+    array_32bit = read_src_file(src_file)
+    <span class="hljs-comment"># extract</span>
+    list_16bit = extract_16_from_32(array_32bit)
+    <span class="hljs-comment"># encode combined data, then write into a binary file</span>
+    save_bytes_to_file(list_16bit, new_file)
+    print(<span class="hljs-string">'Done'</span>)
+    <span class="hljs-keyword">return</span>
+</div></code></pre>
+<h2 id="sox-log">SoX Log</h2>
+<p>Build a module to log output of <code>sox sample.wav -n stats</code></p>
+<pre class="hljs"><code><div><span class="hljs-comment">#stats.py</span>
+<span class="hljs-keyword">import</span> subprocess, os
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_wav_stats</span><span class="hljs-params">(wav_file)</span>:</span>
+    <span class="hljs-string">"""get output of sox -n stats for a single .wav file and return the output log 
+
+    :param wav_file: name or path of .wav file
+    :type wav_file: bytes
+    """</span>
+    rough_wav_stat = subprocess.check_output(<span class="hljs-string">"sox {0} -n stats"</span>.format(wav_file),
+                                            stderr=subprocess.STDOUT,
+                                            shell=<span class="hljs-literal">True</span>)
+    <span class="hljs-keyword">return</span> rough_wav_stat
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_wav_stats_to_txt</span><span class="hljs-params">(bytes_data, new_file)</span>:</span>
+    <span class="hljs-string">"""convert bytes data into string, and save it into text file
+
+    :param bytes_data: bytes data from a stream
+    :type bytes_data: bytes
+    :param new_file: path or name of a text file
+    :type new_file: string
+    """</span>
+    sox_stats = bytes_data.decode(<span class="hljs-string">"utf-8"</span>)
+    <span class="hljs-keyword">with</span> open(new_file, <span class="hljs-string">"a"</span>) <span class="hljs-keyword">as</span> f:
+        f.writelines(sox_stats)
+    <span class="hljs-keyword">return</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_sox_stats</span><span class="hljs-params">(wav_file_mic25, wav_file_src25, log_file)</span>:</span>
+    <span class="hljs-string">"""wrapper to generate sox stats and save to local disk
+    """</span>
+    <span class="hljs-comment"># put .wav files into a list container</span>
+    wav_files = [
+        wav_file_mic25,
+        wav_file_src25
+        ]
+    <span class="hljs-comment"># remove history record, because pkg.stats modules write data in append mode</span>
+    <span class="hljs-keyword">if</span> os.path.exists(log_file):
+        os.remove(log_file)
+    <span class="hljs-comment"># write new stats into the text file</span>
+    <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> wav_files:
+        tmp_wav_stats = get_wav_stats(file)
+        save_wav_stats_to_txt(tmp_wav_stats, log_file)
+    <span class="hljs-keyword">return</span>
+</div></code></pre>
+<h2 id="log-parser">Log Parser</h2>
+<p>Build a module to parse SoX log and return data.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">#parser.py</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_data_from_sox_stats_txt</span><span class="hljs-params">(src_file)</span>:</span>
+    <span class="hljs-string">"""read sox_mic_src_stats.txt and return rows starts with ("Pk lev dB", "RMS lev dB")
+
+    :param src_file: path or name of a sox_mic_src_stats.txt file
+    :type src_file: string
+    """</span>
+    PklevdB_header = <span class="hljs-string">"Pk lev dB"</span>
+    RMSlevdB_header = <span class="hljs-string">"RMS lev dB"</span>
+    <span class="hljs-keyword">with</span> open(src_file, <span class="hljs-string">'r'</span>) <span class="hljs-keyword">as</span> f:
+        tmp_data = [line <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> f.readlines() <span class="hljs-keyword">if</span> line.startswith(PklevdB_header) <span class="hljs-keyword">or</span> line.startswith(RMSlevdB_header)]
+    <span class="hljs-keyword">return</span> tmp_data
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse_PklevdB_and_RMSlevdB</span><span class="hljs-params">(seq)</span>:</span>
+    <span class="hljs-string">"""parse strings inside seq and return overall values which are float type 
+
+    :param seq: a list of strings
+    :type seq: list
+
+    &gt;&gt;&gt; parse_RMSlevdB(["Pk lev dB     -26.79    -27.14    -26.79\n", "Pk lev dB     -25.34    -25.34    -25.34\n"])
+    &gt;&gt;&gt; [-26.79, '-25.34']
+    &gt;&gt;&gt; parse_RMSlevdB(["RMS lev dB    -40.72    -42.04    -39.70\n","RMS lev dB    -35.05    -35.05    -35.05\n"])
+    &gt;&gt;&gt; [-40.72, -35.05]
+    """</span>
+    tmp_seq = []
+    index_cmn_val = <span class="hljs-number">3</span>
+    <span class="hljs-comment">#remove '' inside seq</span>
+    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> seq:
+        tmp_arr = item.strip().split(<span class="hljs-string">" "</span>)
+        tmp_seq.append([s <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> tmp_arr <span class="hljs-keyword">if</span> s != <span class="hljs-string">''</span>])
+    <span class="hljs-keyword">return</span> [float(tmp_item[index_cmn_val]) <span class="hljs-keyword">for</span> tmp_item <span class="hljs-keyword">in</span> tmp_seq]
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_diff</span><span class="hljs-params">(seq)</span>:</span>
+    <span class="hljs-string">"""return difference between src_25.wav and mic_25.wav, diff = (src_25.wav - mic_25.wav)
+
+    :param seq: a list of two floats, first is mic_25.wav("RMS lev dB", "Overall"), second is src_25.wav("RMS lev dB", "Overall")
+    :type seq: list
+    :return: difference
+    :rtype: float
+    """</span>
+    <span class="hljs-keyword">return</span> round((seq[<span class="hljs-number">3</span>] - seq[<span class="hljs-number">1</span>]), <span class="hljs-number">2</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_src_Pklev</span><span class="hljs-params">(seq)</span>:</span>
+    <span class="hljs-string">"""return Pk lev dB of src_25.wav
+
+    :param seq: a list of Pk, RMS values
+    :type seq: list
+    :return: Pk lev dB of src_25.wav
+    :rtype: float
+    """</span>
+    <span class="hljs-keyword">return</span> float(seq[<span class="hljs-number">2</span>])
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_sox_stats_and_get_diff_Pklev</span><span class="hljs-params">(src_file)</span>:</span>
+    <span class="hljs-string">"""wrapper to return diff between mic_25.wav and src_25.wav
+
+    :param src_file: path or name of a sox_mic_src_stats.txt file
+    :type src_file: string
+    :return: difference(mic_25.wav - src_25.wav) and src Pk lev dB
+    :rtype: tuple
+    """</span>
+    seq = get_data_from_sox_stats_txt(src_file)
+    lst = parse_PklevdB_and_RMSlevdB(seq)
+    <span class="hljs-keyword">return</span> get_diff(lst), get_src_Pklev(lst)
+</div></code></pre>
+<h1 id="overview-of-algorithm">Overview of algorithm</h1>
+<p>It is a bit challenge to find an appropriate algorithm to calculate.</p>
+<p>But we finally made it.</p>
+<h2 id="basic-info">Basic Info</h2>
+<ul>
+<li>specification is <code>abs(mic_rms - src_rms) = 6.0±0.1</code>. The magic number is from SHES</li>
+<li><code>mic_rms_val</code> fluctrates. It is sensitive and susceptible to surrounding noise</li>
+<li><code>src_rms_val</code> is TV sound value(dB), it enumerates every volumes [1,2,..,100]</li>
+</ul>
+<p>It is seemingly simple to find out an algorithm as follows.  Though it is not the case, due to <code>mic_rms_val</code> drastic variantion,</p>
+<pre class="hljs"><code><div>6.0 - 0.1 &lt;= |mic_rms_val - src_rms_val| &lt;= 6.0 + 0.1
+</div></code></pre>
+<h2 id="investigation">Investigation</h2>
+<p>We had run several experimental tests to gather first-hand raw data of <code>mic_rms_val</code> and <code>src_rms_val</code>.</p>
+<p>The following graph displays their variation during continual 6mins when <strong>TV volume is 5</strong>.</p>
+<ul>
+<li>
+<p><code>mic_rms_val</code> variates dramatically due to ambient noise outside of the lab room.</p>
+</li>
+<li>
+<p><code>src_rms_val</code>(or <code>Reference</code>) is stable. Its max variation is 0.01. It has little effection compared with tolerance of specification(±0.1).</p>
+</li>
+</ul>
+<img src="docs/docs/static/mic_rms_src_rms.png" width="600" />
+<img src="docs/docs/static/mic_rms_variant.png" width="600" />
+<p>The raw data as follows.</p>
+<pre class="hljs"><code><div>2020-07-06 13:29:53 Diff, src_25_Pk, [mic_25_Pk, mic_25_RMS, src_25_Pk, src_25_RMS]
+2020-07-06 13:29:53 (7.76, 26.99, [33.81, 44.01, 26.99, 36.25])
+2020-07-06 13:30:31 Diff, src_25_Pk, [mic_25_Pk, mic_25_RMS, src_25_Pk, src_25_RMS]
+2020-07-06 13:30:31 (8.06, 26.15, [33.81, 44.32, 26.15, 36.26])
+2020-07-06 13:31:12 Diff, src_25_Pk, [mic_25_Pk, mic_25_RMS, src_25_Pk, src_25_RMS]
+2020-07-06 13:31:12 (8.7, 26.42, [34.52, 44.96, 26.42, 36.26])
+2020-07-06 13:31:52 Diff, src_25_Pk, [mic_25_Pk, mic_25_RMS, src_25_Pk, src_25_RMS]
+2020-07-06 13:31:52 (8.57, 26.33, [34.48, 44.82, 26.33, 36.25])
+2020-07-06 13:32:33 Diff, src_25_Pk, [mic_25_Pk, mic_25_RMS, src_25_Pk, src_25_RMS]
+2020-07-06 13:32:33 (8.61, 26.75, [34.73, 44.86, 26.75, 36.25])
+2020-07-06 13:33:19 Diff, src_25_Pk, [mic_25_Pk, mic_25_RMS, src_25_Pk, src_25_RMS]
+2020-07-06 13:33:19 (8.29, 26.54, [34.82, 44.54, 26.54, 36.25])
+2020-07-06 13:33:58 Diff, src_25_Pk, [mic_25_Pk, mic_25_RMS, src_25_Pk, src_25_RMS]
+2020-07-06 13:33:58 (8.43, 26.15, [34.42, 44.68, 26.15, 36.25])
+2020-07-06 13:34:34 Diff, src_25_Pk, [mic_25_Pk, mic_25_RMS, src_25_Pk, src_25_RMS]
+2020-07-06 13:34:34 (8.32, 26.16, [34.34, 44.58, 26.16, 36.26])
+2020-07-06 13:35:13 Diff, src_25_Pk, [mic_25_Pk, mic_25_RMS, src_25_Pk, src_25_RMS]
+2020-07-06 13:35:13 (8.07, 26.54, [34.16, 44.33, 26.54, 36.26])
+2020-07-06 13:35:51 Diff, src_25_Pk, [mic_25_Pk, mic_25_RMS, src_25_Pk, src_25_RMS]
+2020-07-06 13:35:51 (8.4, 26.45, [33.88, 44.66, 26.45, 36.26])
+</div></code></pre>
+<h2 id="algorithm">Algorithm</h2>
+<p>Main program will try <code>N</code> times to search the best <code>src_rms_val</code>.</p>
+<p>Even after <code>N</code> time tries, there is no available number found, then it implements <code>harmonic mean</code> to get a number that is close enough to true value.</p>
+<pre class="hljs"><code><div>Harmonic Mean = n / ∑ [1/Xi]
+</div></code></pre>
+<h2 id="verification">Verification</h2>
+<p>We started the Main program to find suitabl <code>src_rms_val</code> when TV volume is 1, 5, 10, 15, 20, 25, 30 ...</p>
+<p>Low TV volume tests are most significantly prone to take long time to find out suitable numbers.</p>
+<p>Average search time is 66.60 seconds.</p>
+<p><font color="blue"><strong>It predicts total search time of TV Remote Sound test is 20 minutes.</strong></font></p>
+<table>
+<thead>
+<tr>
+<th>volume</th>
+<th>Search time(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>99.11</td>
+</tr>
+<tr>
+<td>5</td>
+<td>33.14</td>
+</tr>
+<tr>
+<td>10</td>
+<td>164.44</td>
+</tr>
+<tr>
+<td>15</td>
+<td>65.89</td>
+</tr>
+<tr>
+<td>20</td>
+<td>65.43</td>
+</tr>
+<tr>
+<td>25</td>
+<td>65.72</td>
+</tr>
+<tr>
+<td>30</td>
+<td>76.41</td>
+</tr>
+<tr>
+<td>35</td>
+<td>66.60</td>
+</tr>
+<tr>
+<td>40</td>
+<td>66.60</td>
+</tr>
+<tr>
+<td>45</td>
+<td>66.60</td>
+</tr>
+<tr>
+<td>50</td>
+<td>66.60</td>
+</tr>
+<tr>
+<td>55</td>
+<td>66.60</td>
+</tr>
+<tr>
+<td>60</td>
+<td>66.60</td>
+</tr>
+<tr>
+<td>70</td>
+<td>66.60</td>
+</tr>
+<tr>
+<td>80</td>
+<td>66.60</td>
+</tr>
+<tr>
+<td>90</td>
+<td>66.60</td>
+</tr>
+<tr>
+<td>100</td>
+<td>66.60</td>
+</tr>
+</tbody>
+</table>
+<p>Here is output.</p>
+<img src="docs/docs/static/IDEL_LOG.png" width="600" />
+<p>And here is raw data of output.</p>
+<pre class="hljs"><code><div>Python <span class="hljs-number">3.7</span><span class="hljs-number">.4</span> (tags/v3<span class="hljs-number">.7</span><span class="hljs-number">.4</span>:e09359112e, Jul  <span class="hljs-number">8</span> <span class="hljs-number">2019</span>, <span class="hljs-number">20</span>:<span class="hljs-number">34</span>:<span class="hljs-number">20</span>) [MSC v<span class="hljs-number">.1916</span> <span class="hljs-number">64</span> bit (AMD64)] on win32
+Type <span class="hljs-string">"help"</span>, <span class="hljs-string">"copyright"</span>, <span class="hljs-string">"credits"</span> <span class="hljs-keyword">or</span> <span class="hljs-string">"license()"</span> <span class="hljs-keyword">for</span> more information.
+&gt;&gt;&gt;
+======== RESTART: C:\Users\ssv\Desktop\_99_py_SOX_pkg_v0<span class="hljs-number">.0</span><span class="hljs-number">.3</span>\main.py ========
+init meas   : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">50</span>:<span class="hljs-number">05</span>,Diff=<span class="hljs-number">5.53</span>,mic_RMS=<span class="hljs-number">40.59</span>,src_RMS=<span class="hljs-number">35.06</span>,Gain_val=<span class="hljs-number">0.00</span>
+before gain : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">50</span>:<span class="hljs-number">05</span>,Diff=<span class="hljs-number">5.53</span>,mic_RMS=<span class="hljs-number">40.59</span>,src_RMS=<span class="hljs-number">35.06</span>,Gain_val=<span class="hljs-number">0.47</span>
+after gain  : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">50</span>:<span class="hljs-number">38</span>,Diff=<span class="hljs-number">7.25</span>,mic_RMS=<span class="hljs-number">41.84</span>,src_RMS=<span class="hljs-number">34.59</span>,Gain_val=<span class="hljs-number">0.47</span>
+before gain : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">50</span>:<span class="hljs-number">38</span>,Diff=<span class="hljs-number">7.25</span>,mic_RMS=<span class="hljs-number">41.84</span>,src_RMS=<span class="hljs-number">34.59</span>,Gain_val=<span class="hljs-number">-0.78</span>
+after gain  : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">51</span>:<span class="hljs-number">11</span>,Diff=<span class="hljs-number">5.95</span>,mic_RMS=<span class="hljs-number">41.79</span>,src_RMS=<span class="hljs-number">35.84</span>,Gain_val=<span class="hljs-number">-0.78</span>
+Finished. Runtime <span class="hljs-keyword">is</span> <span class="hljs-number">99.11</span>s
+Result: [(<span class="hljs-number">-0.78</span>, [<span class="hljs-number">29.35</span>, <span class="hljs-number">41.79</span>, <span class="hljs-number">26.37</span>, <span class="hljs-number">35.84</span>])]
+&gt;&gt;&gt;
+======== RESTART: C:\Users\ssv\Desktop\_99_py_SOX_pkg_v0<span class="hljs-number">.0</span><span class="hljs-number">.3</span>\main.py ========
+init meas   : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">53</span>:<span class="hljs-number">17</span>,Diff=<span class="hljs-number">6.09</span>,mic_RMS=<span class="hljs-number">42.35</span>,src_RMS=<span class="hljs-number">36.26</span>,Gain_val=<span class="hljs-number">0.00</span>
+Finished. Runtime <span class="hljs-keyword">is</span> <span class="hljs-number">33.14</span>s
+Result: [(<span class="hljs-number">0</span>, [<span class="hljs-number">26.02</span>, <span class="hljs-number">42.35</span>, <span class="hljs-number">26.54</span>, <span class="hljs-number">36.26</span>])]
+&gt;&gt;&gt;
+======== RESTART: C:\Users\ssv\Desktop\_99_py_SOX_pkg_v0<span class="hljs-number">.0</span><span class="hljs-number">.3</span>\main.py ========
+init meas   : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">54</span>:<span class="hljs-number">23</span>,Diff=<span class="hljs-number">8.39</span>,mic_RMS=<span class="hljs-number">45.05</span>,src_RMS=<span class="hljs-number">36.66</span>,Gain_val=<span class="hljs-number">0.00</span>
+before gain : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">54</span>:<span class="hljs-number">23</span>,Diff=<span class="hljs-number">8.39</span>,mic_RMS=<span class="hljs-number">45.05</span>,src_RMS=<span class="hljs-number">36.66</span>,Gain_val=<span class="hljs-number">-2.39</span>
+after gain  : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">54</span>:<span class="hljs-number">56</span>,Diff=<span class="hljs-number">5.45</span>,mic_RMS=<span class="hljs-number">44.50</span>,src_RMS=<span class="hljs-number">39.05</span>,Gain_val=<span class="hljs-number">-2.39</span>
+before gain : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">54</span>:<span class="hljs-number">56</span>,Diff=<span class="hljs-number">5.45</span>,mic_RMS=<span class="hljs-number">44.50</span>,src_RMS=<span class="hljs-number">39.05</span>,Gain_val=<span class="hljs-number">-1.84</span>
+after gain  : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">55</span>:<span class="hljs-number">29</span>,Diff=<span class="hljs-number">7.05</span>,mic_RMS=<span class="hljs-number">45.55</span>,src_RMS=<span class="hljs-number">38.50</span>,Gain_val=<span class="hljs-number">-1.84</span>
+before gain : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">55</span>:<span class="hljs-number">29</span>,Diff=<span class="hljs-number">7.05</span>,mic_RMS=<span class="hljs-number">45.55</span>,src_RMS=<span class="hljs-number">38.50</span>,Gain_val=<span class="hljs-number">-2.89</span>
+after gain  : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">56</span>:<span class="hljs-number">02</span>,Diff=<span class="hljs-number">5.51</span>,mic_RMS=<span class="hljs-number">45.06</span>,src_RMS=<span class="hljs-number">39.55</span>,Gain_val=<span class="hljs-number">-2.89</span>
+Finished. Runtime <span class="hljs-keyword">is</span> <span class="hljs-number">164.44</span>s
+Result: [(<span class="hljs-number">-2.38</span>, [<span class="hljs-number">36.26</span>, <span class="hljs-number">45.04</span>, <span class="hljs-number">28.98</span>, <span class="hljs-number">39.04</span>])]
+&gt;&gt;&gt;
+======== RESTART: C:\Users\ssv\Desktop\_99_py_SOX_pkg_v0<span class="hljs-number">.0</span><span class="hljs-number">.3</span>\main.py ========
+init meas   : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">58</span>:<span class="hljs-number">42</span>,Diff=<span class="hljs-number">6.57</span>,mic_RMS=<span class="hljs-number">37.43</span>,src_RMS=<span class="hljs-number">30.86</span>,Gain_val=<span class="hljs-number">0.00</span>
+before gain : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">58</span>:<span class="hljs-number">42</span>,Diff=<span class="hljs-number">6.57</span>,mic_RMS=<span class="hljs-number">37.43</span>,src_RMS=<span class="hljs-number">30.86</span>,Gain_val=<span class="hljs-number">-0.57</span>
+after gain  : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">08</span>:<span class="hljs-number">59</span>:<span class="hljs-number">15</span>,Diff=<span class="hljs-number">5.98</span>,mic_RMS=<span class="hljs-number">37.40</span>,src_RMS=<span class="hljs-number">31.42</span>,Gain_val=<span class="hljs-number">-0.57</span>
+Finished. Runtime <span class="hljs-keyword">is</span> <span class="hljs-number">65.89</span>s
+Result: [(<span class="hljs-number">-0.57</span>, [<span class="hljs-number">24.63</span>, <span class="hljs-number">37.4</span>, <span class="hljs-number">21.57</span>, <span class="hljs-number">31.42</span>])]
+&gt;&gt;&gt;
+======== RESTART: C:\Users\ssv\Desktop\_99_py_SOX_pkg_v0<span class="hljs-number">.0</span><span class="hljs-number">.3</span>\main.py ========
+init meas   : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">09</span>:<span class="hljs-number">00</span>:<span class="hljs-number">16</span>,Diff=<span class="hljs-number">5.82</span>,mic_RMS=<span class="hljs-number">33.47</span>,src_RMS=<span class="hljs-number">27.65</span>,Gain_val=<span class="hljs-number">0.00</span>
+before gain : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">09</span>:<span class="hljs-number">00</span>:<span class="hljs-number">16</span>,Diff=<span class="hljs-number">5.82</span>,mic_RMS=<span class="hljs-number">33.47</span>,src_RMS=<span class="hljs-number">27.65</span>,Gain_val=<span class="hljs-number">0.18</span>
+after gain  : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">09</span>:<span class="hljs-number">00</span>:<span class="hljs-number">49</span>,Diff=<span class="hljs-number">5.91</span>,mic_RMS=<span class="hljs-number">33.38</span>,src_RMS=<span class="hljs-number">27.47</span>,Gain_val=<span class="hljs-number">0.18</span>
+Finished. Runtime <span class="hljs-keyword">is</span> <span class="hljs-number">65.43</span>s
+Result: [(<span class="hljs-number">0.18</span>, [<span class="hljs-number">19.74</span>, <span class="hljs-number">33.38</span>, <span class="hljs-number">17.7</span>, <span class="hljs-number">27.47</span>])]
+&gt;&gt;&gt;
+======== RESTART: C:\Users\ssv\Desktop\_99_py_SOX_pkg_v0<span class="hljs-number">.0</span><span class="hljs-number">.3</span>\main.py ========
+init meas   : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">09</span>:<span class="hljs-number">01</span>:<span class="hljs-number">48</span>,Diff=<span class="hljs-number">5.66</span>,mic_RMS=<span class="hljs-number">30.21</span>,src_RMS=<span class="hljs-number">24.55</span>,Gain_val=<span class="hljs-number">0.00</span>
+before gain : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">09</span>:<span class="hljs-number">01</span>:<span class="hljs-number">48</span>,Diff=<span class="hljs-number">5.66</span>,mic_RMS=<span class="hljs-number">30.21</span>,src_RMS=<span class="hljs-number">24.55</span>,Gain_val=<span class="hljs-number">0.34</span>
+after gain  : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">09</span>:<span class="hljs-number">02</span>:<span class="hljs-number">21</span>,Diff=<span class="hljs-number">5.95</span>,mic_RMS=<span class="hljs-number">30.16</span>,src_RMS=<span class="hljs-number">24.21</span>,Gain_val=<span class="hljs-number">0.34</span>
+Finished. Runtime <span class="hljs-keyword">is</span> <span class="hljs-number">65.72</span>s
+Result: [(<span class="hljs-number">0.34</span>, [<span class="hljs-number">16.49</span>, <span class="hljs-number">30.16</span>, <span class="hljs-number">14.76</span>, <span class="hljs-number">24.21</span>])]
+&gt;&gt;&gt;
+======== RESTART: C:\Users\ssv\Desktop\_99_py_SOX_pkg_v0<span class="hljs-number">.0</span><span class="hljs-number">.3</span>\main.py ========
+init meas   : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">09</span>:<span class="hljs-number">03</span>:<span class="hljs-number">37</span>,Diff=<span class="hljs-number">5.50</span>,mic_RMS=<span class="hljs-number">28.35</span>,src_RMS=<span class="hljs-number">22.85</span>,Gain_val=<span class="hljs-number">0.00</span>
+before gain : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">09</span>:<span class="hljs-number">03</span>:<span class="hljs-number">37</span>,Diff=<span class="hljs-number">5.50</span>,mic_RMS=<span class="hljs-number">28.35</span>,src_RMS=<span class="hljs-number">22.85</span>,Gain_val=<span class="hljs-number">0.50</span>
+after gain  : <span class="hljs-number">2020</span><span class="hljs-number">-07</span><span class="hljs-number">-07</span> <span class="hljs-number">09</span>:<span class="hljs-number">04</span>:<span class="hljs-number">15</span>,Diff=<span class="hljs-number">5.94</span>,mic_RMS=<span class="hljs-number">28.29</span>,src_RMS=<span class="hljs-number">22.35</span>,Gain_val=<span class="hljs-number">0.50</span>
+Finished. Runtime <span class="hljs-keyword">is</span> <span class="hljs-number">76.41</span>s
+Result: [(<span class="hljs-number">0.5</span>, [<span class="hljs-number">15.03</span>, <span class="hljs-number">28.29</span>, <span class="hljs-number">12.25</span>, <span class="hljs-number">22.35</span>])]
+&gt;&gt;&gt;
+</div></code></pre>
+<h1 id="about">About</h1>
+<p>Copyright © 2020 ZL</p>
+<p>All rights reserved.</p>
+<p>The MIT License (MIT)</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+
+</body>
+</html>
