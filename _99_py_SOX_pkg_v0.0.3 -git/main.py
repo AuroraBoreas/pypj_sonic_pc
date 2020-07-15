@@ -50,7 +50,7 @@ class RemoteFieldSoundSearcher:
             f.writelines("{0:%Y-%m-%d %H:%M:%S} {1}\n".format(self.__timer(), self.__header))
             f.writelines("{0:%Y-%m-%d %H:%M:%S} {1}\n".format(self.__timer(), self.__result_list))
         return
-    def mease_and_search(self):
+    def start(self):
         """measure and search the closest gain value against *__center*
         """
         cnt = 0
@@ -103,7 +103,7 @@ class RemoteFieldSoundSearcher:
 
 def main():
     searcher = RemoteFieldSoundSearcher()
-    searcher.mease_and_search()
+    searcher.start()
 
 if __name__ == "__main__":
     root = tkinter.Tk()
