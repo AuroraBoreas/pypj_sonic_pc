@@ -11,6 +11,8 @@ if __name__ == "__main__":
         os.remove(os.path.join(BASE_DIR, r"data\output\aec_loopback_post.bin"))
     except FileNotFoundError:
         pass
+    except FileExistsError:
+        pass
     src_file = os.path.join(BASE_DIR, r"data\未转\aec_loopback_post.bin")
     new_file = os.path.join(BASE_DIR, r"data\output\tmp.bin")
     # convert

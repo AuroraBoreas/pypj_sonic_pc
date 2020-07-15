@@ -43,7 +43,7 @@ class RemoteFieldSoundSearcher:
 
     def __init__(self, max_search=3):
         self._maxsearch = max_search
-    def _save(self):
+    def __save(self):
         """write search result into local file
         """
         with open(self.__result_log, "a") as f:
@@ -98,7 +98,7 @@ class RemoteFieldSoundSearcher:
         end_time = time.time()
         print("Finished. Runtime is {0:.2f}s".format(end_time - start_time))
         print("Result:", self.__result_list)
-        self._save()
+        self.__save()
         return
 
 def main():
