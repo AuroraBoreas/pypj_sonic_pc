@@ -7,6 +7,7 @@ Changelog
 - v0.0.1, initial fork
 - v0.0.2, refactor and display runtime of this program
 - v0.0.3, format output
+- v0.0.4, refactor and include a simple GUI
 
 About
 - branch : forked by @ZL, 20200630
