@@ -13,6 +13,7 @@ We had explored SOX documentation to get details of each sox command for this au
 - v0.0.1, inital version
 - v0.0.2, fix bugs
 - v0.0.3, algorithm
+- v0.0.4, fix bugs
   
 ## Performance
 

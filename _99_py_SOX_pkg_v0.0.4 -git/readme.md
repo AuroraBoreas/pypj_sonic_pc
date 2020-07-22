@@ -13,6 +13,7 @@ We had explored SOX documentation to get details of each sox command for this au
 - v0.0.1, inital version
 - v0.0.2, fix bugs
 - v0.0.3, algorithm
+- v0.0.4, fix bugs
   
 ## Performance
 
@@ -435,6 +436,9 @@ The raw data as follows.
 Main program will try `N` times to search the best `src_rms_val`.
 
 Even after `N` time tries, there is no available number found, then it implements `harmonic mean` to get a number that is close enough to true value.
+
+<img src="docs/docs/static/algorithm.png" width="600" />
+
 ```
 Harmonic Mean = n / ∑ [1/Xi]
 ```

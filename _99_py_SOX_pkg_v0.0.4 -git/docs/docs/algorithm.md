@@ -55,12 +55,14 @@ The raw data as follows.
 2020-07-06 13:35:51 (8.4, 26.45, [33.88, 44.66, 26.45, 36.26])
 ```
 
-
 ## Algorithm
 
 Main program will try `N` times to search the best `src_rms_val`.
 
 Even after `N` time tries, there is no available number found, then it implements `harmonic meas` to get a number that is close enough to true value.
+
+<img src="static/algorithm.png" width="600" />
+
 ```
 Harmonic Mean = n / ∑ [1/Xi]
 ```
