@@ -1,7 +1,0 @@
-site_name: TV Remote Field Sound Auto
-nav:
-    - Home: index.md
-    - Detail: detail.md
-    - Algorithm: algorithm.md
-    - About: about.md
-theme: readthedocs
