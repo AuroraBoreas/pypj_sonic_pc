@@ -1,5 +1,5 @@
-import sys, os
 import unittest
+import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from lib.pkg import gain
 
@@ -49,6 +49,11 @@ class GainTestCase(unittest.TestCase):
         mic_rms, init_src_rms = 21.43, 49.94
         result = gain.calc_gain(mic_rms, init_src_rms, center)
         self.assertEqual(34.51, result)
+    def test_calc_gain10(self):
+        center = 6.0 
+        mic_rms, init_src_rms = 21.43, 21.43
+        result = gain.calc_gain(mic_rms, init_src_rms, center)
+        self.assertEqual(6.0, result)
 
 if __name__ == "__main__":
     unittest.main()
