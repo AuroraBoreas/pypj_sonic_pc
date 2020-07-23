@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1595463397 source:d:\pj_00_codelib\2020_cpppj\cpp_03_gaindll\main.cpp
+	"main.h"
+	"cmath"
+
+1593997517 d:\pj_00_codelib\2020_cpppj\cpp_03_gaindll\main.h
+	<windows.h>
+
