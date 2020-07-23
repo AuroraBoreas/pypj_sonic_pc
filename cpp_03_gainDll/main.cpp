@@ -7,7 +7,7 @@ float round_n(float num, int dec);
 float DLL_EXPORT calc_gain(float mic_rms, float init_src_rms, float center)
 {
     // calculate absolute difference
-    float diff = round_n(fabsf(mic_rms - init_src_rms), 2);
+    float diff = round_n(fabsf(fabs(mic_rms) - fabs(init_src_rms)), 2);
     // calculate absolute gain value
     float gain = round_n(fabsf(center - diff), 2);
     // conditions determine that gain value is positive or negative
