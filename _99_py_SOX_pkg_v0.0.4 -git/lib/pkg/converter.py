@@ -80,9 +80,19 @@ def save_bytes_to_file(seq, new_file):
     return
 
 def convert_32bit_to_16bit2(src_file, new_file):
-    """
+    """Convert a binary file that is 32bit to 16bit
+
     Author: @SHES
+
+    :param src_file: file name or path of a source binary file
+    :type src_file: string
+    :param new_file: file name or path of a new binary file
+    :type new_file: string
+
+    note: the core of this function is prettier than mine.. 
+    my *convert_32bit_to_16bit(src_file, new_file)* is created from a blackbox during exploring bytes files from scratch.
     """
+    
     index = 0
     with open(src_file, 'rb') as sf, open(new_file, 'wb') as nf:
         while True:

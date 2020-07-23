@@ -3,7 +3,7 @@
 It has the following functionalities.
 - Get stats of a .wav file
 - Save the result into a .txt file
-- Wrapper to get sox stats
+- Wrapper to get sox stats with one shot
 
 Changelong
 - v0.0.1, initial version to get stats of .wav file

@@ -1,4 +1,4 @@
-"""A moudle reads ```sox -n stats``` output.txt and calculates difference between mic_25.wav and src_25.wav
+"""A moudle reads sox -n stats output.txt and calculates difference between mic_25.wav and src_25.wav
 
 It has the following basic functionalities
 - Reads sox output.txt and returns Pk values inside it
@@ -10,7 +10,7 @@ Changelog
 - v0.0.1, initial version
 
 Author
-@ZL, 20200630
+- @ZL, 20200630
 
 """
 
@@ -53,10 +53,10 @@ def parse_PklevdB_and_RMSlevdB(seq):
     """
     tmp_seq = []
     index_cmn_val = 3
-    #remove '' inside seq
+    #remove " " inside seq
     for item in seq:
         tmp_arr = item.strip().split(" ")
-        tmp_seq.append([s for s in tmp_arr if s != ''])
+        tmp_seq.append([s for s in tmp_arr if s != ""])
     return [abs(float(tmp_item[index_cmn_val])) for tmp_item in tmp_seq]
 
 def get_diff(seq):

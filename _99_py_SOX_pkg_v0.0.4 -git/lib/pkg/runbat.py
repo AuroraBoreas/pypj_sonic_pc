@@ -1,11 +1,23 @@
 """A simple module runs batch commands, a basic wrapper
 
+This module has basic functionalities as follows.
+- passes gain_value to adb CLI, change TV src_rms value
+- runs batches file and waits till done
+
+Changelog
+- v0.0.1, initial version
+- v0.0.2, bugfix
+
+Author
+- @ZL, 20200629
+- @SHES
 """
 
 import subprocess
 
 def change_src_gain(gain_value):
-    """Author: SHES
+    """passes *gain_value* to adb CLI, change TV src_rms value
+    Author: SHES
 
     :param gain_value: gain value
     :type gain_value: float
