@@ -8,6 +8,7 @@ Changelog
 - v0.0.2, refactor and display runtime of this program
 - v0.0.3, format output
 - v0.0.4, refactor and include a simple GUI
+- v0.0.5, compensate possible src_rms offset
 
 About
 - branch : forked by @ZL, 20200630
@@ -16,7 +17,7 @@ About
 import time, datetime, statistics, os, sys
 sys.path.append(os.path.dirname(__file__))
 from lib import core
-from lib.pkg import runbat, gain
+from lib.pkg import runbat, gain, offsets
 import tkinter
 from tkinter import messagebox
 
@@ -25,7 +26,7 @@ class RemoteFieldSoundSearcher:
     """
     # formatter and timer
     __timer      = datetime.datetime.now
-    __info_fmt   = "{0:<12}: {1:%H:%M:%S},Diff={2:<.2f},mic_RMS={3:<.2f},src_RMS={4:<.2f},Gain_val={5:<.2f},exp_src_RMS={6:<.2f}"
+    __info_fmt   = "{0:<12}: {1:%H:%M:%S},Diff={2:<.2f},mic_RMS={3:<.2f},src_RMS={4:<.2f},Gain_val={5:<.2f},exp_src_rms={6:<.2f}"
     __header     = "gain_val, [mic_pk, mic_rms, src_pk, src_rms]"
     __result_log = "m5_log.txt"
     # batch file for calibO
@@ -77,9 +78,9 @@ class RemoteFieldSoundSearcher:
         if self.__lbound <= srcdiff <= self.__ubound:
             self.__result_list.append((self.__init_gain, micPkRMSsrcPkRMS))
         else: 
-            cnt = 0
+            cnt, offset = 0, 0
             while not self.__lbound <= srcdiff <= self.__ubound:
-                input_src_gain = gain.calc_gain(mic_rms=micPkRMSsrcPkRMS[self.__indx_mic_rms], init_src_rms=init_src_rms, center=self.__center)
+                input_src_gain = gain.calc_gain(mic_rms=micPkRMSsrcPkRMS[self.__indx_mic_rms], init_src_rms=init_src_rms, center=self.__center) + offset
                 self.__mic_rms_list.append(micPkRMSsrcPkRMS[self.__indx_mic_rms])
                 # if src Pk lev dB == 0 ...
                 if srcpeak == 0:
@@ -90,36 +91,38 @@ class RemoteFieldSoundSearcher:
                 if cnt >= self._maxsearch:
                     # after searching N times, but no result, calculate harmonic mean of mic_25_rms values
                     hm_mic25rms    = round(statistics.harmonic_mean(self.__mic_rms_list), 2)
-                    input_src_gain = gain.calc_gain(mic_rms=hm_mic25rms, init_src_rms=init_src_rms, center=self.__center)
+                    input_src_gain = gain.calc_gain(mic_rms=hm_mic25rms, init_src_rms=init_src_rms, center=self.__center) + offset
                     runbat.change_src_gain(gain_value=input_src_gain) # change gain value
                     result = input_src_gain
                     _, _, micPkRMSsrcPkRMS = core.meas_and_get_result()
                     micPkRMSsrcPkRMS[self.__indx_mic_rms] = hm_mic25rms
                     break
                 # display result before change gain
-                exp_src_RMS = (init_src_rms + input_src_gain) if input_src_gain < 0 else (init_src_rms - input_src_gain)
+                exp_src_rms = (init_src_rms + input_src_gain) if input_src_gain < 0 else (init_src_rms - input_src_gain)
                 s = self.__info_fmt.format("before gain", self.__timer(), srcdiff, 
                                             micPkRMSsrcPkRMS[self.__indx_mic_rms], 
                                             micPkRMSsrcPkRMS[self.__indx_src_rms], 
                                             input_src_gain,
-                                            exp_src_RMS)
+                                            exp_src_rms)
                 print(s)
                 self.__saveSearchLog(s)
+                mic_rms_before = micPkRMSsrcPkRMS[self.__indx_mic_rms]
                 # change gain value
                 runbat.change_src_gain(gain_value=input_src_gain) 
                 result = input_src_gain
                 # measure after changed gain value
                 srcdiff, srcpeak, micPkRMSsrcPkRMS = core.meas_and_get_result()
-                # cond2 = (micPkRMSsrcPkRMS[self.__indx_mic_rms] - micPkRMSsrcPkRMS[self.__indx_src_rms]) > 0
                 # display result after change gain
-                exp_src_RMS = (init_src_rms + input_src_gain) if input_src_gain < 0 else (init_src_rms - input_src_gain)
                 s = self.__info_fmt.format("after gain", self.__timer(), srcdiff, 
                                             micPkRMSsrcPkRMS[self.__indx_mic_rms], 
                                             micPkRMSsrcPkRMS[self.__indx_src_rms], 
                                             input_src_gain,
-                                            exp_src_RMS)
+                                            exp_src_rms)
                 print(s)
                 self.__saveSearchLog(s)
+                mic_rms_after = micPkRMSsrcPkRMS[self.__indx_mic_rms]
+                act_src_rms   = micPkRMSsrcPkRMS[self.__indx_src_rms]
+                offset = offsets.calc_offset(mic_rms_before, mic_rms_after, act_src_rms, exp_src_rms)
                 cnt += 1
             self.__result_list.append((result, micPkRMSsrcPkRMS))
         end_time = time.time()
