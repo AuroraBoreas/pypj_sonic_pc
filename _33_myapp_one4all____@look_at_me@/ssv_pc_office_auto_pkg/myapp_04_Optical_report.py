@@ -369,24 +369,26 @@ class App_win():
                     img = ImageGrab.grabclipboard()
                     tmp_fn = os.path.join(self.tmp, f'{k}.jpg')
                     img.save(tmp_fn)
+            ##<~~specified to grab imgs from cs2000 file
+            ## ! this is not 100% guaranteed. Graph1...5 must prerequists in the cs2000 source workbook
+            self._conclusions.append(ws.Range("C1").Value)
+            if grab_chart:
+                for shape in ws.Shapes:
+                    if shape.Name.startswith('Graph'):
+                        shape.Copy()
+                        time.sleep(.1)
+                        img = ImageGrab.grabclipboard()
+                        tmp_fn = os.path.join(self.tmp, f'{shape.Name}.jpg')
+                        img.save(tmp_fn)
         except AttributeError:
-            messagebox.showinfo('Info', message='Failed to grab img from XL file')
-        ##<~~specified to grab imgs from cs2000 file
-        self._conclusions.append(ws.Range("C1").Value)
-        if grab_chart:
-            for shape in ws.Shapes:
-                if shape.Name.startswith('Graph'):
-                    shape.Copy()
-                    time.sleep(.1)
-                    img = ImageGrab.grabclipboard()
-                    tmp_fn = os.path.join(self.tmp, f'{shape.Name}.jpg')
-                    img.save(tmp_fn)
-        ##<~~clear clipboard and quit XL application
-        if windll.user32.OpenClipboard(None):
-            windll.user32.EmptyClipboard()
-            windll.user32.CloseClipboard()
-        wb.Close(False)
-        xl.Quit()
+            messagebox.showinfo('Info', message='Failed to grab img from XL file {}'.format(wb_path))
+        finally:
+            ##<~~clear clipboard and quit XL application
+            if windll.user32.OpenClipboard(None):
+                windll.user32.EmptyClipboard()
+                windll.user32.CloseClipboard()
+            wb.Close(False)
+            xl.Quit()
         return
 
     def add_conclusion_txtbox(self, slide, conclusion):
@@ -422,7 +424,7 @@ class App_win():
         title_slide_layout = prs.slide_layouts[0]
         slide              = prs.slides.add_slide(title_slide_layout)
         title              = slide.shapes.title
-        title.text         = f"{pmod} Optical Evaluation" #<~~make it dynamic
+        title.text         = f"{pmod} Optical Evaluation" 
         return
 
     def add_cs2000_summary_page_to_ppt(self, prs, pmod):
@@ -436,7 +438,7 @@ class App_win():
         left     = Cm(0)
         height   = Cm(5.9)
         if os.path.exists(img_path):
-            title.text = f"{pmod} Optical" #<~~make it dynamic
+            title.text = f"{pmod} Optical" 
             slide.shapes.add_picture(img_path, left, top, height=height)
 
         cs2000_graph_names = ['Graph' + str(i) +'.jpg' for i in range(1, 6)]
@@ -521,7 +523,7 @@ class App_win():
         top        = Cm(self.top)
         left       = Cm(l)
         height     = Cm(self.resize_ratio)
-        title.text = f"{pmod} corner ratio & UF({IRE}IRE)" #<~~make it dynamic
+        title.text = f"{pmod} corner ratio & UF({IRE}IRE)" 
         slide.shapes.add_picture(img_path, left, top, height=height)
         #<~~conclusion box: ca2500 pages
         if self._conclusions and IRE == 100:
@@ -546,7 +548,7 @@ class App_win():
         left    = Cm(l)
         height  = Cm(self.resize_ratio)
 
-        title.text = f"{pmod} corner ratio & UF({IRE}IRE)" #<~~make it dynamic
+        title.text = f"{pmod} corner ratio & UF({IRE}IRE)" 
         slide.shapes.add_picture(img_path, left, top, height=height)
         #<~~conclusion box: ca2500 pages
         if self._conclusions and IRE == 100:
