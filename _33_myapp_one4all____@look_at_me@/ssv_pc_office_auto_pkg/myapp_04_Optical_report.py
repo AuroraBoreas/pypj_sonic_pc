@@ -70,7 +70,7 @@ class XL_Range_Img():
 class App_win():
     BASE_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
     favicon_path = os.path.join(BASE_DIR, r"data\assets\favicon_bottle.png")
-    ppt_template_path     = os.path.join(BASE_DIR, r"data\templates\FY21_SSV_Template.pptx")
+    ppt_template_path     = os.path.join(BASE_DIR, r"data\templates\template.pptx")
     upload2server_fd_path = r"\\43.98.1.18\ssv sharefile\SHES-C\03-Info-Share\03-FYxx Model\FY20_Model\SSV Design model\NX\31.MP"
     server_address        = '43.98.1.18'
     port                  = 445
@@ -102,7 +102,12 @@ class App_win():
         '0IRE5_8'   : XL_Range_Img(*['AA84:AX123', '0IRE5_8']),
     }
 
-    top          = 1.6 #<~ppt, ca2500, top position(it depends on template)
+    ##<~~View Angle, category for common usage: first 4 samples, next 4 samples
+    va_rngaddress_img_name = {
+        'view_angle' : XL_Range_Img(*['B2:S28', 'view_angle']),
+    }
+
+    top          = 1.8 #<~ppt, ca2500, top position(it depends on template)
     resize_ratio = 17 ##<~~ppt, ca2500, photo resize ratio == hight
 
     def __init__(self):
@@ -110,7 +115,7 @@ class App_win():
         self.root = Toplevel()  ##<~ toplevel when import from other module
         self.root.title("Optical Report v.3, by ZL, 20190921")
 
-        self.w, self.h = 760, 240
+        self.w, self.h = 760, 260
         self.ws = self.root.winfo_screenwidth()
         self.hs = self.root.winfo_screenheight()
         x = int((self.ws - self.w) / 2)
@@ -135,10 +140,12 @@ class App_win():
         self.lbl_cs2000.grid(row=1, column=0, sticky='w')
         self.lbl_cs2500 = Label(self.fm1, text='CA2500_XL_path:')
         self.lbl_cs2500.grid(row=2, column=0, sticky='w')
+        self.lbl_va = Label(self.fm1, text='ViewAngle_XL_path:')
+        self.lbl_va.grid(row=3, column=0, sticky='w')
         self.lbl_pmod = Label(self.fm1, text='PMod:')
-        self.lbl_pmod.grid(row=3, column=0, sticky='w')
+        self.lbl_pmod.grid(row=4, column=0, sticky='w')
         self.lbl_upload2server = Label(self.fm1, text='Server:')
-        self.lbl_upload2server.grid(row=4, column=0, sticky='w')
+        self.lbl_upload2server.grid(row=5, column=0, sticky='w')
 
         self.e_ppt_template = Entry(self.fm1, width=100)
         self.e_ppt_template.insert(INSERT, self.ppt_template_path)
@@ -147,11 +154,13 @@ class App_win():
         self.e_cs2000.grid(row=1, column=1, sticky='w')
         self.e_ca2500 = Entry(self.fm1, width=100)
         self.e_ca2500.grid(row=2, column=1, sticky='w')
+        self.e_va = Entry(self.fm1, width=100)
+        self.e_va.grid(row=3, column=1, sticky='w')
         self.e_pmod = Entry(self.fm1, width=100)
-        self.e_pmod.grid(row=3, column=1, sticky='w')
+        self.e_pmod.grid(row=4, column=1, sticky='w')
         self.e_upload2server = Entry(self.fm1, width=100)
         self.e_upload2server.insert(INSERT, self.upload2server_fd_path)
-        self.e_upload2server.grid(row=4, column=1, sticky='w')
+        self.e_upload2server.grid(row=5, column=1, sticky='w')
 
         self.btn_add_template = Button(self.fm1, text='+', command=self.pick_ppt_template_file_path_dialog)
         self.btn_add_template.grid(row=0, column=2, padx=1, pady=1, sticky='nw')
@@ -159,8 +168,10 @@ class App_win():
         self.btn_cs2000.grid(row=1, column=2, padx=1, pady=1, sticky='nw')
         self.btn_ca2500 = Button(self.fm1, text='+', command=self.pick_ca2500_file_path_dialog)
         self.btn_ca2500.grid(row=2, column=2, padx=1, pady=1, sticky='nw')
+        self.btn_va = Button(self.fm1, text='+', command=self.pick_va_file_path_dialog)
+        self.btn_va.grid(row=3, column=2, padx=1, pady=1, sticky='nw')
         self.btn_upload2server = Button(self.fm1, text='+', command=self.pick_up2server_path_dialog)
-        self.btn_upload2server.grid(row=4, column=2, padx=1, pady=1, sticky='nw')
+        self.btn_upload2server.grid(row=5, column=2, padx=1, pady=1, sticky='nw')
 
         ##<~ start button
         self.btn_start = Button(self.fm1, width=10, text='START', command=self.make_ppt_report)
@@ -194,13 +205,13 @@ class App_win():
         f_path = filedialog.askopenfilename(filetypes=(('Excel files', '*.xls*'), ('all files', '*.*')))
         f_path = os.path.abspath(f_path)
         self.e_cs2000.insert(INSERT, f_path)
-        str_pattern = "[A-Z]{2,4}[0-9]{2}_[A-Z]{2,3}[0-9]*"
+        str_pattern = "[a-zA-Z]{2,4}[0-9]{2,3}_[a-zA-Z]{2,4}[0-9]*"
         result = re.findall(str_pattern, f_path)
         if result:
             pmod_stage = result[-1]
         else:
             pmod_stage = ''
-        self.e_pmod.insert(INSERT, pmod_stage)
+        self.e_pmod.insert(INSERT, pmod_stage.upper())
 
     def pick_ca2500_file_path_dialog(self):
         """get ca25 excel file path"""
@@ -209,13 +220,28 @@ class App_win():
         f_path = filedialog.askopenfilename(filetypes=(('Excel files', '*.xls*'), ('all files', '*.*')))
         f_path = os.path.abspath(f_path)
         self.e_ca2500.insert(INSERT, f_path)
-        str_pattern = "[A-Z]{2,4}[0-9]{2}_[A-Z]{2,3}[0-9]*"
+        str_pattern = "[a-zA-Z]{2,4}[0-9]{2,3}_[a-zA-Z]{2,4}[0-9]*"
         result = re.findall(str_pattern, f_path)
         if result:
             pmod_stage = result[-1]
         else:
             pmod_stage = ''
-        self.e_pmod.insert(INSERT, pmod_stage)
+        self.e_pmod.insert(INSERT, pmod_stage.upper())
+
+    def pick_va_file_path_dialog(self):
+        """get view angle excel file path"""
+        self.e_va.delete(0, 'end')
+        self.e_pmod.delete(0, 'end')
+        f_path = filedialog.askopenfilename(filetypes=(('Excel files', '*.xls*'), ('all files', '*.*')))
+        f_path = os.path.abspath(f_path)
+        self.e_va.insert(INSERT, f_path)
+        str_pattern = "[a-zA-Z]{2,4}[0-9]{2,3}_[a-zA-Z]{2,4}[0-9]*"
+        result = re.findall(str_pattern, f_path)
+        if result:
+            pmod_stage = result[-1]
+        else:
+            pmod_stage = ''
+        self.e_pmod.insert(INSERT, pmod_stage.upper())
 
     def pick_up2server_path_dialog(self):
         """get server path"""
@@ -333,9 +359,9 @@ class App_win():
                     time.sleep(.1)
                     img = ImageGrab.grabclipboard()
                     img.save(tmp_fn)
-
+            #<~~ grab image from excel workbook based on range address
             for k, v in dict_rng_name.items():
-                range_address   = v.range_address
+                range_address  = v.range_address
                 cell_address   = range_address.split(':')[0]
                 if not ws.Range(cell_address).Value is None:
                     rng = ws.Range(range_address)
@@ -344,7 +370,7 @@ class App_win():
                     tmp_fn = os.path.join(self.tmp, f'{k}.jpg')
                     img.save(tmp_fn)
         except AttributeError:
-            messagebox.showinfo('Info', message='NoneType')
+            messagebox.showinfo('Info', message='Failed to grab img from XL file')
         ##<~~specified to grab imgs from cs2000 file
         self._conclusions.append(ws.Range("C1").Value)
         if grab_chart:
@@ -534,6 +560,21 @@ class App_win():
         self.add_conclusion_txtbox(slide, conclusion)
         return
 
+    def add_view_angle_summary_to_ppt(self, img_path, prs):
+        """view angle"""
+        title_slide_layout = prs.slide_layouts[5]
+        slide              = prs.slides.add_slide(title_slide_layout)
+        title              = slide.shapes.title
+        title.text         = 'View Angle'
+
+        top     = Cm(1.94)
+        left    = Cm(0.1)
+        height  = Cm(14.35)
+        if os.path.exists(img_path):
+            slide.shapes.add_picture(img_path, left, top, height=height)
+        return
+
+
     def add_EOF_page_to_ppt(self, prs):
         """final page"""
         title_slide_layout = prs.slide_layouts[6]
@@ -570,6 +611,13 @@ class App_win():
                 self._conclusions.extend([None, None])
             else:
                 self.extract_img_from_xl(wb_path, self.cs25_rngaddress_img_name, is_ca2500_file=True, grab_chart=False)
+
+            ##<~~extract data from view angle file
+            wb_path = self.e_va.get()
+            if not os.path.exists(wb_path):
+                self._conclusions.extend([None, None])
+            else:
+                self.extract_img_from_xl(wb_path, self.va_rngaddress_img_name, is_ca2500_file=False, grab_chart=False)
 
             """=========================import into ppt========================="""
 
@@ -616,6 +664,11 @@ class App_win():
             img_path = os.path.join(self.tmp, img_path)
             if os.path.exists(img_path):
                 self.add_next_four_samples_to_ppt(img_path, prs, pmod, ca2500_sample_left_position, 0)
+
+            #<~~ TODO: view angle page: view angle summary.
+            img_path = '{}.jpg'.format('view_angle')
+            img_path = os.path.join(self.tmp, img_path)
+            self.add_view_angle_summary_to_ppt(img_path, prs)
 
             #<~~final page: EOF
             self.add_EOF_page_to_ppt(prs)

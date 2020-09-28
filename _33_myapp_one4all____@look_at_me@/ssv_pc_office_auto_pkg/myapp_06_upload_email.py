@@ -107,7 +107,7 @@ class App_win():
             socket.setdefaulttimeout(timeout)
             socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
             return True
-        except socket.error as ex:
+        except socket.error:
             return False
 
     def upload2server(self):
@@ -142,6 +142,7 @@ class App_win():
             self.progress_sendemail.grid(row=11, column=1, padx=1, pady=1, sticky=NW)
             self.progress_sendemail.start()
 
+            # create an instance of Office Outlook application
             outlook = win32.Dispatch('outlook.application')
             mail = outlook.CreateItem(0)
 

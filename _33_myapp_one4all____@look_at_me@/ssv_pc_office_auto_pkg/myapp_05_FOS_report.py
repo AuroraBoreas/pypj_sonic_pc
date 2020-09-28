@@ -48,7 +48,7 @@ from tkinter import (
 class App_win():
     BASE_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
     favicon_path = os.path.join(BASE_DIR, r"data\assets\favicon_clover.png")
-    ppt_template_path     = os.path.join(BASE_DIR, r"data\templates\FY21_SSV_Template.pptx")
+    ppt_template_path     = os.path.join(BASE_DIR, r"data\templates\template.pptx")
     upload2server_fd_path = r"\\43.98.1.18\shes-c\03-Info-Share\03-FYxx Model\FY20_Model\SSV Design Model\NX\21.CS"
     server_address = '43.98.1.18'
     port = 445
