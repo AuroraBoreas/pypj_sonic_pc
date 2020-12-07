@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>doc_CUC.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="overview">Overview</h1>
+<p>big image is as follows.</p>
+<p>SONY TV plants are using cameras and mirrors to take photos for special patterns of panel, then calculate <code>CUC</code> (stands for <code>color uniformity correction</code>) for each photo.</p>
+<p>anyways, i dont know the actual algorithm inside of CUC adjustment prg inside of jig PC. it's a total blackbox to me.</p>
+<p>After CUC process is finished, operators check its effect and result. As it is processed by human, and human error always happens. there is a risk that operators omit CUC result, then NG products flow to worldwide market.</p>
+<p>To retrieve CUC status from records in the jig PC, there must be a program to read source data and recover CUC status to identify possible NG panels.</p>
+<p>I reverse-engineered the original dummy-broken &quot;prg&quot; from OSK, which is written in &quot;Excel.exe&quot;, and extracted the core algorithm then implemented in <strong>Python</strong> and rewrote my own prg to do these erands. Because <strong>VBA</strong> is really slow and ugly.</p>
+<h2 id="preparation">Preparation</h2>
+<p>confirmation beforehand</p>
+<ol>
+<li>source file :  &quot;*.eep&quot;</li>
+<li>size of each source file: 25KB</li>
+<li>number of source files:  it depends. sometimes it's 40G+</li>
+</ol>
+<h2 id="reversed-algorithm">Reversed algorithm</h2>
+<p>i had finally completed it after laborious reverse-engineering with hours and hours of blood and tears.</p>
+<img src="assets\CUC_algorithm.png">
+<h2 id="core-algorithms">Core algorithms</h2>
+<p>this section covers most of core algorithms in this program.</p>
+<h3 id="algorithm-01-read-source-data-and-convert">Algorithm 01: read source data and convert</h3>
+<pre class="hljs"><code><div>
+save2array = np.array([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>])
+<span class="hljs-comment">## extract src data</span>
+df = pd.read_csv(f_path, header=<span class="hljs-literal">None</span>, skiprows=<span class="hljs-number">7</span>, sep=<span class="hljs-string">r'\t|\s+'</span>, engine=<span class="hljs-string">'python'</span>).drop([<span class="hljs-number">0</span>], axis=<span class="hljs-number">1</span>)
+save2array = np.vstack((save2array, df.values.tolist()))
+b = save2array.flatten()[:<span class="hljs-number">6828</span>]
+
+</div></code></pre>
+<h3 id="algorithm-02-color-conversion">Algorithm 02: color conversion</h3>
+<p>algorithm decides which color conversion is used for each source data.</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># ssv_pc_office_auto_pkg\myapp_02_muracuc_gui.py</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_index</span><span class="hljs-params">(self, r, c, color=<span class="hljs-string">'RED'</span>)</span>:</span>
+    <span class="hljs-string">"""
+    Purpose:Return calculation result(index) based on color
+    author:Z.Liang, 20190505
+    """</span>
+    <span class="hljs-keyword">if</span> color == <span class="hljs-string">'RED'</span>:
+        <span class="hljs-keyword">return</span> int(<span class="hljs-string">'6019'</span>, <span class="hljs-number">16</span>) - int(<span class="hljs-string">'6000'</span>, <span class="hljs-number">16</span>) + c * <span class="hljs-number">36</span> + r + <span class="hljs-number">1</span> - (r % <span class="hljs-number">2</span>) * <span class="hljs-number">2</span>
+    <span class="hljs-keyword">elif</span> color == <span class="hljs-string">'GREEN'</span>:
+        <span class="hljs-keyword">return</span> int(<span class="hljs-string">'6919'</span>, <span class="hljs-number">16</span>) - int(<span class="hljs-string">'6000'</span>, <span class="hljs-number">16</span>) + c * <span class="hljs-number">36</span> + r + <span class="hljs-number">1</span> - (r % <span class="hljs-number">2</span>) * <span class="hljs-number">2</span>
+    <span class="hljs-keyword">elif</span> color == <span class="hljs-string">'BLUE'</span>:
+        <span class="hljs-keyword">return</span> int(<span class="hljs-string">'7219'</span>, <span class="hljs-number">16</span>) - int(<span class="hljs-string">'6000'</span>, <span class="hljs-number">16</span>) + c * <span class="hljs-number">36</span> + r + <span class="hljs-number">1</span> - (r % <span class="hljs-number">2</span>) * <span class="hljs-number">2</span>
+</div></code></pre>
+<h3 id="algorithm-03-get-redgreenblue-source-data">Algorithm 03: get RED/GREEN/BLUE source data</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">## plot data for each color</span>
+subplot_datas = []
+<span class="hljs-keyword">for</span> color <span class="hljs-keyword">in</span> colors:
+    <span class="hljs-comment">##  hexdata: the hardest part</span>
+    arrZvalue = (np.array([[int(b[self.find_index(r, c, color=color)<span class="hljs-number">-1</span>], <span class="hljs-number">16</span>) 
+                <span class="hljs-keyword">if</span> int(b[self.find_index(r, c, color=color)<span class="hljs-number">-1</span>], <span class="hljs-number">16</span>) &lt; <span class="hljs-number">127</span> 
+                <span class="hljs-keyword">else</span> int(b[self.find_index(r, c, color=color)<span class="hljs-number">-1</span>], <span class="hljs-number">16</span>)<span class="hljs-number">-256</span>] 
+                <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, M) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, N)]).flatten().reshape(M, N))
+    subplot_datas.append(arrZvalue)
+</div></code></pre>
+<h3 id="algorithm-04-plot">Algorithm 04: plot</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">## plot</span>
+subplot_titles = colors
+<span class="hljs-keyword">for</span> subplot_title, subplot_data <span class="hljs-keyword">in</span> zip(subplot_titles, subplot_datas):
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> np.all(subplot_data==<span class="hljs-number">0</span>):
+        _cmap = ryg
+    <span class="hljs-keyword">else</span>:
+        _cmap = self.make_colormap([c(<span class="hljs-string">'#63be7b'</span>)])
+    plt.subplot(<span class="hljs-number">3</span>, <span class="hljs-number">1</span>, i)
+    plt.imshow(subplot_data, cmap=_cmap, interpolation=<span class="hljs-string">'nearest'</span>)
+    plt.title(<span class="hljs-string">f'<span class="hljs-subst">{subplot_title}</span>'</span>, fontsize=<span class="hljs-number">12</span>)
+    i += <span class="hljs-number">1</span>
+</div></code></pre>
+<h2 id="result">Result</h2>
+<p>CUC simulation</p>
+<img src="assets\Eep_A5013700A_0048451_CUC_20201019064728.eep.png">
+<h2 id="about">About</h2>
+<p>Copyright © 2019 <font color="blue">ZL</font></p>
+<p>All rights reserved.</p>
+<p>The MIT License (MIT)</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+
+</body>
+</html>
