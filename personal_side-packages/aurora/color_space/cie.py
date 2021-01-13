@@ -16,29 +16,29 @@ class CIE_Converter:
 
     def __repr__(self):
         if self.color_space == 'xy':
-            return "xy->u\'v\', u\':{:.4f}, v\':{:.4f}".format(*self.converter())
+            return "xy -> u\'v\', u\': {:.4f}, v\': {:.4f}".format(*self.start())
         if self.color_space == 'dudv':
-            return "u\'v\'->xy, x :{:.4f}, y: {:.4f}".format(*self.converter())
+            return "u\'v\' -> xy, x : {:.4f}, y : {:.4f}".format(*self.start())
         else:
             return 'incorrect color space'
 
-    def converter(self):
-        def convert_dudv_to_xy(du: float, dv: float):
-            """CIE1976 space(du,dv) to CIE1931 space(x,y) @ZL"""
-            y = (3*dv)/(9*du/2 - 12*dv + 9)
-            x = (du/dv)*9/4*y
-            return x, y
+    def __dudv_to_xy(self, du: float, dv: float):
+        """CIE1976 space(du,dv) to CIE1931 space(x,y) @ZL"""
+        y = (3*dv)/(9*du/2 - 12*dv + 9)
+        x = (du/dv)*9/4*y
+        return x, y
 
-        def convert_xy_to_dudv(x: float, y: float):
-            """CIE1931 space(x,y) to CIE1976 space(du,dv) @ZL"""
-            du = (4*x)/(12*y - 2*x + 3)
-            dv = (9*y)/(12*y - 2*x + 3)
-            return du, dv
-
+    def __xy_to_dudv(self, x: float, y: float):
+        """CIE1931 space(x,y) to CIE1976 space(du,dv) @ZL"""
+        du = (4*x)/(12*y - 2*x + 3)
+        dv = (9*y)/(12*y - 2*x + 3)
+        return du, dv
+        
+    def start(self):
         if self.color_space == 'xy':
-            return convert_xy_to_dudv(self.a, self.b)
+            return self.__xy_to_dudv(self.a, self.b)
         if self.color_space == 'dudv':
-            return convert_dudv_to_xy(self.a, self.b)
+            return self.__dudv_to_xy(self.a, self.b)
         else:
             return
 
