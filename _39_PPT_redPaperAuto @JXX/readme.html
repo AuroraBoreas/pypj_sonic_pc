@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>readme.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="overview">Overview</h1>
+<p>Recently, SSVE internally requests Market team and QC team to provide a list of quality problems.</p>
+<p>Market team normally is using PowerPoint to make reports(ie. 8D etc).</p>
+<p>In this case, It's necessary to wrap up all information from PowerPoint files and list up.</p>
+<h1 id="diagram">Diagram</h1>
+<img src="docs/static/diagram.png" width="400">
+<h1 id="thoughts">Thoughts</h1>
+<p>Before I get my hands dirty, I choose LBYL</p>
+<h2 id="languages">languages</h2>
+<p>It's straightforward and simple as the diagram above displays.</p>
+<p>which lang is suitable for this?</p>
+<p><strong>basic info</strong></p>
+<ul>
+<li>source files are pptx</li>
+<li>summary file is excel</li>
+</ul>
+<p><strong>lang</strong></p>
+<ul>
+<li>VBA should be the first lang pops out.</li>
+<li>Python may work too via python-pptx pkg.</li>
+</ul>
+<p><strong>merit</strong></p>
+<ul>
+<li>i don't wanna write a solution twice but different langs</li>
+<li>user environment may not use python. though it may convert .py -&gt; .exe through pyinstaller</li>
+</ul>
+<h2 id="psudo-codes">psudo codes</h2>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_data_from_pptx</span><span class="hljs-params">(pptx_file_path)</span>:</span>
+    <span class="hljs-comment"># open pptx file</span>
+    <span class="hljs-comment"># find valid idpattern</span>
+    <span class="hljs-comment"># read first page, store data into a data structure sequentially, like {pptx_page_title: [...]}</span>
+    <span class="hljs-comment"># continue</span>
+    <span class="hljs-comment"># stop till not valid idpattern found</span>
+    <span class="hljs-keyword">pass</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">write_data_to_excel</span><span class="hljs-params">(stored_data, excel_file_path)</span>:</span>
+    <span class="hljs-comment"># open excel file</span>
+    <span class="hljs-comment"># write store_data into excel, each row per pptx page info</span>
+    <span class="hljs-keyword">pass</span>
+</div></code></pre>
+<h1 id="implementation">Implementation</h1>
+<h2 id="project-structure">Project structure</h2>
+<pre class="hljs"><code><div>VB.pj
+|
+|-- Module1_pkg <span class="hljs-comment">' including basic functions and features</span>
+|
+|-- Module2_main <span class="hljs-comment">' final procedure does job</span>
+|
+|-- Module3_UI  <span class="hljs-comment">' a simple, user-friendly GUI </span>
+|
+|-- Module4_tests <span class="hljs-comment">' unittest</span>
+</div></code></pre>
+<h2 id="module1pkg">Module1_pkg</h2>
+<p>This module contains basic functionalities to access, read and close PowerPoint files.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">' Module1_pkg.bas</span>
+
+<span class="hljs-keyword">Public</span> <span class="hljs-keyword">Sub</span> pptx_reader(pptx_file_path <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>, toWS <span class="hljs-keyword">As</span> Worksheet)
+    <span class="hljs-comment"><span class="hljs-doctag">'''</span>read data from pptx file and store into a worksheet @ZL, 202008<span class="hljs-doctag">'''</span></span>
+    <span class="hljs-keyword">Dim</span> PPT <span class="hljs-keyword">As</span> PowerPoint.Application: <span class="hljs-keyword">Set</span> PPT = CreateObject(<span class="hljs-string">"PowerPoint.Application"</span>)
+    <span class="hljs-keyword">Dim</span> p <span class="hljs-keyword">As</span> Presentation: <span class="hljs-keyword">Set</span> p = PPT.Presentations.Open(Filename:=pptx_file_path, <span class="hljs-keyword">ReadOnly</span>:=<span class="hljs-literal">True</span>, WithWindow:=msoFalse)
+    <span class="hljs-keyword">Dim</span> s <span class="hljs-keyword">As</span> Slide
+    <span class="hljs-keyword">Dim</span> sh <span class="hljs-keyword">As</span> PowerPoint.Shape
+    <span class="hljs-keyword">Dim</span> tbl <span class="hljs-keyword">As</span> PowerPoint.Table
+    <span class="hljs-keyword">Dim</span> start_slide_no <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>: start_slide_no = <span class="hljs-number">2</span>
+    <span class="hljs-keyword">Dim</span> end_slide_no <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>: end_slide_no = p.Slides.Count
+    <span class="hljs-keyword">Dim</span> slide_no <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>
+    <span class="hljs-keyword">Dim</span> i <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>, j <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>, k <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>, r <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>, c <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>
+    <span class="hljs-keyword">Dim</span> titleLen <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>, tblRows <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>
+    <span class="hljs-keyword">Dim</span> titleFlag <span class="hljs-keyword">As</span> <span class="hljs-built_in">Boolean</span>
+    titleLen = <span class="hljs-number">3</span>
+    titleFlag = <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">Dim</span> tmpCell <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">Dim</span> lastRow <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>: lastRow = GetLastRow(toWS, <span class="hljs-number">2</span>) + <span class="hljs-number">1</span>
+    
+    <span class="hljs-comment">' read data and write into *toWS* in append mode</span>
+    <span class="hljs-keyword">On</span> <span class="hljs-keyword">Error</span> <span class="hljs-keyword">Resume</span> <span class="hljs-keyword">Next</span>
+    <span class="hljs-keyword">For</span> slide_no = start_slide_no <span class="hljs-keyword">To</span> end_slide_no
+        <span class="hljs-keyword">Set</span> s = p.Slides(slide_no)
+        <span class="hljs-keyword">Set</span> tmpCell = toWS.Cells(lastRow, <span class="hljs-number">2</span>)
+        <span class="hljs-keyword">With</span> s.Shapes
+            <span class="hljs-keyword">For</span> i = <span class="hljs-number">1</span> <span class="hljs-keyword">To</span> .Count
+                <span class="hljs-comment">' title</span>
+                <span class="hljs-keyword">If</span> .Item(i).HasTextFrame <span class="hljs-keyword">And</span> (<span class="hljs-keyword">Not</span> titleFlag) <span class="hljs-keyword">Then</span>
+                    <span class="hljs-keyword">If</span> (.Item(i).TextFrame.HasText) <span class="hljs-keyword">And</span> (Len(.Item(i).TextFrame.TextRange.<span class="hljs-keyword">Text</span>) &gt; titleLen) <span class="hljs-keyword">Then</span>
+                        titleFlag = <span class="hljs-literal">True</span>
+                        tmpCell.Value = .Item(i).TextFrame.TextRange.<span class="hljs-keyword">Text</span>  <span class="hljs-comment">'store title</span>
+                    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+                <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+                <span class="hljs-comment">' table content</span>
+                <span class="hljs-keyword">If</span> .Item(i).HasTable <span class="hljs-keyword">Then</span>
+                        <span class="hljs-keyword">Set</span> tbl = .Item(i).Table
+                        tblRows = tbl.Rows.Count
+                        <span class="hljs-keyword">Select</span> <span class="hljs-keyword">Case</span> tblRows
+                            <span class="hljs-comment">' table 01, rows = 8</span>
+                            <span class="hljs-keyword">Case</span> <span class="hljs-keyword">Is</span> = <span class="hljs-number">8</span>:
+                                <span class="hljs-keyword">With</span> tbl
+                                    <span class="hljs-comment">' store table data into excel</span>
+                                    tmpCell.Offset(, <span class="hljs-number">1</span>).Value = .Cell(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">' Problem Details£¨²»Á¼Ö¢×´£©</span>
+                                    tmpCell.Offset(, <span class="hljs-number">2</span>).Value = <span class="hljs-built_in">CStr</span>(.Cell(<span class="hljs-number">2</span>, <span class="hljs-number">5</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span>) <span class="hljs-comment">' Red paper NO.</span>
+                                    tmpCell.Offset(, <span class="hljs-number">3</span>).Value = .Cell(<span class="hljs-number">4</span>, <span class="hljs-number">1</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">' problem Detail</span>
+                                    tmpCell.Offset(, <span class="hljs-number">4</span>).Value = .Cell(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">' Occurred  Date</span>
+                                    tmpCell.Offset(, <span class="hljs-number">5</span>).Value = .Cell(<span class="hljs-number">4</span>, <span class="hljs-number">6</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">' Quantity</span>
+                                    tmpCell.Offset(, <span class="hljs-number">6</span>).Value = .Cell(<span class="hljs-number">6</span>, <span class="hljs-number">1</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">' Customer Status</span>
+                                    tmpCell.Offset(, <span class="hljs-number">7</span>).Value = .Cell(<span class="hljs-number">6</span>, <span class="hljs-number">6</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">'    Parts</span>
+                                    tmpCell.Offset(, <span class="hljs-number">8</span>).Value = .Cell(<span class="hljs-number">8</span>, <span class="hljs-number">2</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">' Model</span>
+                                    tmpCell.Offset(, <span class="hljs-number">9</span>).Value = <span class="hljs-built_in">CStr</span>(.Cell(<span class="hljs-number">8</span>, <span class="hljs-number">1</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span>) <span class="hljs-comment">' S/N  NO</span>
+                                    tmpCell.Offset(, <span class="hljs-number">10</span>).Value = .Cell(<span class="hljs-number">8</span>, <span class="hljs-number">3</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">'  SSV line</span>
+                                    tmpCell.Offset(, <span class="hljs-number">11</span>).Value = .Cell(<span class="hljs-number">8</span>, <span class="hljs-number">4</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">'  shift</span>
+                                    tmpCell.Offset(, <span class="hljs-number">12</span>).Value = .Cell(<span class="hljs-number">8</span>, <span class="hljs-number">5</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">' Found Plant</span>
+                                <span class="hljs-keyword">End</span> <span class="hljs-keyword">With</span>
+                            <span class="hljs-comment">' table 02</span>
+                            <span class="hljs-keyword">Case</span> <span class="hljs-keyword">Is</span> = <span class="hljs-number">6</span>:
+                                <span class="hljs-keyword">With</span> tbl
+                                    tmpCell.Offset(, <span class="hljs-number">13</span>).Value = .Cell(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">' Define the problem£¨¶¨ÒåÎÊÌâ£©</span>
+                                    tmpCell.Offset(, <span class="hljs-number">14</span>).Value = .Cell(<span class="hljs-number">4</span>, <span class="hljs-number">2</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">' Define &amp; verify root cause£¨ÕæÒò£©</span>
+                                    tmpCell.Offset(, <span class="hljs-number">15</span>).Value = .Cell(<span class="hljs-number">5</span>, <span class="hljs-number">2</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">' Short-term corrective action£¨•º¶¨Œ²ß£©</span>
+                                    tmpCell.Offset(, <span class="hljs-number">16</span>).Value = .Cell(<span class="hljs-number">6</span>, <span class="hljs-number">2</span>).Shape.TextFrame.TextRange.<span class="hljs-keyword">Text</span> <span class="hljs-comment">' Permanent Corrective Action£¨ºã¾ÃŒ²ß£©</span>
+                                    <span class="hljs-comment">'tmpCell.Offset(, 17).Value = .Cell(2, 1).Shape.TextFrame.TextRange.Text ' Pictures£¨Ð´Õæ£©</span>
+                                <span class="hljs-keyword">End</span> <span class="hljs-keyword">With</span>
+                            <span class="hljs-keyword">Case</span> <span class="hljs-keyword">Else</span>:
+                        <span class="hljs-keyword">End</span> <span class="hljs-keyword">Select</span>
+                <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+            <span class="hljs-keyword">Next</span> i
+        <span class="hljs-keyword">End</span> <span class="hljs-keyword">With</span>
+        lastRow = GetLastRow(toWS, <span class="hljs-number">2</span>) + <span class="hljs-number">1</span>
+        titleFlag = <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">Next</span> slide_no
+    PPT.Quit
+    <span class="hljs-keyword">Set</span> PPT = <span class="hljs-literal">Nothing</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+</div></code></pre>
+<h2 id="module2main">Module2_main</h2>
+<p>This module encapsulates all operation into one.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">'Module2_main.bas</span>
+
+<span class="hljs-keyword">Public</span> <span class="hljs-keyword">Sub</span> start(<span class="hljs-keyword">Optional</span> x <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">1</span>)
+    <span class="hljs-comment">' setup writeIntoWS</span>
+    <span class="hljs-keyword">Dim</span> TWB <span class="hljs-keyword">As</span> Workbook: <span class="hljs-keyword">Set</span> TWB = ThisWorkbook
+    <span class="hljs-keyword">Dim</span> ws_FY20Market <span class="hljs-keyword">As</span> Worksheet: <span class="hljs-keyword">Set</span> ws_FY20Market = TWB.Worksheets(<span class="hljs-string">"FY20 市场"</span>)
+    <span class="hljs-comment">' get relative source folder path</span>
+    <span class="hljs-keyword">Dim</span> src_folder_path <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>: src_folder_path = Module1_pkg.strFormat(<span class="hljs-string">"{0}{1}{2}"</span>, TWB.path, Application.PathSeparator, <span class="hljs-string">"PPT文件"</span>)
+    <span class="hljs-keyword">If</span> <span class="hljs-keyword">Not</span> Module1_pkg.FolderExists(src_folder_path) <span class="hljs-keyword">Then</span>
+        MsgBox <span class="hljs-string">"Error: 文件夹(PPT\市场) FolderNotFound"</span>, vbOKOnly, <span class="hljs-string">"FolderNotFoundError"</span>
+        <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Sub</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    <span class="hljs-keyword">Dim</span> FSO <span class="hljs-keyword">As</span> <span class="hljs-keyword">New</span> FileSystemObject
+    <span class="hljs-keyword">Dim</span> src_folder <span class="hljs-keyword">As</span> Folder: <span class="hljs-keyword">Set</span> src_folder = FSO.GetFolder(src_folder_path)
+    <span class="hljs-keyword">Dim</span> f <span class="hljs-keyword">As</span> File
+    <span class="hljs-comment">' iterate through files inside the source folder, read pptx file and write into *ws_FY20Market*</span>
+    <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> f <span class="hljs-keyword">In</span> src_folder.Files
+        <span class="hljs-keyword">If</span> Module1_pkg.is_pptx(f.path) <span class="hljs-keyword">Then</span> <span class="hljs-keyword">Call</span> Module1_pkg.pptx_reader(f.path, ws_FY20Market)
+    <span class="hljs-keyword">Next</span> f
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>　
+
+<span class="hljs-keyword">Public</span> <span class="hljs-keyword">Sub</span> clear_history(<span class="hljs-keyword">Optional</span> x <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">1</span>)
+    <span class="hljs-comment">' setup writeIntoWS</span>
+    <span class="hljs-keyword">Dim</span> TWB <span class="hljs-keyword">As</span> Workbook: <span class="hljs-keyword">Set</span> TWB = ThisWorkbook
+    <span class="hljs-keyword">Dim</span> ws_FY20Market <span class="hljs-keyword">As</span> Worksheet: <span class="hljs-keyword">Set</span> ws_FY20Market = TWB.Worksheets(<span class="hljs-string">"FY20 市场"</span>)
+    <span class="hljs-keyword">Dim</span> startCol <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>: startCol = <span class="hljs-number">2</span>
+    <span class="hljs-keyword">Dim</span> startRow <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>: startRow = <span class="hljs-number">3</span>
+    <span class="hljs-keyword">Dim</span> lastRow <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>: lastRow = Module1_pkg.GetLastRow(ws_FY20Market, startCol)
+    <span class="hljs-keyword">Dim</span> lastCol <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>: lastCol = <span class="hljs-number">18</span>
+    <span class="hljs-keyword">If</span> lastRow &gt;= startRow <span class="hljs-keyword">Then</span>
+        <span class="hljs-keyword">With</span> ws_FY20Market
+            .Range(.Cells(startRow, startCol), .Cells(lastRow, lastCol)).ClearContents
+        <span class="hljs-keyword">End</span> <span class="hljs-keyword">With</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+</div></code></pre>
+<h1 id="about">About</h1>
+<p>Copyright © 2020 ZL</p>
+<p>All rights reserved.</p>
+<p>The MIT License (MIT)</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+
+</body>
+</html>
