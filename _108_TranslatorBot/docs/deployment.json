@@ -1,0 +1,57 @@
+{
+  "id": "/subscriptions/846c2d58-dca1-4428-ac36-6926849651e0/resourceGroups/ZhangLiang/providers/Microsoft.Resources/deployments/Microsoft.CognitiveServicesTextTranslation-20210121222336",
+  "name": "Microsoft.CognitiveServicesTextTranslation-20210121222336",
+  "type": "Microsoft.Resources/deployments",
+  "tags": {
+    "marketplaceItemId": "Microsoft.CognitiveServicesTextTranslation"
+  },
+  "properties": {
+    "templateHash": "14670823093415704151",
+    "parameters": {
+      "name": {
+        "type": "String",
+        "value": "ZhangLiang"
+      },
+      "location": {
+        "type": "String",
+        "value": "japaneast"
+      },
+      "sku": {
+        "type": "String",
+        "value": "F0"
+      },
+      "tagValues": {
+        "type": "Object",
+        "value": {}
+      }
+    },
+    "mode": "Incremental",
+    "debugSetting": {
+      "detailLevel": "None"
+    },
+    "provisioningState": "Succeeded",
+    "timestamp": "2021-01-21T14:29:27.0161838Z",
+    "duration": "PT6.5084801S",
+    "correlationId": "b70f7da9-d7ae-497d-951c-1517371f558c",
+    "providers": [
+      {
+        "namespace": "Microsoft.CognitiveServices",
+        "resourceTypes": [
+          {
+            "resourceType": "accounts",
+            "locations": [
+              "japaneast"
+            ]
+          }
+        ]
+      }
+    ],
+    "dependencies": [],
+    "outputResources": [
+      {
+        "id": "/subscriptions/846c2d58-dca1-4428-ac36-6926849651e0/resourceGroups/ZhangLiang/providers/Microsoft.CognitiveServices/accounts/ZhangLiang"
+      }
+    ],
+    "validationLevel": "Template"
+  }
+}

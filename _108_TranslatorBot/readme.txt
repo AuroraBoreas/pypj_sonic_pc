@@ -1,0 +1,3 @@
+link: https://portal.azure.com/#@AuroraBoreaslive.onmicrosoft.com/resource/subscriptions/846c2d58-dca1-4428-ac36-6926849651e0/resourceGroups/ZhangLiang/providers/Microsoft.CognitiveServices/accounts/ZhangLiang/cskeys
+
+These keys are used to access your Cognitive Service API. Do not share your keys. Store them securely– for example, using Azure Key Vault. We also recommend regenerating these keys regularly. Only one key is necessary to make an API call. When regenerating the first key, you can use the second key for continued access to the service.

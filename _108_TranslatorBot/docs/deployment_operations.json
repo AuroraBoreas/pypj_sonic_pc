@@ -1,0 +1,32 @@
+[
+  {
+    "id": "/subscriptions/846c2d58-dca1-4428-ac36-6926849651e0/resourceGroups/ZhangLiang/providers/Microsoft.Resources/deployments/Microsoft.CognitiveServicesTextTranslation-20210121222336/operations/C7507EC5FA5222D4",
+    "operationId": "C7507EC5FA5222D4",
+    "properties": {
+      "provisioningOperation": "Create",
+      "provisioningState": "Succeeded",
+      "timestamp": "2021-01-21T14:29:26.9089974Z",
+      "duration": "PT4.6573271S",
+      "trackingId": "119fa812-1891-4c8c-8688-656f6fd5b9f1",
+      "serviceRequestId": "dd99cf70-d2dd-49eb-aec3-e073fc1c5c97",
+      "statusCode": "Created",
+      "targetResource": {
+        "id": "/subscriptions/846c2d58-dca1-4428-ac36-6926849651e0/resourceGroups/ZhangLiang/providers/Microsoft.CognitiveServices/accounts/ZhangLiang",
+        "resourceType": "Microsoft.CognitiveServices/accounts",
+        "resourceName": "ZhangLiang"
+      }
+    }
+  },
+  {
+    "id": "/subscriptions/846c2d58-dca1-4428-ac36-6926849651e0/resourceGroups/ZhangLiang/providers/Microsoft.Resources/deployments/Microsoft.CognitiveServicesTextTranslation-20210121222336/operations/08585903675249699091",
+    "operationId": "08585903675249699091",
+    "properties": {
+      "provisioningOperation": "EvaluateDeploymentOutput",
+      "provisioningState": "Succeeded",
+      "timestamp": "2021-01-21T14:29:26.9874908Z",
+      "duration": "PT4.7358205S",
+      "trackingId": "37409681-6ff0-470f-b1e5-38ac997d95ac",
+      "statusCode": "OK"
+    }
+  }
+]
