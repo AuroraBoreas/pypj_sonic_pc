@@ -33,6 +33,7 @@ def OpenExcel():
     try:
         yield excel
     finally:
+        # excel.Application.Save() # if you want to save then uncomment this line and change delete the ", ReadOnly=1" part from the open function.
         excel.Application.Quit()
         del excel
 
@@ -60,14 +61,15 @@ def OpenWorkbook(excel, xl_file):
 if __name__ == '__main__':
     xl_file    = r"C:\Users\Aurora_Boreas\Desktop\pypj_sonic_pc\20210821 PythonDate\data\test1.xlsm"
     xl_delimit = "!"
-    macr_name  = "Module1.Macro1"
-    macro_addr = "{0}{1}{2}".format(xl_file, xl_delimit, macr_name)
+    macro_name = "modulename.macroname"
+    macro_addr = "{0}{1}{2}".format(xl_file, xl_delimit, macro_name)
 
     if os.path.exists(xl_file):
         with OpenExcel() as excel:
-                try:
-                    with OpenWorkbook(excel, xl_file) as workbook:
-                        excel.Application.Run(macro_addr)
-                except pywintypes.com_error as e:
-                    print(xl_file)
-                    traceback.print_exc()
+            try:
+                with OpenWorkbook(excel, xl_file) as workbook:
+                    # possible workbook usage                    
+                    excel.Application.Run(macro_addr) # run macro in the workbook
+            except pywintypes.com_error as e:
+                # print(xl_file)
+                traceback.print_exc()
