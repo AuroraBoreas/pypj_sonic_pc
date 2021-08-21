@@ -6,7 +6,7 @@ it has the following functionalities.
 - convert week number to year month
 
 changelog
-- v0.01, @ZL, 20210821
+- v0.01, initial build; @ZL 20210821
 
 """
 
