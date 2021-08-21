@@ -16,7 +16,6 @@ import os
 import contextlib
 import traceback
 import win32com.client
-# from pythoncom import com_error
 import pywintypes
 
 @contextlib.contextmanager
@@ -59,10 +58,10 @@ def OpenWorkbook(excel, xl_file):
         workbook.Close(False)
 
 if __name__ == '__main__':
-    xl_file    = r"C:\Users\Aurora_Boreas\Desktop\pypj_sonic_pc\20210821 PythonDate\data\test1.xlsm"
-    xl_delimit = "!"
-    macro_name = "modulename.macroname"
-    macro_addr = "{0}{1}{2}".format(xl_file, xl_delimit, macro_name)
+    # ~ xl_file must be an absolute path @ZL, 20210821
+    xl_file    = r"C:\Users\Aurora_Boreas\Desktop\pypj_sonic_pc\20210821 PythonDate\data\Book2.xlsm"
+    macro_name = "Module1.hello"
+    macro_addr = "\'{0}\'!{1}".format(xl_file, macro_name)
 
     if os.path.exists(xl_file):
         with OpenExcel() as excel:
