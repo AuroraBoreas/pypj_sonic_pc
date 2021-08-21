@@ -59,7 +59,7 @@ def OpenWorkbook(excel, xl_file):
 
 if __name__ == '__main__':
     xl_file    = r"C:\Users\Aurora_Boreas\Desktop\pypj_sonic_pc\20210821 PythonDate\data\test1.xlsm"
-    xl_delimit = r"!"
+    xl_delimit = "!"
     macr_name  = "Module1.Macro1"
     macro_addr = "{0}{1}{2}".format(xl_file, xl_delimit, macr_name)
 
