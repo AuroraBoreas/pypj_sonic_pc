@@ -13,6 +13,7 @@ changelog
 - v0.01, initial build
 
 Ref links:
+- https://stackoverflow.com/questions/51591634/fill-a-image-in-a-cell-excel-using-python
 - https://stackoverflow.com/questions/2232742/does-python-pil-resize-maintain-the-aspect-ratio
 
 """
