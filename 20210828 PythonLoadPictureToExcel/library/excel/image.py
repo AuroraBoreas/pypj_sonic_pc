@@ -74,18 +74,20 @@ class MuraImageLoader:
                     img.save(tmp_img1)
                     img = openpyxl.drawing.image.Image(tmp_img1)
                     dstCellAddress = f'{self.dstCellCol375}{i}'
+                    ws[dstCellAddress].value = os.path.split(image)[-1]
                     ws.add_image(img, dstCellAddress)
                     i += 1
 
             if self._675:
-                for ximage in self._675:
-                    img = Image.open(ximage)
+                for image in self._675:
+                    img = Image.open(image)
                     width_percent = (self.width/float(img.size[idx_w]))
                     hsize = int((float(img.size[idx_h])*float(width_percent)))
                     img = img.resize((self.width, hsize), Image.ANTIALIAS)
                     img.save(tmp_img2)
                     img = openpyxl.drawing.image.Image(tmp_img2)
                     dstCellAddress = f'{self.dstCellCol675}{j}'
+                    ws[dstCellAddress].value = os.path.split(image)[-1]
                     ws.add_image(img, dstCellAddress)
                     j += 1
 
@@ -98,9 +100,9 @@ class MuraImageLoader:
         self._export()
 
 if __name__ == '__main__':
-    template       = r'C:\Users\Aurora_Boreas\Desktop\20210828 PythonLoadPictureToExcel\templates\out.xlsx'
-    dst_xl         = r'C:\Users\Aurora_Boreas\Desktop\20210828 PythonLoadPictureToExcel\test.xlsx'
-    src_img_folder = r'C:\Users\Aurora_Boreas\Desktop\20210828 PythonLoadPictureToExcel\data'
+    template       = r'C:\Users\Aurora_Boreas\Desktop\pypj_sonic_pc\20210828 PythonLoadPictureToExcel\templates\out.xlsx'
+    dst_xl         = r'C:\Users\Aurora_Boreas\Desktop\pypj_sonic_pc\20210828 PythonLoadPictureToExcel\test1.xlsx'
+    src_img_folder = r'C:\Users\Aurora_Boreas\Desktop\pypj_sonic_pc\20210828 PythonLoadPictureToExcel\data'
     dstWidth      = 200
     dstCellCol375 = 'B'
     dstCellCol675 = 'C'
