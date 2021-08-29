@@ -84,19 +84,19 @@ class Merger:
         self._dfInputs:DataFrame = None
     
     def _filter(self):
-        """[summary]
+        """filter source files, especially excel temporary files which start with '~$'
 
-        :yield: [description]
-        :rtype: [type]
+        :yield: excel file
+        :rtype: path-like string
         """
-        path_sep:str = '.'
-        tmp_xlsx:str = '~$'
+        xl_ext:str = '.xlsx'
+        tmp_xl:str = '~$'
         idns:list = ['smld', 'quality']
 
         for root, _, files in os.walk(self._folder):
             for file in files:
-                ext = file.split(path_sep)[-1]
-                if any(idn in file.lower() for idn in idns) and not file.startswith(tmp_xlsx):
+                ext = os.path.splitext(file)[-1]
+                if any(idn in file.lower() for idn in idns) and not file.startswith(tmp_xl) and xl_ext == ext:
                     logging.info(file)
                     yield os.path.abspath(os.path.join(root, file))
 
@@ -155,13 +155,13 @@ class Merger:
             logging.info(f'SQL {act} completed')
 
     def _match_fymod(self, x:str, d:Dict[Any,Any])->Union[str, None]:
-        """[summary]
+        """return FY21 based on the unique character inside a give string x;
 
-        :param x: [description]
+        :param x: pmod name. i.e: AG65
         :type x: str
-        :param d: [description]
+        :param d: a dictionary contains unique character and FYxx pairs
         :type d: Dict[Any,Any]
-        :return: [description]
+        :return: string if found else None
         :rtype: Union[str, None]
         """
         for k in d.keys():

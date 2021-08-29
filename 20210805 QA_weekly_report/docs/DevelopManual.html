@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DevelopManual.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="ww-pmod-smld-quality-control-system">WW Pmod SMLD Quality Control System</h1>
+<p>This project builds, maintains a database, and monitors SSVE Pmod performance by week.</p>
+<p>It minimizes significant labor hours, eliminates human errors and speeds up the whole process.</p>
+<p>This project makes monitoring WW Pmod SMLD Quality in real time possible.</p>
+<h2 id="author">Author</h2>
+<p>SSVE TVQA member <code>@Zhang Liang</code>, 20210804</p>
+<h2 id="changelog">Changelog</h2>
+<ul>
+<li>v0.01, initial build</li>
+<li>v0.02, clean and format algorithms</li>
+<li>v0.03, change design pattern: split into two dataframes: defects, inputs</li>
+<li>v0.04, add more columns to prepare for visualization</li>
+<li>v0.05, fix TVPlant column, &quot;SO'EM&quot; -&gt; &quot;SOEM&quot;</li>
+</ul>
+<h2 id="design-pattern">Design pattern</h2>
+<p>There was an impact to performance when using Python to clean &quot;inputs&quot; data in source files;</p>
+<p>After built a VBA class API to preprocess the clean operation, the impact is alleviated;</p>
+<h3 id="pattern">Pattern</h3>
+<ul>
+<li>(Class) using <code>VBA</code> preprocess class API to do basic data cleaning;</li>
+<li>(Class) using <code>Python</code> + <code>Pandas</code> to build a DataFrame Merger API to wrangle the preprocessed source files with split control: &quot;defects&quot;, &quot;inputs&quot;;</li>
+<li>(Class) using <code>SQL</code> to control all data entries and poka-yoke duplicate entries;</li>
+<li>(Class) exports <code>SQL</code> database to excel &quot;pmod_smld.xlsx&quot; with unique columns for further data visualization;</li>
+<li>(Module) using <code>VBA</code> to visualise pmod smld data;</li>
+</ul>
+<img src=".\design.png" alt="" width="600">
+<h3 id="performance">Performance</h3>
+<p>The average run time of whole process is around 3 minutes.</p>
+<img src=".\performance.png" alt="" width="600">
+<h3 id="vba-preprocess-class-api">VBA preprocess class API</h3>
+<pre class="hljs"><code><div>
+<span class="hljs-keyword">Option</span> <span class="hljs-keyword">Explicit</span>
+
+<span class="hljs-comment"><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span></span>
+<span class="hljs-comment">'  a WW PMod SMLD wrangler class handles to format source data</span>
+
+<span class="hljs-comment">'  + The class has the following functionalities:</span>
+<span class="hljs-comment">'       - enumerate source files</span>
+<span class="hljs-comment">'       - complement miss data based on folder? file name?</span>
+<span class="hljs-comment">'       - create new worksheet "input"</span>
+<span class="hljs-comment">'       - transfer WW input data to "Input"</span>
+
+<span class="hljs-comment">' @ZL, 20210818</span>
+
+<span class="hljs-comment"><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span><span class="hljs-doctag">'''</span></span>
+
+<span class="hljs-keyword">Private</span> srcWB <span class="hljs-keyword">As</span> Workbook
+<span class="hljs-keyword">Private</span> srcWS <span class="hljs-keyword">As</span> Worksheet
+<span class="hljs-keyword">Private</span> TV_Plant <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>
+<span class="hljs-keyword">Private</span> coll_invalid_wsname <span class="hljs-keyword">As</span> ArrayList
+<span class="hljs-keyword">Private</span> fy_mode_mapping <span class="hljs-keyword">As</span> Scripting.Dictionary
+
+<span class="hljs-keyword">Const</span> wsname_inProcess <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"InProcess Conf"</span> <span class="hljs-comment">'others</span>
+<span class="hljs-keyword">Const</span> wsname_raw_fsk <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"raw data"</span>  <span class="hljs-comment">'FSK</span>
+<span class="hljs-keyword">Const</span> wsname_inputs <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"inputs"</span>
+<span class="hljs-keyword">Const</span> str_line_name <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"Line"</span>
+<span class="hljs-keyword">Const</span> strFSK <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"FSK"</span>
+
+<span class="hljs-keyword">Const</span> col_OccurredWC <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">2</span>
+<span class="hljs-keyword">Const</span> col_ConfirmWC <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">3</span>
+<span class="hljs-keyword">Const</span> col_tvplant <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">7</span>
+<span class="hljs-keyword">Const</span> col_line_or_sbi <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">8</span>
+<span class="hljs-keyword">Const</span> col_set_name <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">10</span>
+<span class="hljs-keyword">Const</span> col_model_name <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">11</span>
+<span class="hljs-keyword">Const</span> col_model_id <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">12</span>
+<span class="hljs-keyword">Const</span> col_week_code <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">13</span>
+<span class="hljs-keyword">Const</span> col_sony_pn <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">14</span>
+<span class="hljs-keyword">Const</span> col_classify <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">20</span>
+<span class="hljs-keyword">Const</span> start_row <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">2</span>
+<span class="hljs-keyword">Const</span> row_header <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">1</span>
+<span class="hljs-keyword">Const</span> FY_mod_col <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">21</span>
+<span class="hljs-keyword">Const</span> FY_mod_head <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"FY_mod"</span>
+
+<span class="hljs-keyword">Const</span> len_model_id <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">22</span> <span class="hljs-comment">'format: A5028174A$0000389_2111</span>
+<span class="hljs-keyword">Const</span> str_sony_pn_dash <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"-"</span>
+<span class="hljs-keyword">Const</span> str_sony_pn_delimiter_dollar <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"$"</span>
+<span class="hljs-keyword">Const</span> str_sony_pn_delimiter_underscore <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"_"</span>
+<span class="hljs-keyword">Const</span> str_sony_pn_fmt <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"0000000"</span>
+
+<span class="hljs-keyword">Const</span> inputs_TVPlant <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"TVPlant"</span>
+<span class="hljs-keyword">Const</span> inputs_ModName <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"ModelName"</span>
+<span class="hljs-keyword">Const</span> inputs_weekcode <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"WeekCode"</span>
+<span class="hljs-keyword">Const</span> inputs_qty <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"QTY"</span>
+<span class="hljs-keyword">Const</span> inputs_fy <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"FY_mod"</span>
+
+<span class="hljs-keyword">Const</span> defects_moduleID <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"Module ID"</span>
+<span class="hljs-keyword">Const</span> defects_CellMod <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"Cell Model"</span>
+<span class="hljs-keyword">Const</span> defects_CellID <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"Cell-ID"</span>
+<span class="hljs-keyword">Const</span> defects_Weekcode <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"Week-Code"</span>
+
+<span class="hljs-keyword">Const</span> col_oss_ffa_judge <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">18</span>
+<span class="hljs-keyword">Const</span> col_notice_symptom <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">19</span>
+<span class="hljs-keyword">Const</span> col_insert <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">16</span>
+<span class="hljs-keyword">Const</span> col_rename_cell_model <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">16</span>
+<span class="hljs-keyword">Const</span> col_rename_cell_id <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">17</span>
+<span class="hljs-keyword">Const</span> col_rename_weekcode <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">13</span>
+
+<span class="hljs-keyword">Private</span> common_col_headers <span class="hljs-keyword">As</span> Variant
+
+<span class="hljs-keyword">Public</span> <span class="hljs-keyword">Sub</span> init(<span class="hljs-keyword">ByRef</span> WB <span class="hljs-keyword">As</span> Workbook, <span class="hljs-keyword">ByVal</span> plant <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>)
+    <span class="hljs-keyword">Set</span> srcWB = WB
+    TV_Plant = plant
+    
+    <span class="hljs-keyword">If</span> WSExists(srcWB, wsname_inProcess) <span class="hljs-keyword">Then</span>
+        <span class="hljs-keyword">Set</span> srcWS = srcWB.Worksheets(wsname_inProcess)
+    <span class="hljs-keyword">ElseIf</span> WSExists(srcWB, wsname_raw_fsk) <span class="hljs-keyword">Then</span>
+        <span class="hljs-keyword">Set</span> srcWS = srcWB.Worksheets(wsname_raw_fsk)
+    <span class="hljs-keyword">Else</span>
+        MsgBox Formatter(<span class="hljs-string">"WSNotFoundError:  {0} or {1}"</span>, wsname_inProcess, wsname_raw_fsk), vbInformation, <span class="hljs-string">"WSError"</span>
+        <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Sub</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    
+    <span class="hljs-comment">' init arraylist</span>
+    <span class="hljs-keyword">Set</span> coll_invalid_wsname = <span class="hljs-keyword">New</span> ArrayList
+    coll_invalid_wsname.Add wsname_inProcess
+    coll_invalid_wsname.Add wsname_raw_fsk
+    coll_invalid_wsname.Add wsname_inputs
+    coll_invalid_wsname.Add <span class="hljs-string">"Fail list"</span>
+    coll_invalid_wsname.Add <span class="hljs-string">"General Monthly(by Classify)"</span>
+    coll_invalid_wsname.Add <span class="hljs-string">"General Weekly(by Classify)"</span>
+    coll_invalid_wsname.Add <span class="hljs-string">"Weekly"</span>
+    coll_invalid_wsname.Add <span class="hljs-string">"Monthly"</span>
+    
+    <span class="hljs-comment">'init dict</span>
+    <span class="hljs-keyword">Set</span> fy_mode_mapping = <span class="hljs-keyword">New</span> Scripting.Dictionary
+    fy_mode_mapping.Add <span class="hljs-string">"A"</span>, <span class="hljs-string">"FY21"</span>
+    fy_mode_mapping.Add <span class="hljs-string">"N"</span>, <span class="hljs-string">"FY20"</span>
+    fy_mode_mapping.Add <span class="hljs-string">"S"</span>, <span class="hljs-string">"FY19"</span>
+    
+    <span class="hljs-comment">'common headers</span>
+    common_col_headers = Array(<span class="hljs-string">"No"</span>, <span class="hljs-string">"Confirmation W/C"</span>, <span class="hljs-string">"Occurred W/C"</span>, <span class="hljs-string">"source"</span>, <span class="hljs-string">"Occurred date"</span>, <span class="hljs-string">"Confirm date"</span>, <span class="hljs-string">"TV Plant"</span>, <span class="hljs-string">"LineName Line / SBI"</span>, <span class="hljs-string">"Position"</span>, <span class="hljs-string">"Set name"</span>, <span class="hljs-string">"Model name"</span>, <span class="hljs-string">"Module ID"</span>, <span class="hljs-string">"Week-Code"</span>, <span class="hljs-string">"Sony PN"</span>, <span class="hljs-string">"SITE"</span>, <span class="hljs-string">"Cell Model"</span>, <span class="hljs-string">"Cell-ID"</span>, <span class="hljs-string">"Noticed symptom"</span>, <span class="hljs-string">"OSS or FFA judgement"</span>, <span class="hljs-string">"Classify"</span>, <span class="hljs-string">"FY_mod"</span>)
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+<span class="hljs-keyword">Public</span> <span class="hljs-keyword">Sub</span> clean()
+    <span class="hljs-keyword">Call</span> clean_inProcess
+    <span class="hljs-keyword">Call</span> clean_Inputs
+    <span class="hljs-keyword">Call</span> clean_fileType
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+<span class="hljs-keyword">Private</span> <span class="hljs-keyword">Function</span> create_fy_mod(<span class="hljs-keyword">ByVal</span> mode_name <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>) <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>
+    <span class="hljs-keyword">Dim</span> <span class="hljs-keyword">key</span> <span class="hljs-keyword">As</span> Variant
+    <span class="hljs-keyword">Const</span> na <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"na"</span>
+    <span class="hljs-keyword">Dim</span> rv
+    <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> <span class="hljs-keyword">key</span> <span class="hljs-keyword">In</span> fy_mode_mapping.Keys
+        rv = InStr(<span class="hljs-number">1</span>, UCase(mode_name), <span class="hljs-keyword">key</span>, vbTextCompare)
+        <span class="hljs-keyword">If</span> IsNull(rv) <span class="hljs-keyword">Then</span>
+            create_fy_mod = vbNullString
+        <span class="hljs-keyword">Else</span>
+            <span class="hljs-keyword">If</span> rv &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">Then</span>
+                create_fy_mod = fy_mode_mapping(<span class="hljs-keyword">key</span>)
+                <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">For</span>
+            <span class="hljs-keyword">Else</span>
+                create_fy_mod = na
+            <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+        <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    <span class="hljs-keyword">Next</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Function</span>
+
+<span class="hljs-keyword">Private</span> <span class="hljs-keyword">Sub</span> clean_FSK_inProcess(<span class="hljs-keyword">ByRef</span> srcWS_FSK)
+    <span class="hljs-comment"><span class="hljs-doctag">'''</span> especially clean up FSK in process</span>
+    <span class="hljs-keyword">Const</span> header_start_col <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">With</span> srcWS
+        <span class="hljs-keyword">If</span> <span class="hljs-keyword">Not</span> .Cells(row_header, FY_mod_col).Value = FY_mod_head <span class="hljs-keyword">Then</span>
+            .Columns(col_insert).Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+            .Columns(col_insert).Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+            .Range(.Cells(row_header, header_start_col), .Cells(row_header, FY_mod_col)) = common_col_headers
+<span class="hljs-comment">'            .Cells(row_header, col_model_id).Value = defects_moduleID</span>
+<span class="hljs-comment">'            .Cells(row_header, col_rename_cell_model).Value = defects_CellMod</span>
+<span class="hljs-comment">'            .Cells(row_header, col_rename_cell_id).Value = defects_CellID</span>
+<span class="hljs-comment">'            .Cells(row_header, FY_mod_col).Value = FY_mod_head</span>
+<span class="hljs-comment">'            .Cells(row_header, col_rename_weekcode).Value = defects_Weekcode</span>
+        <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">With</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+<span class="hljs-keyword">Private</span> <span class="hljs-keyword">Sub</span> clean_inProcess()
+    <span class="hljs-comment"><span class="hljs-doctag">'''</span> Clean SMLD defect entry</span>
+    <span class="hljs-keyword">Dim</span> last_row <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>: last_row = GetLastRow(srcWS, col_model_id)
+    <span class="hljs-keyword">Dim</span> i <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>
+    <span class="hljs-keyword">Dim</span> tmp_val
+
+    <span class="hljs-keyword">If</span> TV_Plant = strFSK <span class="hljs-keyword">Then</span>
+        <span class="hljs-keyword">Call</span> clean_FSK_inProcess(srcWS)
+    <span class="hljs-keyword">Else</span>
+        srcWS.Cells(row_header, FY_mod_col).Value = FY_mod_head
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    
+    <span class="hljs-keyword">For</span> i = start_row <span class="hljs-keyword">To</span> last_row
+        <span class="hljs-keyword">With</span> srcWS
+            <span class="hljs-comment">' Occurred W/C</span>
+            <span class="hljs-keyword">If</span> IsEmpty(.Cells(i, col_OccurredWC).Value) <span class="hljs-keyword">Then</span>
+                .Cells(i, col_OccurredWC).Value = .Cells(i, col_ConfirmWC).Value
+            <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+            <span class="hljs-comment">' Confirm W/C</span>
+            <span class="hljs-keyword">If</span> IsEmpty(.Cells(i, col_ConfirmWC).Value) <span class="hljs-keyword">Then</span>
+                .Cells(i, col_ConfirmWC).Value = .Cells(i, col_OccurredWC).Value
+            <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+            <span class="hljs-comment">' TV Plant</span>
+            <span class="hljs-keyword">If</span> IsEmpty(.Cells(i, col_tvplant).Value) <span class="hljs-keyword">Then</span>
+                .Cells(i, col_tvplant).Value = TV_Plant
+            <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+            <span class="hljs-comment">' Set Name</span>
+            <span class="hljs-keyword">If</span> IsEmpty(.Cells(i, col_set_name).Value) <span class="hljs-keyword">Then</span>
+                .Cells(i, col_set_name).Value = .Cells(i, col_model_name).Value
+            <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+            <span class="hljs-comment">' Line Name</span>
+            <span class="hljs-keyword">If</span> IsEmpty(.Cells(i, col_line_or_sbi).Value) <span class="hljs-keyword">Then</span>
+                .Cells(i, col_line_or_sbi).Value = str_line_name
+            <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+            <span class="hljs-comment">' Week Code</span>
+            <span class="hljs-keyword">If</span> IsEmpty(.Cells(i, col_week_code).Value) <span class="hljs-keyword">Then</span>
+               .Cells(i, col_week_code).Value = ParseWeekCode(Trim$(.Cells(i, col_model_id)))
+            <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+            <span class="hljs-comment">' Model ID</span>
+            tmp_val = .Cells(i, col_model_id).Value
+            <span class="hljs-keyword">If</span> Len(tmp_val) &lt; len_model_id <span class="hljs-keyword">And</span> <span class="hljs-keyword">Not</span> IsEmpty(tmp_val) <span class="hljs-keyword">Then</span>
+                .Cells(i, col_model_id).Value = Replace(.Cells(i, col_sony_pn).Value, str_sony_pn_dash, vbNullString) _
+                                                            &amp; str_sony_pn_delimiter_dollar _
+                                                            &amp; Format(.Cells(i, col_model_id).Value, str_sony_pn_fmt) _
+                                                            &amp; str_sony_pn_delimiter_underscore _
+                                                            &amp; .Cells(i, col_week_code)
+            <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+            <span class="hljs-comment">' OSS or FFA judgement</span>
+            <span class="hljs-keyword">If</span> IsEmpty(.Cells(i, col_oss_ffa_judge).Value) <span class="hljs-keyword">Then</span>
+                .Cells(i, col_oss_ffa_judge).Value = .Cells(i, col_notice_symptom).Value
+            <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+            <span class="hljs-comment">' Classify</span>
+            <span class="hljs-keyword">If</span> IsEmpty(.Cells(i, col_classify).Value) <span class="hljs-keyword">Then</span>
+                .Cells(i, col_classify).Value = str_sony_pn_dash
+            <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+            <span class="hljs-comment">' FY_mod</span>
+            <span class="hljs-keyword">If</span> <span class="hljs-keyword">Not</span> IsError(.Cells(i, col_set_name)) <span class="hljs-keyword">Then</span>
+                .Cells(i, FY_mod_col).Value = create_fy_mod(.Cells(i, col_set_name).Value)
+            <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+        <span class="hljs-keyword">End</span> <span class="hljs-keyword">With</span>
+    <span class="hljs-keyword">Next</span> i
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+<span class="hljs-keyword">Private</span> <span class="hljs-keyword">Sub</span> clean_Inputs()
+    <span class="hljs-comment"><span class="hljs-doctag">'''</span> clean inputs</span>
+    <span class="hljs-keyword">Dim</span> WS <span class="hljs-keyword">As</span> Worksheet
+    <span class="hljs-keyword">Call</span> Create_WS_on_GivenWB(srcWB, wsname_inputs)
+    <span class="hljs-keyword">Dim</span> dstWS <span class="hljs-keyword">As</span> Worksheet
+    <span class="hljs-keyword">Set</span> dstWS = srcWB.Worksheets(wsname_inputs)
+    <span class="hljs-comment">' clear</span>
+    dstWS.Cells.ClearContents
+    <span class="hljs-comment">' headers</span>
+    <span class="hljs-keyword">Dim</span> dstStartRow <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>: dstStartRow = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">Dim</span> dstStartCol <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>: dstStartCol = <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">With</span> dstWS
+        .Cells(dstStartRow, dstStartCol).Value = inputs_TVPlant
+        .Cells(dstStartRow, dstStartCol + <span class="hljs-number">1</span>).Value = inputs_ModName
+        .Cells(dstStartRow, dstStartCol + <span class="hljs-number">2</span>).Value = inputs_weekcode
+        .Cells(dstStartRow, dstStartCol + <span class="hljs-number">3</span>).Value = inputs_qty
+        <span class="hljs-comment">'.Cells(dstStartRow, dstStartCol + 4).Value = inputs_fy</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">With</span>
+    
+    <span class="hljs-comment">' transfer</span>
+    <span class="hljs-keyword">Dim</span> srcStartCol <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>, srcLastCol <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>
+    <span class="hljs-keyword">Dim</span> i <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>
+    <span class="hljs-keyword">Dim</span> srcHeaderRow  <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>
+    <span class="hljs-keyword">Const</span> srcDataRow <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">29</span>
+    <span class="hljs-keyword">Const</span> srcPmodRow <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span> = <span class="hljs-number">28</span>
+    srcHeaderRow = <span class="hljs-built_in">IIf</span>(TV_Plant = strFSK, <span class="hljs-number">28</span>, <span class="hljs-number">33</span>)
+    srcStartCol = <span class="hljs-built_in">IIf</span>(TV_Plant = strFSK, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>)
+    <span class="hljs-keyword">Dim</span> qty
+    
+    <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> WS <span class="hljs-keyword">In</span> srcWB.Worksheets
+        <span class="hljs-keyword">If</span> WS.Visible = xlSheetVisible <span class="hljs-keyword">And</span> (<span class="hljs-keyword">Not</span> coll_invalid_wsname.contains(WS.name)) <span class="hljs-keyword">Then</span>
+            srcLastCol = GetLastCol(WS, srcHeaderRow) - <span class="hljs-number">2</span> <span class="hljs-comment">' exclude last col -- "ave"</span>
+            <span class="hljs-keyword">For</span> i = srcStartCol <span class="hljs-keyword">To</span> srcLastCol
+                <span class="hljs-keyword">With</span> dstWS
+                    qty = WS.Cells(srcDataRow, i).Value
+                    <span class="hljs-keyword">If</span> (<span class="hljs-keyword">Not</span> IsEmpty(qty)) <span class="hljs-keyword">And</span> (qty &gt; <span class="hljs-number">0</span>) <span class="hljs-keyword">Then</span>
+                        .Cells(dstStartRow + <span class="hljs-number">1</span>, dstStartCol).Value = TV_Plant <span class="hljs-comment">'Plant</span>
+                        <span class="hljs-keyword">If</span> TV_Plant = strFSK <span class="hljs-keyword">Then</span> <span class="hljs-comment">'PMod</span>
+                            .Cells(dstStartRow + <span class="hljs-number">1</span>, dstStartCol + <span class="hljs-number">1</span>).Value = ParserFSKPmodName(Trim$(WS.Cells(srcPmodRow, srcStartCol - <span class="hljs-number">1</span>).Value))
+                        <span class="hljs-keyword">Else</span>
+                            .Cells(dstStartRow + <span class="hljs-number">1</span>, dstStartCol + <span class="hljs-number">1</span>).Value = WS.Cells(srcPmodRow, srcStartCol - <span class="hljs-number">1</span>).Value
+                        <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+                        .Cells(dstStartRow + <span class="hljs-number">1</span>, dstStartCol + <span class="hljs-number">2</span>).Value = WS.Cells(srcHeaderRow, i).Value <span class="hljs-comment">'Weekcode</span>
+                        .Cells(dstStartRow + <span class="hljs-number">1</span>, dstStartCol + <span class="hljs-number">3</span>).Value = qty  <span class="hljs-comment">' qty</span>
+                        <span class="hljs-comment">'.Cells(dstStartRow + 1, dstStartCol + 4).Value = vbNullString  ' FY_mod placeholder, Python handles it later</span>
+                        dstStartRow = dstStartRow + <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+                <span class="hljs-keyword">End</span> <span class="hljs-keyword">With</span>
+            <span class="hljs-keyword">Next</span> i
+        <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    <span class="hljs-keyword">Next</span> WS
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+<span class="hljs-keyword">Private</span> <span class="hljs-keyword">Sub</span> clean_fileType()
+    <span class="hljs-comment"><span class="hljs-doctag">'''</span> Change file type from old excel version to new version</span>
+    <span class="hljs-keyword">Dim</span> fso <span class="hljs-keyword">As</span> <span class="hljs-keyword">New</span> Scripting.FileSystemObject
+    <span class="hljs-keyword">Dim</span> ext <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>: ext = GetFileExtension(srcWB.name)
+    <span class="hljs-keyword">Dim</span> newFn <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>
+    
+    <span class="hljs-keyword">Const</span> old_ext <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"xls"</span>
+    <span class="hljs-keyword">Const</span> new_ext <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">".xlsx"</span>
+    <span class="hljs-keyword">Dim</span> path <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>: path = srcWB.FullName
+    <span class="hljs-keyword">If</span> ext = old_ext <span class="hljs-keyword">Then</span>
+        newFn = srcWB.path &amp; Application.PathSeparator &amp; fso.GetBaseName(srcWB.name) &amp; new_ext
+        srcWB.SaveAs Filename:=newFn, FileFormat:=<span class="hljs-number">51</span>
+        Application.Windows(srcWB.name).Visible = <span class="hljs-literal">True</span>
+        srcWB.Close <span class="hljs-literal">False</span>
+        Kill path
+    <span class="hljs-keyword">Else</span>
+        <span class="hljs-comment">' Application.Windows(srcWB.name).Visible = True</span>
+        srcWB.Close <span class="hljs-literal">True</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    <span class="hljs-keyword">Set</span> fso = <span class="hljs-literal">Nothing</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+</div></code></pre>
+<h3 id="python-dataframe-merger-api">Python DataFrame Merger API</h3>
+<p>Using Python to read all preprocessed files, and clean DataFrame further;</p>
+<pre class="hljs"><code><div>
+<span class="hljs-string">"""
+this module reads all WW SMLD src file and aggregates into one file.
+
+it has the following functionalities.
+- enumerate all source files from a given folder
+- clean defects dataframe
+- format inputs dataframe
+- dump cleaned dataframes into sqlite3 database
+
+Author
+- @ZL, 20210804
+"""</span>
+
+<span class="hljs-keyword">import</span> datetime, time, os, logging, sqlite3, sys, contextlib, functools
+sys.path.append(<span class="hljs-string">'.'</span>)
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">from</span> lib.date <span class="hljs-keyword">import</span> utils
+<span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> NewType, Dict, Any, Union, List, Callable
+<span class="hljs-keyword">from</span> lib <span class="hljs-keyword">import</span> setname_mapping
+
+logging.basicConfig(level=logging.INFO, format=<span class="hljs-string">'%(asctime)s %(message)s'</span>)
+Path      = NewType(<span class="hljs-string">'Path'</span>, str)
+DataFrame = NewType(<span class="hljs-string">'DataFrame'</span>, pd.DataFrame)
+Cursor    = NewType(<span class="hljs-string">'Cursor'</span>, sqlite3.Cursor)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">timer</span><span class="hljs-params">(func:Callable)</span>-&gt;Callable:</span>
+<span class="hljs-meta">    @functools.wraps(func)</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">inner</span><span class="hljs-params">(*args:Any, **kwargs:Any)</span>-&gt;Any:</span>
+        beg = time.perf_counter()
+        rv  = func(*args, **kwargs)
+        end = time.perf_counter()
+        logging.info(<span class="hljs-string">'Successed. time lapsed(s): {0:.2f}'</span>.format(end - beg))
+        <span class="hljs-keyword">return</span> rv
+    <span class="hljs-keyword">return</span> inner
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Merger</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, folder:Path, db:Path,
+                fix_defects_setname:str=None, fix_defects_setname_mapping:Dict[Any, Any]=None,
+                fix_inputs_modelname:str=None, fix_inputs_modelname_mapping:Dict[Any,Any]=None,
+                fix_inputs_fy:str=None, fix_inputs_fy_mapping:Dict[Any,Any]=None,
+                fix_inputs_wkcode:str=None
+    )</span>:</span>
+        <span class="hljs-string">"""read preprocessed source excel files(*.xlsx) from a given directory, and dump into database
+
+        :param folder: a folder that holds source excel files(*.xlsx)
+        :type folder: Path
+        :param db: database
+        :type db: Path
+        :param fix_defects_setname: [description], defaults to None
+        :type fix_defects_setname: str, optional
+        :param fix_defects_setname_mapping: [description], defaults to None
+        :type fix_defects_setname_mapping: Dict[Any, Any], optional
+        :param fix_inputs_modelname: [description], defaults to None
+        :type fix_inputs_modelname: str, optional
+        :param fix_inputs_modelname_mapping: [description], defaults to None
+        :type fix_inputs_modelname_mapping: Dict[Any,Any], optional
+        :param fix_inputs_fy: [description], defaults to None
+        :type fix_inputs_fy: str, optional
+        :param fix_inputs_fy_mapping: [description], defaults to None
+        :type fix_inputs_fy_mapping: Dict[Any,Any], optional
+        :param fix_inputs_wkcode: [description], defaults to None
+        :type fix_inputs_wkcode: str, optional
+        """</span>
+        self._folder = folder
+        self._db     = db
+
+        self.fix_defects_setname          = fix_defects_setname
+        self.fix_defects_setname_mapping  = fix_defects_setname_mapping
+        self.fix_inputs_modelname         = fix_inputs_modelname
+        self.fix_inputs_modelname_mapping = fix_inputs_modelname_mapping
+        self.fix_inputs_fy                = fix_inputs_fy
+        self.fix_inputs_fy_mapping        = fix_inputs_fy_mapping
+        self.fix_inputs_wkcode            = fix_inputs_wkcode
+
+        self._dfDefect:DataFrame = <span class="hljs-literal">None</span>
+        self._dfInputs:DataFrame = <span class="hljs-literal">None</span>
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_filter</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-string">"""filter source files, especially excel temporary files which start with '~$'
+
+        :yield: excel file
+        :rtype: path-like string
+        """</span>
+        xl_ext:str = <span class="hljs-string">'.xlsx'</span>
+        tmp_xl:str = <span class="hljs-string">'~$'</span>
+        idns:list = [<span class="hljs-string">'smld'</span>, <span class="hljs-string">'quality'</span>]
+
+        <span class="hljs-keyword">for</span> root, _, files <span class="hljs-keyword">in</span> os.walk(self._folder):
+            <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> files:
+                ext = os.path.splitext(file)[<span class="hljs-number">-1</span>]
+                <span class="hljs-keyword">if</span> any(idn <span class="hljs-keyword">in</span> file.lower() <span class="hljs-keyword">for</span> idn <span class="hljs-keyword">in</span> idns) <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> file.startswith(tmp_xl) <span class="hljs-keyword">and</span> xl_ext == ext:
+                    logging.info(file)
+                    <span class="hljs-keyword">yield</span> os.path.abspath(os.path.join(root, file))
+
+<span class="hljs-meta">    @contextlib.contextmanager</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__enter_defects_table</span><span class="hljs-params">(self, name:str, cur:Cursor, act:str)</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+        cur.execute(
+            <span class="hljs-string">"""
+            CREATE TABLE IF NOT EXISTS {0}(
+                No INTEGER,
+                ConfirmationWC INTEGER,
+                OccurredWC INTEGER,
+                source TEXT,
+                OccurredDate TEXT,
+                ConfirmDate TEXT,
+                TVPlant TEXT,
+                LineName TEXT,
+                Position TEXT,
+                SetName TEXT,
+                ModelName TEXT,
+                ModuleID TEXT,
+                WeekCode INTEGER,
+                SonyPN TEXT,
+                SITE TEXT,
+                CellModel TEXT,
+                CellID TEXT,
+                NoticedSymptom TEXT,
+                OSSorFFAjudgement TEXT,
+                Classify TEXT,
+                FY_mod TEXT,
+
+                UNIQUE(ConfirmationWC, TVPlant, SetName, ModelName, ModuleID, Classify) ON CONFLICT IGNORE
+            );
+            """</span>.format(name))
+        <span class="hljs-keyword">try</span>:
+            <span class="hljs-keyword">yield</span>
+        <span class="hljs-keyword">finally</span>:
+            logging.info(<span class="hljs-string">f'SQL <span class="hljs-subst">{act}</span> completed'</span>)
+
+<span class="hljs-meta">    @contextlib.contextmanager</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__enter_inputs_table</span><span class="hljs-params">(self, name:str, cur:Cursor, act:str)</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+        cur.execute(
+            <span class="hljs-string">"""
+            CREATE TABLE IF NOT EXISTS {0}(
+                TVPlant TEXT,
+                ModelName TEXT,
+                WeekCode INTEGER,
+                QTY INTEGER,
+                FY_mod TEXT,
+                FY_MM TEXT,
+                UNIQUE(TVPlant, ModelName, WeekCode, QTY) ON CONFLICT IGNORE
+            );
+            """</span>.format(name))
+        <span class="hljs-keyword">try</span>:
+            <span class="hljs-keyword">yield</span>
+        <span class="hljs-keyword">finally</span>:
+            logging.info(<span class="hljs-string">f'SQL <span class="hljs-subst">{act}</span> completed'</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_match_fymod</span><span class="hljs-params">(self, x:str, d:Dict[Any,Any])</span>-&gt;Union[str, <span class="hljs-keyword">None</span>]:</span>
+        <span class="hljs-string">"""return FY21 based on the unique character inside a give string x;
+
+        :param x: pmod name. i.e: AG65
+        :type x: str
+        :param d: a dictionary contains unique character and FYxx pairs
+        :type d: Dict[Any,Any]
+        :return: string if found else None
+        :rtype: Union[str, None]
+        """</span>
+        <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> d.keys():
+            <span class="hljs-keyword">if</span> k <span class="hljs-keyword">in</span> x:
+                <span class="hljs-keyword">return</span> d[k]
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_clean_dfDefects</span><span class="hljs-params">(self, DataFrameList:List[DataFrame])</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+        <span class="hljs-string">"""clean defects DataFrame before dumping into database
+
+        :param DataFrameList: a list contains raw dataframe
+        :type DataFrameList: List[DataFrame]
+        """</span>
+        <span class="hljs-comment"># ~ Defects</span>
+        na_col:str           = <span class="hljs-string">'Module ID'</span>
+        defects_cols:int     = <span class="hljs-number">21</span>
+        defects_col_date:str = <span class="hljs-string">'Confirm date'</span>
+        defects_na_date  = pd.Timestamp(<span class="hljs-string">'20210101'</span>)
+        defects_str_col1 = <span class="hljs-string">'Occurred date'</span>
+        defects_str_col2 = <span class="hljs-string">'Confirm date'</span>
+        defects_col_FYMM = <span class="hljs-string">'FY_mod'</span>
+
+        _na = <span class="hljs-string">'na'</span>
+
+        new_column_names   = {
+            <span class="hljs-string">"No"</span>                    :   <span class="hljs-string">"No"</span>,
+            <span class="hljs-string">"Confirmation W/C"</span>      :   <span class="hljs-string">"ConfirmationWC"</span>,
+            <span class="hljs-string">"Occurred W/C"</span>          :   <span class="hljs-string">"OccurredWC"</span>,
+            <span class="hljs-string">"source"</span>                :   <span class="hljs-string">"source"</span>,
+            <span class="hljs-string">"Occurred date"</span>         :   <span class="hljs-string">"OccurredDate"</span>,
+            <span class="hljs-string">"Confirm date"</span>          :   <span class="hljs-string">"ConfirmDate"</span>,
+            <span class="hljs-string">"TV Plant"</span>              :   <span class="hljs-string">"TVPlant"</span>,
+            <span class="hljs-string">"LineName Line / SBI"</span>   :   <span class="hljs-string">"LineName"</span>,
+            <span class="hljs-string">"Position"</span>              :   <span class="hljs-string">"Position"</span>,
+            <span class="hljs-string">"Set name"</span>              :   <span class="hljs-string">"SetName"</span>,
+            <span class="hljs-string">"Model name"</span>            :   <span class="hljs-string">"ModelName"</span>,
+            <span class="hljs-string">"Module ID"</span>             :   <span class="hljs-string">"ModuleID"</span>,
+            <span class="hljs-string">"Week-Code"</span>             :   <span class="hljs-string">"WeekCode"</span>,
+            <span class="hljs-string">"Sony PN"</span>               :   <span class="hljs-string">"SonyPN"</span>,
+            <span class="hljs-string">"SITE"</span>                  :   <span class="hljs-string">"SITE"</span>,
+            <span class="hljs-string">"Cell Model"</span>            :   <span class="hljs-string">"CellModel"</span>,
+            <span class="hljs-string">"Cell-ID"</span>               :   <span class="hljs-string">"CellID"</span>,
+            <span class="hljs-string">"Noticed symptom"</span>       :   <span class="hljs-string">"NoticedSymptom"</span>,
+            <span class="hljs-string">"OSS or FFA judgement"</span>  :   <span class="hljs-string">"OSSorFFAjudgement"</span>,
+            <span class="hljs-string">"Classify"</span>              :   <span class="hljs-string">"Classify"</span>,
+            <span class="hljs-string">"FY_mod"</span>                :   <span class="hljs-string">"FY_mod"</span>,
+        }
+
+        defects_tv_plants = <span class="hljs-string">'TVPlant'</span>
+        defects_tv_plants_mapping = {<span class="hljs-string">"SO\'EM"</span> : <span class="hljs-string">'SOEM'</span>}
+
+        df:DataFrame = pd.concat(DataFrameList, ignore_index=<span class="hljs-literal">True</span>, sort=<span class="hljs-literal">False</span>)
+        df = df[pd.notnull(df[na_col])]
+        df = df.iloc[:, : defects_cols]
+        <span class="hljs-comment"># ~ convert nasty DATETIME columns into TEXT, because sqlite3 does not like them</span>
+        df[defects_str_col1] = df[defects_str_col1].astype(str)
+        df[defects_str_col2] = df[defects_str_col2].astype(str)
+        <span class="hljs-comment"># ~ fill na for rest of empty values to cater sqlite3</span>
+        df.fillna(_na, inplace=<span class="hljs-literal">True</span>)
+        <span class="hljs-keyword">if</span> self.fix_defects_setname:
+            df[self.fix_defects_setname].replace(self.fix_defects_setname_mapping, inplace=<span class="hljs-literal">True</span>)
+            df[defects_col_FYMM] = df[self.fix_defects_setname].apply(<span class="hljs-keyword">lambda</span> x: self._match_fymod(x, self.fix_inputs_fy_mapping))
+        <span class="hljs-comment"># ~ rename all stupid headers to fit sqlite3 schema</span>
+        df.rename(columns=new_column_names, inplace=<span class="hljs-literal">True</span>)
+        df[defects_tv_plants].replace(defects_tv_plants_mapping, inplace=<span class="hljs-literal">True</span>)
+        self._dfDefect = df
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_clean_dfInputs</span><span class="hljs-params">(self, DataFrameList:List[DataFrame])</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+        <span class="hljs-string">"""clean inputs DataFrame before dumping into database
+
+        :param DataFrameList: a list contains raw dataframe
+        :type DataFrameList: List[DataFrame]
+        """</span>
+        <span class="hljs-comment"># ~ Inputs</span>
+        inputs_Modname:str  = <span class="hljs-string">'ModelName'</span>
+        inputs_weekcode:str = <span class="hljs-string">'FY_MM'</span>
+
+        df:DataFrame = pd.concat(DataFrameList, ignore_index=<span class="hljs-literal">True</span>, sort=<span class="hljs-literal">False</span>)
+        <span class="hljs-comment"># ~ replace stupid entries: model name, input fy, input weekcode; 20210818</span>
+        <span class="hljs-keyword">if</span> self.fix_inputs_modelname <span class="hljs-keyword">and</span> self.fix_inputs_modelname_mapping:
+            df[self.fix_inputs_modelname].replace(self.fix_inputs_modelname_mapping, inplace=<span class="hljs-literal">True</span>)
+        <span class="hljs-keyword">if</span> self.fix_inputs_fy <span class="hljs-keyword">and</span> self.fix_inputs_fy_mapping:
+            df[self.fix_inputs_fy] = df[inputs_Modname].apply(<span class="hljs-keyword">lambda</span> x: self._match_fymod(x, self.fix_inputs_fy_mapping))
+        <span class="hljs-keyword">if</span> self.fix_inputs_wkcode:
+            df[inputs_weekcode] = df[self.fix_inputs_wkcode].astype(int).apply(<span class="hljs-keyword">lambda</span> x: utils.wkno2ym(int(float(x)), datetime.datetime.today().year))
+        self._dfInputs = df
+
+<span class="hljs-meta">    @timer</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">work</span><span class="hljs-params">(self)</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+        sheet_name:str = <span class="hljs-string">'inputs'</span>
+        df_defects = []
+        df_inputs  = []
+
+        <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> self._filter():
+            tmp_dfDefects = pd.read_excel(file)
+            tmp_dfInput   = pd.read_excel(file, sheet_name=sheet_name)
+            df_defects.append(tmp_dfDefects)
+            df_inputs.append(tmp_dfInput)
+        self._clean_dfDefects(df_defects)
+        self._clean_dfInputs(df_inputs)
+
+        <span class="hljs-comment"># ~ migrate to db</span>
+        sql_table_name_defects:str = <span class="hljs-string">'defects'</span>
+        sql_table_name_inputs:str  = <span class="hljs-string">'inputs'</span>
+        <span class="hljs-keyword">with</span> sqlite3.connect(self._db) <span class="hljs-keyword">as</span> conn:
+            cur = conn.cursor()
+            info = <span class="hljs-string">'update {}'</span>.format(sql_table_name_defects)
+            <span class="hljs-keyword">with</span> self.__enter_defects_table(sql_table_name_defects, cur, info):
+                self._dfDefect.to_sql(sql_table_name_defects, conn, if_exists=<span class="hljs-string">'append'</span>, index=<span class="hljs-literal">False</span>)
+            info = <span class="hljs-string">'update {}'</span>.format(sql_table_name_inputs)
+            <span class="hljs-keyword">with</span> self.__enter_inputs_table(sql_table_name_inputs, cur, info):
+                self._dfInputs.to_sql(sql_table_name_inputs, conn, if_exists=<span class="hljs-string">'append'</span>, index=<span class="hljs-literal">False</span>)
+
+</div></code></pre>
+<h2 id="project-structure">Project structure</h2>
+<pre class="hljs"><code><div><span class="hljs-function">
+C:.
+│  20210806 <span class="hljs-title">WW_Panel_SMLD_Database</span> <span class="hljs-title">v0</span>.02.<span class="hljs-title">pptx</span>
+│  <span class="hljs-title">main.py</span>
+│  <span class="hljs-title">pmod_smld.db</span>
+│  <span class="hljs-title">pmod_smld.xlsx</span>
+│  <span class="hljs-title">requirements.txt</span>
+│
+├─<span class="hljs-title">data</span>
+│  ├─<span class="hljs-title">CTTI</span>
+│  │      ~$【<span class="hljs-title">BOE</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">APH_APHB</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│  │      【<span class="hljs-title">BOE</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">APH_APHB</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│  │      【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AR</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│  │
+│  ├─<span class="hljs-title">FBC</span>
+│  │      【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> <span class="hljs-title">AG</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">W33.xlsx</span>
+│  │      【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> <span class="hljs-title">AQ</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">W33.xlsx</span>
+│  │      【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AG</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">W33.xlsx</span>
+│  │
+│  ├─<span class="hljs-title">FSK</span>
+│  │      <span class="hljs-title">FY21_Quality_Data_SSVE_week33.xlsx</span>
+│  │
+│  ├─<span class="hljs-title">INZ</span>
+│  │      【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY20</span> <span class="hljs-title">NE</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│  │      【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY20</span> <span class="hljs-title">NH</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│  │      【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> <span class="hljs-title">AG65_85</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│  │      【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> <span class="hljs-title">AQ</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│  │      【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AG</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│  │      【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AR</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│  │
+│  └─<span class="hljs-title">SOEM</span>
+│          【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY20</span> 55, 65<span class="hljs-title">NH</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY20</span> 85<span class="hljs-title">NB</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY20</span> 85<span class="hljs-title">NX_NXB</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> 65<span class="hljs-title">AG</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> 85<span class="hljs-title">AG</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> 85<span class="hljs-title">AX</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">BOE</span> <span class="hljs-title">OCL_FY20</span> 75<span class="hljs-title">NB</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">BOE</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">APH</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY20</span> 75<span class="hljs-title">NX_NXB</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AG</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AR</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AX</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">LGD</span> <span class="hljs-title">OCL_FY20</span> 75<span class="hljs-title">NB</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│          【<span class="hljs-title">SDC</span> <span class="hljs-title">OCL_FY20</span> 75<span class="hljs-title">NX_NXB</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│
+├─<span class="hljs-title">docs</span>
+│      <span class="hljs-title">develop_manual.md</span>
+│      <span class="hljs-title">info.text</span>
+│      <span class="hljs-title">smld_db.drawio</span>
+│      <span class="hljs-title">smld_db.png</span>
+│
+├─<span class="hljs-title">lib</span>
+│  │  <span class="hljs-title">core.py</span>
+│  │  <span class="hljs-title">query.py</span>
+│  │  <span class="hljs-title">setname_mapping.py</span>
+│  │  <span class="hljs-title">__init__.py</span>
+│  │
+│  ├─<span class="hljs-title">date</span>
+│  │      <span class="hljs-title">utils.py</span>
+│  │      <span class="hljs-title">__init__.py</span>
+│  │
+│  └─<span class="hljs-title">vba</span>
+│          <span class="hljs-title">caller.py</span>
+│          <span class="hljs-title">__init__.py</span>
+│
+├─<span class="hljs-title">reports</span>
+│      <span class="hljs-title">pmod_smld_viz_v0</span>.05.<span class="hljs-title">xlsm</span>
+│      <span class="hljs-title">pmod_smld_viz_v0</span>.06.<span class="hljs-title">xlsm</span>
+│      <span class="hljs-title">pmod_smld_viz_v0</span>.07.<span class="hljs-title">xlsm</span>
+│
+└─<span class="hljs-title">test</span>
+        <span class="hljs-title">cleaned_headers.py</span>
+        <span class="hljs-title">df_replace.py</span>
+        <span class="hljs-title">field_names.py</span>
+
+</span></div></code></pre>
+<h2 id="usage">Usage</h2>
+<p>The project itself is a well-tested console application.</p>
+<h3 id="usage-1">Usage 1</h3>
+<p>User may write the following command to run this application.</p>
+<pre class="hljs"><code><div>
+@<span class="hljs-built_in">echo</span> off
+<span class="hljs-built_in">cd</span> "root of this procject directory"
+python main.py
+
+</div></code></pre>
+<h3 id="usage-2">Usage 2</h3>
+<p>If user was familiar with <code>SQL</code>, user should use SQLite3 Studio to link &quot;pmod_smld.db&quot;.</p>
+<pre class="hljs"><code><div>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> defects
+<span class="hljs-keyword">WHERE</span> TVPlant = <span class="hljs-string">"FSK"</span> <span class="hljs-keyword">AND</span> ConfirmationWC = <span class="hljs-number">2132</span> <span class="hljs-keyword">AND</span> Classify = <span class="hljs-string">"Line"</span>
+<span class="hljs-keyword">LIMIT</span> <span class="hljs-number">10</span>;
+
+</div></code></pre>
+<img src=".\SQL.png" alt="" width="600">
+<h3 id="usage-3">Usage 3</h3>
+<p>If user was familar with <code>Excel</code>, user could use Excel application to manipulate data as well;</p>
+<pre class="hljs"><code><div>
+<span class="hljs-keyword">Public</span> <span class="hljs-keyword">Sub</span> load_src()
+    <span class="hljs-comment"><span class="hljs-doctag">'''</span> load source data from a given workbook @ZL, 20210825</span>
+    <span class="hljs-keyword">Dim</span> beg <span class="hljs-keyword">As</span> <span class="hljs-built_in">Single</span>: beg = Timer
+    
+    <span class="hljs-keyword">Dim</span> dstWB <span class="hljs-keyword">As</span> Workbook: <span class="hljs-keyword">Set</span> dstWB = ThisWorkbook
+    <span class="hljs-keyword">Dim</span> strSRC <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>: strSRC = GetFilePath(ThisWorkbook.path)
+    <span class="hljs-keyword">If</span> <span class="hljs-keyword">Not</span> FileExists(strSRC) <span class="hljs-keyword">Or</span> strSRC = vbNullString <span class="hljs-keyword">Then</span>
+        <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Sub</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    <span class="hljs-keyword">Dim</span> srcWB <span class="hljs-keyword">As</span> Workbook: <span class="hljs-keyword">Set</span> srcWB = GetObject(strSRC)
+    
+    <span class="hljs-keyword">Const</span> wsn_defects <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"defects"</span>
+    <span class="hljs-keyword">Const</span> wsn_inputs <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"inputs"</span>
+    
+    <span class="hljs-keyword">Dim</span> srcDefects <span class="hljs-keyword">As</span> Worksheet, srcInputs <span class="hljs-keyword">As</span> Worksheet
+    <span class="hljs-keyword">Dim</span> dstDefects <span class="hljs-keyword">As</span> Worksheet, dstInputs <span class="hljs-keyword">As</span> Worksheet
+    <span class="hljs-keyword">If</span> (<span class="hljs-keyword">Not</span> WSExists(srcWB, wsn_defects)) <span class="hljs-keyword">Or</span> (<span class="hljs-keyword">Not</span> WSExists(srcWB, wsn_inputs)) <span class="hljs-keyword">Then</span>
+        MsgBox <span class="hljs-string">"WSNotFoundError"</span>, vbInformation, <span class="hljs-string">"WorkSheetError"</span>
+        <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Sub</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    
+    <span class="hljs-keyword">Set</span> srcDefects = srcWB.Worksheets(wsn_defects)
+    <span class="hljs-keyword">Set</span> srcInputs = srcWB.Worksheets(wsn_inputs)
+    <span class="hljs-keyword">Set</span> dstDefects = dstWB.Worksheets(wsn_defects)
+    <span class="hljs-keyword">Set</span> dstInputs = dstWB.Worksheets(wsn_inputs)
+    
+    dstDefects.Cells(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>).Resize(srcDefects.UsedRange.Rows.Count, srcDefects.UsedRange.Columns.Count) = srcDefects.UsedRange.Value
+    dstInputs.Cells(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>).Resize(srcInputs.UsedRange.Rows.Count, srcInputs.UsedRange.Columns.Count) = srcInputs.UsedRange.Value
+    
+    <span class="hljs-keyword">Const</span> hiddenColumnDefects <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"V:AC"</span>
+    <span class="hljs-keyword">Const</span> hiddenColumnsInputs <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"G:O"</span>
+    dstDefects.Columns(hiddenColumnDefects).EntireColumn.Hidden = <span class="hljs-literal">True</span>
+    dstInputs.Columns(hiddenColumnsInputs).EntireColumn.Hidden = <span class="hljs-literal">True</span>
+    
+    hidde_WS_OldColumns dstWB
+    
+    MsgBox <span class="hljs-string">"Successed. time lapsed(s): "</span> &amp; (Timer - beg), vbInformation, <span class="hljs-string">"Reload"</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+</div></code></pre>
+<h2 id="about">About</h2>
+<p>MIT License</p>
+<p>Copyright (c) 2021 ZL</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+
+</body>
+</html>
