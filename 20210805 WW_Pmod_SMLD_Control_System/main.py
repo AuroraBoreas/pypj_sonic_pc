@@ -31,10 +31,12 @@ if __name__ == "__main__":
             fix_inputs_wkcode=inputs_wkcode
     )
 
+    logging.info("start preprocessing by VBA")
     try:
         caller.call_vba_macro(preprocess_xl, macro_name)
         logging.info("preprocess operation finished")
         try:
+            logging.info("start Pathon -> SQL")
             sm.work()
         except:
             logging.info("PythonError: failed to merge source file")
