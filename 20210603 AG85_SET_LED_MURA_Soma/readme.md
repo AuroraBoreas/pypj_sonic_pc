@@ -1,2 +1,0 @@
-# SONY Set log visualization
-
