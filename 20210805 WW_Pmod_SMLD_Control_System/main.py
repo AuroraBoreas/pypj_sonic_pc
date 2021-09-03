@@ -11,8 +11,9 @@ if __name__ == "__main__":
 
     folder = r'D:\pj_00_codelib\2019_pypj\20210805 WW_Pmod_SMLD_Control_System\data'
     dst_xl = 'pmod_smld.xlsx'
+    dst_xl_web = r'\\43.98.1.18\SSVE_Division\TV品质保证部\部共通\部门\2制品品质课\CS\FY21_Model\20210805 WW_Pmod_SMLD_System\pmod_smld.xlsx'
     db     = 'pmod_smld.db'
-    db_web = r'D:\pj_00_codelib\2019_pypj\20210823 django-tvqa-master\db.sqlite3'
+    db_web = r'\\43.98.1.18\SSVE_Division\TV品质保证部\部共通\部门\2制品品质课\CS\FY21_Model\20210805 WW_Pmod_SMLD_System\pmod_smld.db'
 
     defects_setname          = "Set name"
     defects_setname_mapping  = {'75AR(2 Stand)':'75AR', '55NH(1)':'55NH', '75NB BOE':'75NB'}
@@ -31,17 +32,17 @@ if __name__ == "__main__":
             fix_inputs_wkcode=inputs_wkcode
     )
 
-    logging.info("start preprocessing by VBA")
+    logging.info("start preprocess..")
     try:
         caller.call_vba_macro(preprocess_xl, macro_name)
-        logging.info("preprocess operation finished")
+        logging.info("preprocess finished")
         try:
-            logging.info("start Pathon -> SQL")
+            logging.info("start Pathon -> SQL..")
             sm.work()
         except:
             logging.info("PythonError: failed to merge source file")
     except:
         logging.info("VBAError: failed to clean source file")
 
-    ex = Exporter(db, dst_xl)
+    ex = Exporter(db_web, dst_xl_web)
     ex.work()
