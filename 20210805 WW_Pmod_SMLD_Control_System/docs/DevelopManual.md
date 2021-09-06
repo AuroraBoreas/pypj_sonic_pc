@@ -39,6 +39,12 @@ After built a VBA class API to preprocess the clean operation, the impact is all
 
 The average run time of whole process is around 3 minutes.
 
+* preprocess           : 46.50 seconds
+* python->SQL database : 137.16 seconds
+* SQL query            : 1.19 seconds
+
+=> Performance: 184 seconds
+
 <img src=".\performance.png" alt="" width="600">
 
 ### VBA preprocess class API
@@ -608,10 +614,9 @@ class Merger:
 
 ```
 
-
 ## Project structure
 
-```cmd
+```Batch
 
 C:.
 │  20210806 WW_Panel_SMLD_Database v0.02.pptx
@@ -690,15 +695,30 @@ C:.
 
 ```
 
-## Usage
+## Usages
 
 The project itself is a well-tested console application.
 
 ### Usage 1
 
-User may write the following command to run this application.
+User may utilize `Python` to interact with "pmod_smld.db";
 
-```cmd
+```Python
+import sqlite3
+
+def dml(db:Path)->None:
+    with sqlite3.connect(db) as conn:
+        cur = conn.cursor()
+        ...
+```
+
+### Usage 2
+
+User may write the following `command` to run this application if user is familiar with `Batch`;
+
+Either user may click "main.bat" to achieve same effect;
+
+```Batch
 
 @echo off
 cd "root of this procject directory"
@@ -706,7 +726,7 @@ python main.py
 
 ```
 
-### Usage 2
+### Usage 3
 
 If user was familiar with `SQL`, user should use SQLite3 Studio to link "pmod_smld.db".
 

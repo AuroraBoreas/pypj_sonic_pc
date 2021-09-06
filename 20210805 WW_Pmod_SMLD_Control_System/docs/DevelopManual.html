@@ -378,6 +378,7 @@ code {
 <li>v0.03, change design pattern: split into two dataframes: defects, inputs</li>
 <li>v0.04, add more columns to prepare for visualization</li>
 <li>v0.05, fix TVPlant column, &quot;SO'EM&quot; -&gt; &quot;SOEM&quot;</li>
+<li>v0.06, add an option to run <code>main.py</code> by using <code>main.bat</code> (Batch script)</li>
 </ul>
 <h2 id="design-pattern">Design pattern</h2>
 <p>There was an impact to performance when using Python to clean &quot;inputs&quot; data in source files;</p>
@@ -393,6 +394,12 @@ code {
 <img src=".\design.png" alt="" width="600">
 <h3 id="performance">Performance</h3>
 <p>The average run time of whole process is around 3 minutes.</p>
+<ul>
+<li>preprocess           : 46.50 seconds</li>
+<li>python-&gt;SQL database : 137.16 seconds</li>
+<li>SQL query            : 1.19 seconds</li>
+</ul>
+<p>=&gt; Performance: 184 seconds</p>
 <img src=".\performance.png" alt="" width="600">
 <h3 id="vba-preprocess-class-api">VBA preprocess class API</h3>
 <pre class="hljs"><code><div>
@@ -955,94 +962,104 @@ Cursor    = NewType(<span class="hljs-string">'Cursor'</span>, sqlite3.Cursor)
 
 </div></code></pre>
 <h2 id="project-structure">Project structure</h2>
-<pre class="hljs"><code><div><span class="hljs-function">
+<pre class="hljs"><code><div>
 C:.
-│  20210806 <span class="hljs-title">WW_Panel_SMLD_Database</span> <span class="hljs-title">v0</span>.02.<span class="hljs-title">pptx</span>
-│  <span class="hljs-title">main.py</span>
-│  <span class="hljs-title">pmod_smld.db</span>
-│  <span class="hljs-title">pmod_smld.xlsx</span>
-│  <span class="hljs-title">requirements.txt</span>
+│  20210806 WW_Panel_SMLD_Database v0.02.pptx
+│  main.py
+│  pmod_smld.db
+│  pmod_smld.xlsx
+│  requirements.txt
 │
-├─<span class="hljs-title">data</span>
-│  ├─<span class="hljs-title">CTTI</span>
-│  │      ~$【<span class="hljs-title">BOE</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">APH_APHB</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│  │      【<span class="hljs-title">BOE</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">APH_APHB</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│  │      【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AR</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+├─data
+│  ├─CTTI
+│  │      ~$【BOE OCL_FY21 75APH_APHB (SSVE) 】 SMLD Quality Data Workbook.xlsx
+│  │      【BOE OCL_FY21 75APH_APHB (SSVE) 】 SMLD Quality Data Workbook.xlsx
+│  │      【CSOT OCL_FY21 75AR (SSVE) 】 SMLD Quality Data Workbook.xlsx
 │  │
-│  ├─<span class="hljs-title">FBC</span>
-│  │      【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> <span class="hljs-title">AG</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">W33.xlsx</span>
-│  │      【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> <span class="hljs-title">AQ</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">W33.xlsx</span>
-│  │      【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AG</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">W33.xlsx</span>
+│  ├─FBC
+│  │      【AUO OCL_FY21 AG (SSVE) 】 SMLD Quality Data W33.xlsx
+│  │      【AUO OCL_FY21 AQ (SSVE) 】 SMLD Quality Data W33.xlsx
+│  │      【CSOT OCL_FY21 75AG (SSVE) 】 SMLD Quality Data W33.xlsx
 │  │
-│  ├─<span class="hljs-title">FSK</span>
-│  │      <span class="hljs-title">FY21_Quality_Data_SSVE_week33.xlsx</span>
+│  ├─FSK
+│  │      FY21_Quality_Data_SSVE_week33.xlsx
 │  │
-│  ├─<span class="hljs-title">INZ</span>
-│  │      【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY20</span> <span class="hljs-title">NE</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│  │      【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY20</span> <span class="hljs-title">NH</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│  │      【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> <span class="hljs-title">AG65_85</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│  │      【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> <span class="hljs-title">AQ</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│  │      【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AG</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│  │      【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AR</span> (<span class="hljs-title">SSVE</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│  ├─INZ
+│  │      【AUO OCL_FY20 NE (SSV) 】 SMLD Quality Data Workbook.xlsx
+│  │      【AUO OCL_FY20 NH (SSV) 】 SMLD Quality Data Workbook.xlsx
+│  │      【AUO OCL_FY21 AG65_85 (SSVE) 】 SMLD Quality Data Workbook.xlsx
+│  │      【AUO OCL_FY21 AQ (SSVE) 】 SMLD Quality Data Workbook.xlsx
+│  │      【CSOT OCL_FY21 75AG (SSVE) 】 SMLD Quality Data Workbook.xlsx
+│  │      【CSOT OCL_FY21 75AR (SSVE) 】 SMLD Quality Data Workbook.xlsx
 │  │
-│  └─<span class="hljs-title">SOEM</span>
-│          【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY20</span> 55, 65<span class="hljs-title">NH</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY20</span> 85<span class="hljs-title">NB</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY20</span> 85<span class="hljs-title">NX_NXB</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> 65<span class="hljs-title">AG</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> 85<span class="hljs-title">AG</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">AUO</span> <span class="hljs-title">OCL_FY21</span> 85<span class="hljs-title">AX</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">BOE</span> <span class="hljs-title">OCL_FY20</span> 75<span class="hljs-title">NB</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">BOE</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">APH</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY20</span> 75<span class="hljs-title">NX_NXB</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AG</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AR</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">CSOT</span> <span class="hljs-title">OCL_FY21</span> 75<span class="hljs-title">AX</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">LGD</span> <span class="hljs-title">OCL_FY20</span> 75<span class="hljs-title">NB</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
-│          【<span class="hljs-title">SDC</span> <span class="hljs-title">OCL_FY20</span> 75<span class="hljs-title">NX_NXB</span> (<span class="hljs-title">SSV</span>) 】 <span class="hljs-title">SMLD</span> <span class="hljs-title">Quality</span> <span class="hljs-title">Data</span> <span class="hljs-title">Workbook.xlsx</span>
+│  └─SOEM
+│          【AUO OCL_FY20 55, 65NH (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【AUO OCL_FY20 85NB (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【AUO OCL_FY20 85NX_NXB (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【AUO OCL_FY21 65AG (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【AUO OCL_FY21 85AG (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【AUO OCL_FY21 85AX (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【BOE OCL_FY20 75NB (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【BOE OCL_FY21 75APH (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【CSOT OCL_FY20 75NX_NXB (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【CSOT OCL_FY21 75AG (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【CSOT OCL_FY21 75AR (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【CSOT OCL_FY21 75AX (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【LGD OCL_FY20 75NB (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【SDC OCL_FY20 75NX_NXB (SSV) 】 SMLD Quality Data Workbook.xlsx
 │
-├─<span class="hljs-title">docs</span>
-│      <span class="hljs-title">develop_manual.md</span>
-│      <span class="hljs-title">info.text</span>
-│      <span class="hljs-title">smld_db.drawio</span>
-│      <span class="hljs-title">smld_db.png</span>
+├─docs
+│      develop_manual.md
+│      info.text
+│      smld_db.drawio
+│      smld_db.png
 │
-├─<span class="hljs-title">lib</span>
-│  │  <span class="hljs-title">core.py</span>
-│  │  <span class="hljs-title">query.py</span>
-│  │  <span class="hljs-title">setname_mapping.py</span>
-│  │  <span class="hljs-title">__init__.py</span>
+├─lib
+│  │  core.py
+│  │  query.py
+│  │  setname_mapping.py
+│  │  __init__.py
 │  │
-│  ├─<span class="hljs-title">date</span>
-│  │      <span class="hljs-title">utils.py</span>
-│  │      <span class="hljs-title">__init__.py</span>
+│  ├─date
+│  │      utils.py
+│  │      __init__.py
 │  │
-│  └─<span class="hljs-title">vba</span>
-│          <span class="hljs-title">caller.py</span>
-│          <span class="hljs-title">__init__.py</span>
+│  └─vba
+│          caller.py
+│          __init__.py
 │
-├─<span class="hljs-title">reports</span>
-│      <span class="hljs-title">pmod_smld_viz_v0</span>.05.<span class="hljs-title">xlsm</span>
-│      <span class="hljs-title">pmod_smld_viz_v0</span>.06.<span class="hljs-title">xlsm</span>
-│      <span class="hljs-title">pmod_smld_viz_v0</span>.07.<span class="hljs-title">xlsm</span>
+├─reports
+│      pmod_smld_viz_v0.05.xlsm
+│      pmod_smld_viz_v0.06.xlsm
+│      pmod_smld_viz_v0.07.xlsm
 │
-└─<span class="hljs-title">test</span>
-        <span class="hljs-title">cleaned_headers.py</span>
-        <span class="hljs-title">df_replace.py</span>
-        <span class="hljs-title">field_names.py</span>
+└─test
+        cleaned_headers.py
+        df_replace.py
+        field_names.py
 
-</span></div></code></pre>
-<h2 id="usage">Usage</h2>
+</div></code></pre>
+<h2 id="usages">Usages</h2>
 <p>The project itself is a well-tested console application.</p>
 <h3 id="usage-1">Usage 1</h3>
-<p>User may write the following command to run this application.</p>
+<p>User may utilize <code>Python</code> to interact with &quot;pmod_smld.db&quot;;</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> sqlite3
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dml</span><span class="hljs-params">(db:Path)</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+    <span class="hljs-keyword">with</span> sqlite3.connect(db) <span class="hljs-keyword">as</span> conn:
+        cur = conn.cursor()
+        ...
+</div></code></pre>
+<h3 id="usage-2">Usage 2</h3>
+<p>User may write the following <code>command</code> to run this application if user is familiar with <code>Batch</code>;</p>
+<p>Either user may click &quot;main.bat&quot; to achieve same effect;</p>
 <pre class="hljs"><code><div>
-@<span class="hljs-built_in">echo</span> off
-<span class="hljs-built_in">cd</span> "root of this procject directory"
+@echo off
+cd &quot;root of this procject directory&quot;
 python main.py
 
 </div></code></pre>
-<h3 id="usage-2">Usage 2</h3>
+<h3 id="usage-3">Usage 3</h3>
 <p>If user was familiar with <code>SQL</code>, user should use SQLite3 Studio to link &quot;pmod_smld.db&quot;.</p>
 <pre class="hljs"><code><div>
 <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> defects
