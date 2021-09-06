@@ -27,7 +27,7 @@ class Extractor:
         """
         patter: MesData128_, MesData384_, MesData640_, MesData896_, MesData1023_
         """
-        files: list = sorted(pathlib.Path(self.srcFolder).glob("*.bin"))
+        files: list = sorted(pathlib.Path(self.srcFolder).rglob("*.bin"))
         for file in files:
             if file.name.startswith(self.ids):
                 yield file

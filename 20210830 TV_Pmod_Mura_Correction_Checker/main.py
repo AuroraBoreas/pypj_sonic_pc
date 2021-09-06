@@ -16,7 +16,7 @@ def clean_dst_history(dstBinFolder:Path, dstImageFolder:Path):
             os.remove(os.path.join(root, file))
 
 def main():
-    srcBinFolder   = r'C:\Users\5106001995\Desktop\J'
+    srcBinFolder   = r'C:\Users\5106001995\Desktop\samples'
     pmod_name      = "AG75_ITC(J)"
     dstBinFolder   = "data"
     dstImageFolder = "Images"

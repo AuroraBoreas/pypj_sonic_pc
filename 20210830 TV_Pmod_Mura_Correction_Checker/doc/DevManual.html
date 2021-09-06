@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DevManual.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="tv-pmod-mura-correction-checker">TV Pmod Mura Correction Checker</h1>
+<p>This simple program is to summarize SONY TV Pmod Mura Correction Images.</p>
+<h2 id="author">Author</h2>
+<p>TVQA member <code>@Zhang Liang</code>, 20210830</p>
+<h2 id="changelog">Changelog</h2>
+<ul>
+<li>v0.01, initial build</li>
+<li>v0.02, auto-generate report</li>
+</ul>
+<h2 id="final-result">Final Result</h2>
+<table>
+<thead>
+<tr>
+<th>SCC. No</th>
+<th>Before Adj, 87.5IRE</th>
+<th>After Adj, 87.5IRE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ddddd01</td>
+<td>Mura Image</td>
+<td>Mura Image</td>
+</tr>
+<tr>
+<td>ddddd02</td>
+<td>Mura Image</td>
+<td>Mura Image</td>
+</tr>
+<tr>
+<td>ddddd03</td>
+<td>Mura Image</td>
+<td>Mura Image</td>
+</tr>
+<tr>
+<td>ddddd04</td>
+<td>Mura Image</td>
+<td>Mura Image</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>ddddd99</td>
+<td>Mura Image</td>
+<td>Mura Image</td>
+</tr>
+</tbody>
+</table>
+<h2 id="schema">Schema</h2>
+<img src=".\schema.drawio.png" alt="" width="600">
+<h3 id="key-points">Key points</h3>
+<ul>
+<li>(Class) *.bin files Extracter, adds constraints to identify target files;</li>
+<li>(Class) Converter, builds a hook to interact with <code>PLRLog.exe</code> to do auto-convert operation, and moves *.BMP images into temporary image folder;</li>
+<li>(Class) MuraImageLoader, loads Mura images into <code>Excel</code> by pairs;</li>
+<li>(Function) clear history before new input;</li>
+</ul>
+<h2 id="project-structure">Project Structure</h2>
+<pre class="hljs"><code><div><span class="hljs-function">
+D:.
+│  20210828 <span class="hljs-title">AG65_Pmod_LED_Mura.xlsx</span>
+│  20210830 <span class="hljs-title">AG65_Pmod_Mura_Image_List.xlsx</span>
+│  20210830 <span class="hljs-title">AG75_ITC</span>(<span class="hljs-title">J</span>)<span class="hljs-title">_Mura_Image_List.xlsx</span>
+│  20210831 <span class="hljs-title">AG75_ITC</span>(<span class="hljs-title">J</span>)<span class="hljs-title">_Mura_Image_List.xlsx</span>
+│  20210901 <span class="hljs-title">AG75_ITC</span>(<span class="hljs-title">J</span>)<span class="hljs-title">_Mura_Image_List.xlsx</span>
+│  <span class="hljs-title">main.py</span>
+│  <span class="hljs-title">PLRLog.exe</span>
+│  <span class="hljs-title">readme.md</span>
+│  <span class="hljs-title">tmp1.jpg</span>
+│  <span class="hljs-title">tmp2.jpg</span>
+│
+├─<span class="hljs-title">data</span>
+│      <span class="hljs-title">MesData896Result_12501100_6225_20210821040730.bin</span>
+│      <span class="hljs-title">MesData896Result_12501100_6229_20210821041620.bin</span>
+│      <span class="hljs-title">MesData896Result_12501100_6231_20210821041917.bin</span>
+│      <span class="hljs-title">MesData896_12501100_6225_20210821040702.bin</span>
+│      <span class="hljs-title">MesData896_12501100_6229_20210821041551.bin</span>
+│      <span class="hljs-title">MesData896_12501100_6231_20210821041848.bin</span>
+│
+├─<span class="hljs-title">doc</span>
+│      <span class="hljs-title">DevManual.md</span>
+│      <span class="hljs-title">info.txt</span>
+│      <span class="hljs-title">schema.drawio</span>
+│      <span class="hljs-title">schema.drawio.png</span>
+│
+├─<span class="hljs-title">Images</span>
+│      <span class="hljs-title">MesData896Result_12501100_6225_20210821040730.bin.bmp</span>
+│      <span class="hljs-title">MesData896Result_12501100_6229_20210821041620.bin.bmp</span>
+│      <span class="hljs-title">MesData896Result_12501100_6231_20210821041917.bin.bmp</span>
+│      <span class="hljs-title">MesData896_12501100_6225_20210821040702.bin.bmp</span>
+│      <span class="hljs-title">MesData896_12501100_6229_20210821041551.bin.bmp</span>
+│      <span class="hljs-title">MesData896_12501100_6231_20210821041848.bin.bmp</span>
+│
+├─<span class="hljs-title">library</span>
+│  │  <span class="hljs-title">extractor.py</span>
+│  │  <span class="hljs-title">img.bmp</span>
+│  │  <span class="hljs-title">plrLog.py</span>
+│  │  <span class="hljs-title">sn.py</span>
+│  │  <span class="hljs-title">__init__.py</span>
+│  │
+│  └─<span class="hljs-title">excel</span>
+│          <span class="hljs-title">image.py</span>
+│          <span class="hljs-title">__init__.py</span>
+│
+└─<span class="hljs-title">templates</span>
+        <span class="hljs-title">Mura_List_Template.xlsx</span>
+
+</span></div></code></pre>
+<h2 id="implementation">Implementation</h2>
+<p>the following are some core class APIs;</p>
+<h3 id="extractor">Extractor</h3>
+<pre class="hljs"><code><div>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Extractor</span>:</span>
+    <span class="hljs-comment"># ids: tuple = ("MesData128_", "MesData384_", "MesData640_", "MesData896_", "MesData1023_")</span>
+    ids:tuple = (<span class="hljs-string">"MesData896_"</span>, <span class="hljs-string">"MesData896Result_"</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, src_folder: str, to_folder: str)</span>:</span>
+        self.srcFolder = src_folder
+        self.toFolder  = to_folder
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__repr__</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"\nSRC folder: <span class="hljs-subst">{self.srcFolder}</span>\nTo Folder: <span class="hljs-subst">{self.toFolder}</span>"</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_indentify</span><span class="hljs-params">(self)</span>-&gt;str:</span>
+        <span class="hljs-string">"""
+        patter: MesData128_, MesData384_, MesData640_, MesData896_, MesData1023_
+        """</span>
+        files: list = sorted(pathlib.Path(self.srcFolder).glob(<span class="hljs-string">"*.bin"</span>))
+        <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> files:
+            <span class="hljs-keyword">if</span> file.name.startswith(self.ids):
+                <span class="hljs-keyword">yield</span> file
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">copy</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> self._indentify():
+            logging.info(file)
+            shutil.copy(file, self.toFolder)
+
+</div></code></pre>
+<h3 id="convertmuraimage">ConvertMuraImage</h3>
+<pre class="hljs"><code><div>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SetLogConverter</span>:</span>
+    PLRLOG_OPEN_BTN = (<span class="hljs-number">43</span>, <span class="hljs-number">63</span>) <span class="hljs-comment"># it varies; it depends on PC hardware</span>
+    EXT             = <span class="hljs-string">'.bmp'</span>
+    PATTERN         = <span class="hljs-string">'*.bin'</span>
+    SLEEP_TIME01    = <span class="hljs-number">2</span>
+    SLEEP_TIME_INIT = <span class="hljs-number">6</span>
+    SLEEP_TIME02    = <span class="hljs-number">1.5</span>
+    SLEEP_TIME03    = <span class="hljs-number">1.5</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, plr_path: str, bin_folder: str, img_path: str, new_folder: str)</span>:</span>
+        self.plr_path   = plr_path
+        self.bin_files  = [os.path.abspath(p) <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> glob.glob(os.path.join(bin_folder, self.PATTERN))]
+        self.img_path   = img_path
+        self.new_folder = new_folder
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">to_image</span><span class="hljs-params">(self)</span>:</span>
+        p = subprocess.Popen(self.plr_path)
+        i = <span class="hljs-number">1</span> <span class="hljs-comment"># a switch / flag, which makes sure that the first time "open" operation wait a long time; otherwise, wait shorter time;</span>
+        <span class="hljs-keyword">with</span> temporary_plrlog(p):
+            time.sleep(self.SLEEP_TIME01)
+            <span class="hljs-keyword">for</span> bin_file <span class="hljs-keyword">in</span> self.bin_files:
+                <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">1</span>:
+                    self.load_MesData_bin(bin_file)
+                <span class="hljs-keyword">else</span>:
+                    self.load_MesData_bin(bin_file, <span class="hljs-literal">True</span>)
+                i += <span class="hljs-number">1</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">rename_img</span><span class="hljs-params">(self, new_name: str)</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+        os.rename(self.img_path, os.path.abspath(os.path.join(self.new_folder, new_name + self.EXT)))
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_MesData_bin</span><span class="hljs-params">(self, bin_file, isInit: bool = False)</span>:</span>
+        fw = pyautogui.getActiveWindow()
+        fw.maximize() <span class="hljs-comment"># otherwise PLR GUI position changes per opening</span>
+        pyautogui.moveTo(*self.PLRLOG_OPEN_BTN) <span class="hljs-comment"># move mouse to "open"</span>
+        pyautogui.click() <span class="hljs-comment"># click</span>
+        <span class="hljs-keyword">if</span> isInit:
+            pyautogui.sleep(self.SLEEP_TIME_INIT)
+        <span class="hljs-keyword">else</span>:
+            pyautogui.sleep(self.SLEEP_TIME02)
+        pyautogui.typewrite(bin_file) <span class="hljs-comment"># input the absolute path of bin file to address</span>
+        pyautogui.sleep(self.SLEEP_TIME03)
+        pyautogui.hotkey(<span class="hljs-string">'Enter'</span>) <span class="hljs-comment"># enter</span>
+        pyautogui.sleep(self.SLEEP_TIME03)
+        <span class="hljs-keyword">try</span>:
+            self.rename_img(os.path.split(bin_file)[<span class="hljs-number">-1</span>]) <span class="hljs-comment"># save img</span>
+        <span class="hljs-keyword">except</span> FileExistsError:
+            <span class="hljs-keyword">pass</span>
+
+</div></code></pre>
+<h3 id="muraimageloader">MuraImageLoader</h3>
+<pre class="hljs"><code><div>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MuraImageLoader</span>:</span>
+    img_ext     = <span class="hljs-string">'.bmp'</span>
+    muradata896 = <span class="hljs-string">'mesdata896_'</span>
+    muradataresult896 = <span class="hljs-string">'mesdata896result_'</span>
+    dstStartRow = <span class="hljs-number">2</span>
+    img_quality = <span class="hljs-number">95</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, xl_template:Path, dst_xl:Path, img_folder:Path, width:int, dstCellName:str, dstCellCol384:str, dstCellCol640:str)</span>:</span>
+        self._xl_template     = xl_template
+        self._dst_xl          = dst_xl
+        self._img_folder      = img_folder
+        self.width            = width
+        self.dstCellName      = dstCellName
+        self.dstCellCol384    = dstCellCol384
+        self.dstCellCol640    = dstCellCol640
+        self._896:List[Path]  = []
+        self._896R:List[Path] = []
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_sort_images</span><span class="hljs-params">(self)</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+        <span class="hljs-keyword">for</span> root, _, files <span class="hljs-keyword">in</span> os.walk(self._img_folder):
+            <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> files:
+                <span class="hljs-keyword">if</span> os.path.splitext(file)[<span class="hljs-number">-1</span>] == self.img_ext:
+                    filepath = os.path.join(root, file)
+                    <span class="hljs-keyword">if</span> self.muradata896 <span class="hljs-keyword">in</span> file.lower():
+                        self._896.append(filepath)
+                    <span class="hljs-keyword">if</span> self.muradataresult896 <span class="hljs-keyword">in</span> file.lower():
+                        self._896R.append(filepath)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_is_pmod_id_match</span><span class="hljs-params">(self, x:str, y:str)</span>-&gt;bool:</span>
+        delimiter = <span class="hljs-string">'_'</span>
+        idx_id = <span class="hljs-number">2</span>
+        <span class="hljs-keyword">return</span> x.split(delimiter)[idx_id] == y.split(delimiter)[idx_id]
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_export</span><span class="hljs-params">(self)</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+        idx_w, idx_h = (<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
+        i = j = self.dstStartRow
+        tmp_img1 = <span class="hljs-string">'tmp1.jpg'</span>
+        tmp_img2 = <span class="hljs-string">'tmp2.jpg'</span>
+        <span class="hljs-keyword">with</span> open_workbook(self._xl_template, self._dst_xl) <span class="hljs-keyword">as</span> wb:
+            ws = wb.worksheets[<span class="hljs-number">0</span>]
+            <span class="hljs-keyword">if</span> len(self._896) == len(self._896R) <span class="hljs-keyword">and</span> len(self._896) &gt; <span class="hljs-number">0</span>:
+                ubound = len(self._896)
+                <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, ubound):
+                    img_896 = self._896[k]
+                    img_896R = self._896R[k]
+                    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self._is_pmod_id_match(img_896, img_896R):
+                        logging.info(<span class="hljs-string">"PmodIDNotMatchError"</span>)
+                        <span class="hljs-keyword">break</span>
+                    img = Image.open(img_896)
+                    width_percent = (self.width/float(img.size[idx_w]))
+                    hsize = int((float(img.size[idx_h])*float(width_percent)))
+                    img = img.resize((self.width, hsize), Image.ANTIALIAS)
+                    img.save(tmp_img1, quality=self.img_quality)
+                    img = openpyxl.drawing.image.Image(tmp_img1)
+                    dstCellAddress = <span class="hljs-string">f'<span class="hljs-subst">{self.dstCellName}</span><span class="hljs-subst">{i}</span>'</span>
+                    ws[dstCellAddress].value = os.path.split(img_896)[<span class="hljs-number">-1</span>]
+                    dstCellAddress = <span class="hljs-string">f'<span class="hljs-subst">{self.dstCellCol384}</span><span class="hljs-subst">{i}</span>'</span>
+                    ws.add_image(img, dstCellAddress)
+                    i += <span class="hljs-number">1</span>
+
+                    img = Image.open(img_896R)
+                    width_percent = (self.width/float(img.size[idx_w]))
+                    hsize = int((float(img.size[idx_h])*float(width_percent)))
+                    img = img.resize((self.width, hsize), Image.ANTIALIAS)
+                    img.save(tmp_img2, quality=self.img_quality)
+                    img = openpyxl.drawing.image.Image(tmp_img2)
+                    dstCellAddress = <span class="hljs-string">f'<span class="hljs-subst">{self.dstCellCol640}</span><span class="hljs-subst">{j}</span>'</span>
+                    ws.add_image(img, dstCellAddress)
+                    j += <span class="hljs-number">1</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">clean</span><span class="hljs-params">(self)</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+        self._896.clear()
+        self._896R.clear()
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">work</span><span class="hljs-params">(self)</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+        self._sort_images()
+        self._export()
+
+</div></code></pre>
+<h2 id="about">About</h2>
+<p>MIT License</p>
+<p>Copyright (c) 2021 ZL</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+
+</body>
+</html>
