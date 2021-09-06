@@ -8,7 +8,8 @@ v2. fix a potential server drive path problem
 ====================================================================================
 '''
 
-import os, getpass, itertools, glob, time, concurrent.futures
+import os, getpass, itertools, glob, time, concurrent.futures, datetime
+import pprint
 import tkinter as tk
 from tkinter import filedialog
 # from tkinter import TopLevel
@@ -52,6 +53,7 @@ def extract_zvalue_and_plot(f_path, save2fdname='MURACUC_Img'):
     Author: Z.Liang, 20190505
     mutiprocesses to improve performance, @ZL, 20190925
     """
+
     save2fd_path = os.path.join("C:\\Users", getpass.getuser(), "Desktop", save2fdname)
     if not os.path.isdir(save2fd_path):
         os.makedirs(save2fd_path, exist_ok=True)
@@ -66,24 +68,44 @@ def extract_zvalue_and_plot(f_path, save2fdname='MURACUC_Img'):
     M, N = 36, 61
     colors = ['RED', 'GREEN', 'BLUE']
     c = mcolors.ColorConverter().to_rgb
-    ryg = make_colormap([c('red'), c('#ffeb84'), 0.38, c('#ffeb84'), c('#63be7b'), 0.77, c('#63be7b')])
-
+    ryg = make_colormap([c('#F7696B'), c('#FCC57C'), 0.50, c('#ffeb84'), c('#CEDC81'), 0.77, c('#CEDC81'), c('#63be7b')])
     fn = os.path.split(f_path)[1] ##<~to: A2231641A_0000434
-    # plot data for each color
-    i = 1
-    for color in colors:
-        #  hexdata: the hardest part
-        arrZvalue = (np.array([[int(b[find_index(r, c, color=color)-1], 16) if int(b[find_index(r, c, color=color)-1], 16) < 127 else
-                                int(b[find_index(r, c, color=color)-1], 16)-256] for r in range(0, M) for c in range(0, N)]).flatten().reshape(M, N))
 
+    ## plot data for each color
+    subplot_datas = []
+    for color in colors:
+        ##  hexdata: the hardest part
+        arrZvalue = (np.array([[int(b[find_index(r, c, color=color)-1], 16)
+                    if int(b[find_index(r, c, color=color)-1], 16) < 127
+                    else int(b[find_index(r, c, color=color)-1], 16)-256]
+                    for r in range(0, M) for c in range(0, N)]).flatten().reshape(M, N))
+        subplot_datas.append(arrZvalue)
+
+    ## plot
+    i = 1
+    subplot_titles = colors
+    subplot_colors = [make_colormap([c('#F7696B')]), make_colormap([c('#63be7b')]), make_colormap([c('blue')])]
+    for subplot_title, subplot_color, subplot_data in zip(subplot_titles, subplot_colors, subplot_datas):
+        if not np.all(subplot_data==0):
+            _cmap = ryg
+        else:
+            _cmap = subplot_color
         plt.subplot(3, 1, i)
-        plt.imshow(arrZvalue, cmap=ryg, interpolation='nearest')
-        plt.title(f'{color}', fontsize=10)
+        plt.imshow(subplot_data, cmap=_cmap, interpolation='nearest')
+        plt.axis("off")
+        plt.title(f'{subplot_title}', fontsize=12)
         i += 1
+
     # save to a given folder
     plt.subplots_adjust(left=None, bottom=0.1, right=None, top=1.8, wspace=0.2, hspace=0.2)
     plt.savefig(f'{save2fd_path}/{fn}.png', dpi=300, bbox_inches='tight')
     plt.clf()
+
+def is_expired(expired_date='Feb 1 2021 8:00AM'):
+    """check if current date is explired date"""
+    ed = datetime.datetime.strptime(expired_date,'%b %d %Y %I:%M%p')
+    now = datetime.datetime.now()
+    return (now - ed) > datetime.timedelta(days=1)
 
 def main():
     """Batch codes here"""
@@ -92,10 +114,19 @@ def main():
     # root.title = "MURACUC Img Simulator v.1"
     fd_path = filedialog.askdirectory()
     fd_path = os.path.abspath(fd_path)
-    if fd_path != '':
-        all_files = glob.glob(os.path.join(fd_path, '*.eep'))
 
-        #<~~ mutiprocesses to improve performance, @ZL, 20190925
+    if fd_path != '':
+        all_files = []
+        for root_dir, _, files in os.walk(fd_path):
+            for file in files:
+                if (('TCON' not in file.upper()) and ('MURA' not in file.upper()) and ('NG' not in file.upper()) and ('EEP' in file.upper())):
+                    all_files.append(os.path.join(root_dir, file))
+        # pprint.pprint(all_CUC_files)
+        # all_files = glob.glob(os.path.join(fd_path, '*.eep'))
+        # # filter
+        # all_files = [file for file in all_files ]
+        # # pprint.pprint(all_files)
+        # #<~~ mutiprocesses to improve performance, @ZL, 20190925
         with concurrent.futures.ProcessPoolExecutor() as executor:
             executor.map(extract_zvalue_and_plot, all_files)
 
@@ -103,4 +134,5 @@ def main():
         root.master.deiconify()
 
 if __name__ == '__main__':
-    main()
+    if not is_expired():
+        main()

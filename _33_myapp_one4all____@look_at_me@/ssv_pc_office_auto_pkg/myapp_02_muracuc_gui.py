@@ -8,11 +8,12 @@
 # v5: @Z.liang, 20190806, updates as follows.
       utilize pandas to read src file instead of normal method, open(f, read_mode='r');
       get rid of shutil.rm_tree(dir, ignore_errors=True) after read an article on https://www.codercto.com/a/41423.html;
-  v6: fix a potential server drive path problem
+# v6: fix a potential server drive path problem
+# v7: bugfix, @ZL, 20201207
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 '''
 
-import os, itertools, tempfile, distutils.dir_util, time
+import os, tempfile, distutils.dir_util, time
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -21,9 +22,7 @@ import tkinter
 from tkinter import (
     Toplevel,
     PhotoImage,
-    Frame,
     Label,
-    Entry,
     INSERT,
     Button,
     Text,
@@ -48,8 +47,8 @@ class App_win():
         if not os.path.isdir(self.tmp): os.makedirs(self.tmp)
 
         self.root = Toplevel()
-        self.root.title("MURACUC Sim v.1, by Z.Liang, 2019")
-        self.root.geometry("{}x{}".format(360, 610))
+        self.root.title("CUC Sim v.1, by Z.Liang, 2019")
+        self.root.geometry("{}x{}".format(360, 620))
         try:
             self.imgicon = PhotoImage(file=self.favicon_path)
             self.root.tk.call('wm', 'iconphoto', self.root._w, self.imgicon)
@@ -121,6 +120,7 @@ class App_win():
         author: Z.Liang, 20190505
         v1, 20190719: added GUI design
         v2, 20190725: added error-proofing for filedialog.askopenfilename() when it doesnt return a valid path
+        v3, 20201207: bugfix
         """
         # #<~ show app stat: analyzing
         self.change_app_stat(text='Analyzing..', color='orange')
@@ -136,29 +136,40 @@ class App_win():
             M, N = 36, 61
             colors = ['RED', 'GREEN', 'BLUE']
             c = mcolors.ColorConverter().to_rgb
-            ryg = self.make_colormap([c('red'), c('#ffeb84'), 0.38, c('#ffeb84'), c('#63be7b'), 0.77, c('#63be7b')])
+            ryg = self.make_colormap([c('#F7696B'), c('#ffeb84'), 0.50, c('#ffeb84'), c('#CEDC81'), 0.77, c('#CEDC81'), c('#63be7b')])
             fn = os.path.split(f_path)[1]
-            i = 1
 
             ## plot data for each color
+            subplot_datas = []
             for color in colors:
-                ##  hexdata: the hardest part
-                arrZvalue = (np.array(
-                    [[int(b[self.find_index(r, c, color=color)-1], 16) if int(b[self.find_index(r, c, color=color)-1], 16) < 127
-                    else int(b[self.find_index(r, c, color=color)-1], 16)-256] for r in range(0, M) for c in range(0, N)]
-                    ).flatten().reshape(M, N))
+                arrZvalue = (np.array([[int(b[self.find_index(r, c, color=color)-1], 16)
+                            if int(b[self.find_index(r, c, color=color)-1], 16) < 127
+                            else int(b[self.find_index(r, c, color=color)-1], 16)-256]
+                            for r in range(0, M) for c in range(0, N)]).flatten().reshape(M, N))
+                subplot_datas.append(arrZvalue)
 
+            ## plot
+            i = 1
+            subplot_titles = colors
+            subplot_colors = [self.make_colormap([c('#F7696B')]), self.make_colormap([c('#63be7b')]), self.make_colormap([c('blue')])]
+            for subplot_title, subplot_color, subplot_data in zip(subplot_titles, subplot_colors, subplot_datas):
+                if not np.all(subplot_data==0):
+                    _cmap = ryg
+                else:
+                    _cmap = subplot_color
                 plt.subplot(3, 1, i)
-                plt.imshow(arrZvalue, cmap=ryg, interpolation='nearest')
-                plt.title(f'{color}', fontsize=12)
+                plt.imshow(subplot_data, cmap=_cmap, interpolation='nearest')
+                plt.axis("off")
+                plt.title(f'{subplot_title}', fontsize=12)
                 i += 1
-            # #<~ change font size in the plt
+
+            ##<~ change font size in the plt
             medium_size = 10
             plt.rc('xtick', labelsize=medium_size)
             plt.rc('ytick', labelsize=medium_size)
             plt.subplots_adjust(left=None, bottom=0.1, right=None, top=1.8, wspace=0.2, hspace=0.2)
 
-            # #<~ save to the temp folder
+            ##<~ save to the temp folder
             tmp_fn = os.path.join(self.tmp, f'{fn}.png')
             plt.savefig(tmp_fn, dpi=300, bbox_inches='tight')
             plt.clf()

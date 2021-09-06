@@ -1,6 +1,9 @@
 """
 ============================================================================================================================
 #Z.Liang, 20191031
+#ZL, 20210518
+
+Changelog
 #v0, make life easier: to upload to server and send email automatically.
 #v1, fix a potential server drive path problem
 #v2, add slide images into email body to avoid manual copy-paste
@@ -29,12 +32,10 @@ from tkinter import (
 )
 
 sys.path.append('.')
-from library import powerpoint, mail
-from ssv_pc_office_auto_pkg.ssve_server import server
+from ssv_pc_office_auto_pkg.ulpayment import mail
 
 class App_win():
-    favicon_path = r"data\assets\favicon_diamond.png"
-    upload2server_fd_path = server
+    upload2server_fd_path = r"\\43.98.1.18\SSVE_Division\SHES-C\部共通\02-Sections\4020_Panel_Design\经费管理\system application report\决裁&入力"
     server_address = '43.98.1.18'
     port = 445
 
@@ -53,19 +54,13 @@ class App_win():
         x = int((self.ws - self.w) / 2)
         y = int((self.hs - self.h) / 2)
         self.root.geometry("{}x{}+{}+{}".format(self.w, self.h, x, y))
-
-        try:
-            self.imgicon = PhotoImage(file=self.favicon_path) ##<~ favicon setting up
-            self.root.tk.call('wm', 'iconphoto', self.root._w, self.imgicon)    ##<~ favicon setting up
-        except tkinter._tkinter.TclError:
-            pass
         self.root.focus_set()
 
         ##<~frame1
         self.fm1 = Frame(self.root)
         self.fm1.grid(row=0, column=0, padx=2, sticky='nw')
 
-        self.lbl_ppt_report = Label(self.fm1, text='Report file:')
+        self.lbl_ppt_report = Label(self.fm1, text='Payment file:')
         self.lbl_ppt_report.grid(row=0, column=0, sticky='w')
         self.lbl_upload2server = Label(self.fm1, text='Server:')
         self.lbl_upload2server.grid(row=1, column=0, sticky='w')
@@ -158,19 +153,9 @@ class App_win():
             tmp_fd_name = os.path.split(save2fd_path)[-1]
             dst_dir = self.e_upload2server.get()
             dst_dir = os.path.join(dst_dir, tmp_fd_name)
-            if ext.lower() == ".pptx":
-                self.root.wm_state('iconic')
-                time.sleep(.5)
-                ##<~ shoot image for each slide
-                ppt_slides = powerpoint.ReportPowerPoint(attachment)
-                ppt_slides.shoot()
-                ppt_slides.quit()
-            else:
-                pass
             ##<~ send email
-            report_mail = mail.ReportMail(fn.split('.')[0], dst_dir, "images\\", attachment)
+            report_mail = mail.UlMail(attachment)
             report_mail.send()
-            report_mail.quit()
             self.btn_sendemail.configure(bg='green') #<~ user-friendy
 
             self.progress_sendemail.stop()

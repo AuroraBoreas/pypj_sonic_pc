@@ -28,7 +28,7 @@ class UL_Gmbh_contract():
     follow_cost = 7020
     doc_cost = 3569
     other_cost = 0
-    USD2RMB_forex = 6.76
+    USD2RMB_forex = 6.47
 
     app_width = 800
     app_height = 620
@@ -120,7 +120,7 @@ class UL_Gmbh_contract():
 
         self.lbl_ttl_amt['text'] = new_ttl_amt
         self.lbl_ttl_amt.update()
-        self.lbl_ttl_amt_RMB['text'] = new_ttl_amt_RMB
+        self.lbl_ttl_amt_RMB['text'] = format(new_ttl_amt_RMB, "2f")
         self.lbl_ttl_amt.update()
 
         contract_year = self.e_contract_year.get().strip()
@@ -140,11 +140,11 @@ class UL_Gmbh_contract():
 
 SSV与UL检测瑞士公司({1})签订跟踪服务合同
 合同期间：{0}年1月1日～{0}年12月31日
-决裁金额：{4:.2f}美金
+决裁金额：{4:,.2f}美金
 费用明细:
-1.跟踪服务费:{2:.2f}美金
-2.{0}年度档案维护费:{3:.2f}美金
-3.其他与跟踪服务相关的费用:{5:.2f}美金
+1.跟踪服务费:{2:,.2f}美金
+2.{0}年度档案维护费:{3:,.2f}美金
+3.其他与跟踪服务相关的费用:{5:,.2f}美金
 由于每年的跟踪服务费会变化,因此每年需要签订一次合同.
 
 -------br-------br-------br-------br-------br-------
@@ -152,16 +152,16 @@ SSV与UL检测瑞士公司({1})签订跟踪服务合同
 {0}年度{1}サービス費用契約書締結
 
 目的: {0}年度{1}へのサービス費用支払い
-背景: 2017.7.1より税務局から外貨の支払いについて、すべて契約締結が必要となった。
+背景: 2017/7/1より税務局から外貨の支払いについて、すべて契約締結が必要となった。
 現状: {0}年度、{1}とのサービス費用契約書がまだ契約されていない
 
 {1}サービス費用契約書締結
 契約期間：{0}年1月1日～{0}年12月31日
-契約金額：{4:.2f}ドル
+契約金額：{4:,.2f}ドル
 見積もり内容：
-1.フォローサービス費:{2:.2f}ドル
-2.{0}年度ファイルメンテナンス費:{3:.2f}ドル
-3.その他フォローサービス関連費用:{5:.2f}ドル
+1.フォローサービス費:{2:,.2f}ドル
+2.{0}年度ファイルメンテナンス費:{3:,.2f}ドル
+3.その他フォローサービス関連費用:{5:,.2f}ドル
 今後:毎年のサービス費用が変わるので、1回/年にて契約書を結ぶ必要あり
 
 -------br-------br-------br-------br-------br-------
@@ -175,8 +175,8 @@ SSV与UL检测瑞士公司({1})签订跟踪服务合同
 
 -------br-------br-------br-------br-------br-------
 
-合同金额(USD): {6:.2f}
-换算金额(基准货币): {7:.2f}
+合同金额(USD): {6:,.2f}
+换算金额(基准货币): {7:,.2f}
         '''.format(contract_year, company_name, follow_cost, doc_cost, ttl_amt, other_cost, ttl_amt, ttl_amt_RMB))
 
         if self.txt_contract.get(0.0, END).strip() != '': self.txt_contract.delete(0.0, END)

@@ -1,6 +1,7 @@
 """
 ============================================================================================================================
-#ZL, 20190905
+this module is to automatically do optical evaluation summary job for myself.
+
 #convert cs2000, ca2500 summary data into ppt material
 #ver0, sample QTY: 4
 #ver1, sample QTY: 8
@@ -16,7 +17,9 @@
 #ver10, @ZL, 20191022. polish. 
 #ver11, fix a potential server drive path problem
 #ver12, @ZL, 20200114. add 0IRE. 
-#ver13, @ZL, 20200602. refactor and add tables of cs2000. 
+#ver13, @ZL, 20200602. refactor and add tables of cs2000.
+#ver14, @ZL, 20201123. modify 0IRE img combo.
+#ver15, @ZL, 20201223. add slide images into email body to avoid manual copy-paste
 
 notes[2019-10-15]:
 this module is flexiable and extensible. it makes report for 4 upto 8 samples, and even more after adding several lines of codes.
@@ -60,6 +63,11 @@ from tkinter import (
     filedialog,
     messagebox,
 )
+
+sys.path.append('.')
+from library import powerpoint, mail
+from ssv_pc_office_auto_pkg.ssve_server import server
+
 class XL_Range_Img():
     def __init__(self, range_address, img_name):
         self.range_address = range_address
@@ -71,7 +79,7 @@ class App_win():
     BASE_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
     favicon_path = os.path.join(BASE_DIR, r"data\assets\favicon_bottle.png")
     ppt_template_path     = os.path.join(BASE_DIR, r"data\templates\template.pptx")
-    upload2server_fd_path = r"\\43.98.1.18\ssv sharefile\SHES-C\03-Info-Share\03-FYxx Model\FY20_Model\SSV Design model\NX\31.MP"
+    upload2server_fd_path = server
     server_address        = '43.98.1.18'
     port                  = 445
 
@@ -90,9 +98,12 @@ class App_win():
         'sample6' : XL_Range_Img(*['C59:K66', 'no6']),
     }
 
-    ##<~~ca2500, category for common usage: first 4 samples, next 4 samples
+    ##<~~ca2500, category for common usage: first 4 samples, next 4 samples, for 100IRE, 50IRE
     ca2500_cat_address  =  'B2:B41'
     ca2500_cat_name     = 'cat'
+    ##<~~ca2500, headers for common usage: 0IRE
+    ca2500_cat_addr_0IRE = 'B84:B123'
+    ca2500_cat_name_0IRE = 'cat_0IRE'
     cs25_rngaddress_img_name = {
         '100IRE1_4' : XL_Range_Img(*['C2:Z41', '100IRE1_4']),
         '100IRE5_8' : XL_Range_Img(*['AA2:AX41', '100IRE5_8']),
@@ -101,7 +112,7 @@ class App_win():
         '0IRE1_4'   : XL_Range_Img(*['C84:Z123', '0IRE1_4']), 
         '0IRE5_8'   : XL_Range_Img(*['AA84:AX123', '0IRE5_8']),
     }
-
+    
     ##<~~View Angle, category for common usage: first 4 samples, next 4 samples
     va_rngaddress_img_name = {
         'view_angle' : XL_Range_Img(*['B2:S28', 'view_angle']),
@@ -113,9 +124,9 @@ class App_win():
     def __init__(self):
         """basic settings"""
         self.root = Toplevel()  ##<~ toplevel when import from other module
-        self.root.title("Optical Report v.3, by ZL, 20190921")
+        self.root.title("Optical Report v.4 @ZL")
 
-        self.w, self.h = 760, 260
+        self.w, self.h = 1260, 460
         self.ws = self.root.winfo_screenwidth()
         self.hs = self.root.winfo_screenheight()
         x = int((self.ws - self.w) / 2)
@@ -129,7 +140,6 @@ class App_win():
             pass
         self.root.focus_set()
         self._conclusions = [] #<~cs2000.xlsx has 1 conclusion, index[0], ca2500.xlsx has 2 conclusions index are [1, 2]
-
         ##<~frame1
         self.fm1 = Frame(self.root)
         self.fm1.grid(row=0, column=0, padx=2, sticky=NW)
@@ -343,18 +353,28 @@ class App_win():
         xl.Visible       = False
         wb = xl.Workbooks.Open(wb_path)
         ws = wb.Worksheets(ws_name)
+
         try:
             #<~~ get summary data, save as an image: must captured area
-            #<~~ ca2500, screenshot category area, and check if cat.jpg exists
+            #<~~ ca2500, screenshot category area, and check if cat.png exists
             if is_ca2500_file:
                 #<~pick up conclusions, 20191018
                 self._conclusions.append(ws.Range("C1").Value)
                 self._conclusions.append(ws.Range("D1").Value)
                 self._conclusions.append(ws.Range("E1").Value)
 
-                tmp_fn = os.path.join(self.tmp, f'{self.ca2500_cat_name}.jpg')
+                #img header for 100IRE, 50IRE
+                tmp_fn = os.path.join(self.tmp, f'{self.ca2500_cat_name}.png')
                 if not os.path.exists(tmp_fn):
                     rng = ws.Range(self.ca2500_cat_address)
+                    rng.Copy()
+                    time.sleep(.1)
+                    img = ImageGrab.grabclipboard()
+                    img.save(tmp_fn)
+                #img header for 0IRE
+                tmp_fn = os.path.join(self.tmp, f'{self.ca2500_cat_name_0IRE}.png')
+                if not os.path.exists(tmp_fn):
+                    rng = ws.Range(self.ca2500_cat_addr_0IRE)
                     rng.Copy()
                     time.sleep(.1)
                     img = ImageGrab.grabclipboard()
@@ -367,10 +387,9 @@ class App_win():
                     rng = ws.Range(range_address)
                     rng.Copy()
                     img = ImageGrab.grabclipboard()
-                    tmp_fn = os.path.join(self.tmp, f'{k}.jpg')
+                    tmp_fn = os.path.join(self.tmp, f'{k}.png')
                     img.save(tmp_fn)
             ##<~~specified to grab imgs from cs2000 file
-            ## ! this is not 100% guaranteed. Graph1...5 must prerequists in the cs2000 source workbook
             self._conclusions.append(ws.Range("C1").Value)
             if grab_chart:
                 for shape in ws.Shapes:
@@ -378,7 +397,7 @@ class App_win():
                         shape.Copy()
                         time.sleep(.1)
                         img = ImageGrab.grabclipboard()
-                        tmp_fn = os.path.join(self.tmp, f'{shape.Name}.jpg')
+                        tmp_fn = os.path.join(self.tmp, f'{shape.Name}.png')
                         img.save(tmp_fn)
         except AttributeError:
             messagebox.showinfo('Info', message='Failed to grab img from XL file {}'.format(wb_path))
@@ -408,9 +427,12 @@ class App_win():
         p.font.color.rgb = RGBColor(255,255,255)
         return 
 
-    def add_ca2500_cat(self, slide):
+    def add_ca2500_cat(self, slide, IRE):
         """cat"""
-        img_path = f'{self.ca2500_cat_name}.jpg'
+        if not IRE:
+            img_path = f'{self.ca2500_cat_name_0IRE}.png'
+        else:
+            img_path = f'{self.ca2500_cat_name}.png'
         img_path = os.path.join(self.tmp, img_path)
         top      = Cm(self.top)
         left     = Cm(0)
@@ -419,12 +441,71 @@ class App_win():
             slide.shapes.add_picture(img_path, left, top, height=height)
         return 
 
+    def _iter_table(self, table):
+        for row in table.rows:
+            for cell in row.cells:
+                yield cell
+
+    def _change_entire_table_fontsize(self, table, fontsize=16):
+        font_family = "Arial"
+        for cell in self._iter_table(table):
+            for paragraph in cell.text_frame.paragraphs:
+                for run in paragraph.runs:
+                    run.font.size = Pt(fontsize)
+                    run.font.name = font_family
+
+    def __format_table_column_width(self, table, column_widths:list):
+        for i, column_width in enumerate(column_widths):
+            table.columns[i].width = Cm(column_width)
+
+    def __populate_table_rows(self, table, row_no:int, row_contents:list):
+        for i, content in enumerate(row_contents):
+            table.cell(row_no, i).text = content
+
+    def add_summary_page(self, prs):
+        """summary table"""
+        title_slide_layout = prs.slide_layouts[5]
+        slide              = prs.slides.add_slide(title_slide_layout)
+        title              = slide.shapes.title
+        title.text         = f"Summary"
+        
+        # add summary table
+        x, y, cx, cy = Cm(0.02), Cm(1.9), Cm(10), Cm(6)
+        shape = slide.shapes.add_table(4, 8, x, y, cx, cy)
+        table = shape.table
+        table.rows[0].width = Cm(4)
+        
+        column_widths = [1.5, 6.7, 5.5, 6, 4, 4, 3, 3.16]
+        self.__format_table_column_width(table, column_widths)
+
+        headers = ['No', 'SCC', '{ parts_variable }', 'OCELL, OPT, DP, REF, LSB, BC', '中心輝度', '視野角', 'UF', 'Mura']
+        self.__populate_table_rows(table, 0, headers)
+        rows01 = ['1', '-', '-', 'Default', '-', '-', '-', '-']
+        self.__populate_table_rows(table, 1, rows01)
+        rows02 = ['2', '-', '-', 'Default', '-', '-', '-', '-']
+        self.__populate_table_rows(table, 2, rows02)
+        rows03 = ['3', '-', '-', 'Default', '-', '-', '-', '-']
+        self.__populate_table_rows(table, 3, rows03)
+
+        self._change_entire_table_fontsize(table)
+
+        # add conclusion textbox
+        x, y, cx, cy = Cm(8), Cm(10), Cm(20), Cm(1)
+        textbox = slide.shapes.add_textbox(x, y, cx, cy)
+        tf = textbox.text_frame
+        p = tf.add_paragraph()
+        p.text = "Conclusion\n\n"
+        p.font.size = Pt(18)
+        p.font.name = "Arial"
+
+        return
+
     def add_front_page_to_ppt(self, prs, pmod):
         """Front page"""
         title_slide_layout = prs.slide_layouts[0]
         slide              = prs.slides.add_slide(title_slide_layout)
         title              = slide.shapes.title
-        title.text         = f"{pmod} Optical Evaluation" 
+        title.text         = f"{pmod} Optical" 
         return
 
     def add_cs2000_summary_page_to_ppt(self, prs, pmod):
@@ -433,7 +514,7 @@ class App_win():
         slide              = prs.slides.add_slide(title_slide_layout)
         title              = slide.shapes.title
         
-        img_path = os.path.join(self.tmp, '{}.jpg'.format('summary'))
+        img_path = os.path.join(self.tmp, '{}.png'.format('summary'))
         top      = Cm(4.1)
         left     = Cm(0)
         height   = Cm(5.9)
@@ -441,7 +522,7 @@ class App_win():
             title.text = f"{pmod} Optical" 
             slide.shapes.add_picture(img_path, left, top, height=height)
 
-        cs2000_graph_names = ['Graph' + str(i) +'.jpg' for i in range(1, 6)]
+        cs2000_graph_names = ['Graph' + str(i) +'.png' for i in range(1, 7)]
         img_path = cs2000_graph_names[0]
         img_path = os.path.join(self.tmp, img_path)
         top      = Cm(0)
@@ -498,13 +579,13 @@ class App_win():
         title_slide_layout = prs.slide_layouts[5]
         slide              = prs.slides.add_slide(title_slide_layout)
         title              = slide.shapes.title
-        title.text         = 'Details'
+        title.text         = 'Optical Details'
 
         top              = Cm(1.94)
         left             = Cm(6)
         height           = Cm(3.38)
         step             = Cm(3.6)
-        sample_img_names = ['sample' + str(i) + '.jpg' for i in range(1, 7)]
+        sample_img_names = ['sample' + str(i) + '.png' for i in range(1, 7)]
         for sample_img_name in sample_img_names:
             img_path = os.path.join(self.tmp, sample_img_name)
             if os.path.exists(img_path):
@@ -513,17 +594,20 @@ class App_win():
         return
 
     def add_first_four_samples_to_ppt(self, img_path, prs, pmod, l, IRE):
-        """fourth page:ca2500, 100IRE1_4"""
+        """fourth page:ca2500, 100IRE/50IRE/0IRE(1_4)"""
         title_slide_layout = prs.slide_layouts[5]
         slide              = prs.slides.add_slide(title_slide_layout)
         title              = slide.shapes.title
         ##<~~ cat
-        self.add_ca2500_cat(slide)
+        if not IRE:
+            self.add_ca2500_cat(slide, IRE) # for 0IRE
+        else:
+            self.add_ca2500_cat(slide, IRE) # for 100IRE and 50IRE
         ##<~~ first 4 samples, 50IRE1_4
         top        = Cm(self.top)
         left       = Cm(l)
         height     = Cm(self.resize_ratio)
-        title.text = f"{pmod} corner ratio & UF({IRE}IRE)" 
+        title.text = f"{pmod} corner ratio & UF({IRE}IRE)" if IRE > 0 else f"{pmod} White Mura & BY Mura({IRE}IRE)"
         slide.shapes.add_picture(img_path, left, top, height=height)
         #<~~conclusion box: ca2500 pages
         if self._conclusions and IRE == 100:
@@ -538,12 +622,12 @@ class App_win():
         return
 
     def add_next_four_samples_to_ppt(self, img_path, prs, pmod, l, IRE):
-        """sample5_8 page: ca2500, 100IRE5_8"""
+        """sample5_8 page: ca2500, 100IRE/50IRE/0IRE(5_8)"""
         title_slide_layout = prs.slide_layouts[5]
         slide              = prs.slides.add_slide(title_slide_layout)
         title              = slide.shapes.title
         ##<~~ cat
-        self.add_ca2500_cat(slide)
+        self.add_ca2500_cat(slide, IRE)
         top     = Cm(self.top)
         left    = Cm(l)
         height  = Cm(self.resize_ratio)
@@ -567,7 +651,7 @@ class App_win():
         title_slide_layout = prs.slide_layouts[5]
         slide              = prs.slides.add_slide(title_slide_layout)
         title              = slide.shapes.title
-        title.text         = 'View Angle'
+        title.text         = 'VAI'
 
         top     = Cm(1.94)
         left    = Cm(0.1)
@@ -575,7 +659,6 @@ class App_win():
         if os.path.exists(img_path):
             slide.shapes.add_picture(img_path, left, top, height=height)
         return
-
 
     def add_EOF_page_to_ppt(self, prs):
         """final page"""
@@ -596,8 +679,8 @@ class App_win():
             self.progress.grid(row=9, column=1, padx=1, pady=5, sticky='nw')
             self.progress.start()
 
-            FY19_template = self.e_ppt_template.get()
-            pmod          = self.e_pmod.get()
+            ssv_template = self.e_ppt_template.get()
+            pmod         = self.e_pmod.get()
 
             """=========extract raw data and info from cs2000 workbook, ca2500 workbook==="""
             ##<~~extract data from cs2000 file
@@ -619,13 +702,16 @@ class App_win():
             if not os.path.exists(wb_path):
                 self._conclusions.extend([None, None])
             else:
-                self.extract_img_from_xl(wb_path, self.va_rngaddress_img_name, is_ca2500_file=False, grab_chart=False)
+                self.extract_img_from_xl(wb_path, self.va_rngaddress_img_name, is_ca2500_file=False, grab_chart=True)
 
             """=========================import into ppt========================="""
 
-            prs = Presentation(FY19_template)
+            prs = Presentation(ssv_template)
             #<~~Front page
             self.add_front_page_to_ppt(prs, pmod)
+            #<~~Summary page
+            self.add_summary_page(prs)
+
             #<~~second page:add pics from EXCEL file that contains CS2000 data summary
             self.add_cs2000_summary_page_to_ppt(prs, pmod)
             self.add_cs2000_details_page(prs)
@@ -633,49 +719,50 @@ class App_win():
             #<~~third page:ca2500, 100IRE
             ca2500_sample_left_position = 2.98 #<~for ca2500 sub-imgs left side
             #<~~first 4 samples, 100IRE1_4
-            img_path = '{}.jpg'.format('100IRE1_4')
+            img_path = '{}.png'.format('100IRE1_4')
             img_path = os.path.join(self.tmp, img_path)
             if os.path.exists(img_path):
                 self.add_first_four_samples_to_ppt(img_path, prs, pmod, ca2500_sample_left_position, 100)
             #<~~sample5_8 page: ca2500, 100IRE5_8
-            img_path = '{}.jpg'.format('100ire5_8')
+            img_path = '{}.png'.format('100ire5_8')
             img_path = os.path.join(self.tmp, img_path)
             if os.path.exists(img_path):
                 self.add_next_four_samples_to_ppt(img_path, prs, pmod, ca2500_sample_left_position, 100)
 
             #<~~fourth page:ca2500, 50IRE
             #<~~ samples1_4 page: ca2500, 50IRE1_4
-            img_path = '{}.jpg'.format('50IRE1_4')
+            img_path = '{}.png'.format('50IRE1_4')
             img_path = os.path.join(self.tmp, img_path)
             if os.path.exists(img_path):
                 self.add_first_four_samples_to_ppt(img_path, prs, pmod, ca2500_sample_left_position, 50)
             #<~~sample5_8 page: ca2500, 50IRE5_8
-            img_path = '{}.jpg'.format('50IRE5_8')
+            img_path = '{}.png'.format('50IRE5_8')
             img_path = os.path.join(self.tmp, img_path)
             if os.path.exists(img_path):
                 self.add_next_four_samples_to_ppt(img_path, prs, pmod, ca2500_sample_left_position, 50)
 
             #<~~fifth page:ca2500, 0IRE
             #<~~ samples1_4 page: ca2500, 0IRE1_4
-            img_path = '{}.jpg'.format('0IRE1_4')
+            img_path = '{}.png'.format('0IRE1_4')
             img_path = os.path.join(self.tmp, img_path)
             if os.path.exists(img_path):
                 self.add_first_four_samples_to_ppt(img_path, prs, pmod, ca2500_sample_left_position, 0)
             #<~~sample5_8 page: ca2500, 0IRE5_8
-            img_path = '{}.jpg'.format('0IRE5_8')
+            img_path = '{}.png'.format('0IRE5_8')
             img_path = os.path.join(self.tmp, img_path)
             if os.path.exists(img_path):
                 self.add_next_four_samples_to_ppt(img_path, prs, pmod, ca2500_sample_left_position, 0)
 
             #<~~ TODO: view angle page: view angle summary.
-            img_path = '{}.jpg'.format('view_angle')
+            img_path = '{}.png'.format('view_angle')
             img_path = os.path.join(self.tmp, img_path)
-            self.add_view_angle_summary_to_ppt(img_path, prs)
+            if os.path.exists(img_path):
+                self.add_view_angle_summary_to_ppt(img_path, prs)
 
             #<~~final page: EOF
             self.add_EOF_page_to_ppt(prs)
             #<~~ save ppt file
-            ppt_name = f"{self.today} {pmod} Optical Evaluation.pptx"
+            ppt_name = f"{self.today} {pmod}_Optical_Evaluation.pptx"
             wb_path = self.e_cs2000.get() or self.e_ca2500.get()
             save2fd_path = os.path.split(wb_path)[0]
             save2f_path = os.path.join(save2fd_path, ppt_name)
@@ -728,33 +815,27 @@ class App_win():
         def real_send_email():
             self.progress_sendemail.grid(row=11, column=1, padx=1, pady=1, sticky=NW)
             self.progress_sendemail.start()
-
-            outlook = win32.Dispatch('outlook.application')
-            mail = outlook.CreateItem(0)
-
-            mail.To = 'Liang.Zhang@sony.com' #<~ this is safer
-            mail.Subject = f'{self.e_pmod.get()} Optical'
-
-            ##<~ attachment
+            
             pmod = self.e_pmod.get()
             wb_path = self.e_cs2000.get()
             save2fd_path = os.path.split(wb_path)[0]
-            ppt_name = f"{self.today} {pmod} Optical Evaluation.pptx"
+            ppt_name = f"{self.today} {pmod}_Optical_Evaluation.pptx"
             attachment = os.path.join(save2fd_path, ppt_name) #<~ local ppt file path
             ##<~ ssv server folder
             tmp_fd_name = os.path.split(save2fd_path)[-1]
             dst_dir = self.e_upload2server.get()
             dst_dir = os.path.join(dst_dir, tmp_fd_name)
-            #<~HTML Body
-            email_body_txt = """
-            <p><font face="Arial">Hello all,</font></p>
-            <p><font face="Arial">Pls refer to the attachment or the following hyperlink to see details of {0} Optical evaluation result.<br>
-            Server: <a href="{1}">SSV Server link</a></font></p>
-            <p><font face="Arial">Regards,</font></p>
-            """.format(pmod, dst_dir)
-            mail.HTMLBody = email_body_txt
-            mail.Attachments.Add(attachment)
-            mail.Send()
+            ##<~ minimize tkinter to get focus
+            self.root.wm_state('iconic')
+            time.sleep(.5)
+            ##<~ shoot image for each slide
+            ppt_slides = powerpoint.ReportPowerPoint(attachment)
+            ppt_slides.shoot()
+            ppt_slides.quit()
+            ##<~ send email
+            report_mail = mail.ReportMail(ppt_name.split('.')[0], dst_dir, "images\\", attachment)
+            report_mail.send()
+            report_mail.quit()
             self.btn_sendemail.configure(bg='green') #<~ user-friendy
 
             self.progress_sendemail.stop()
