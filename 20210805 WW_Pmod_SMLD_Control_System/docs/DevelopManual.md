@@ -17,6 +17,7 @@ SSVE TVQA member `@Zhang Liang`, 20210804
 - v0.03, change design pattern: split into two dataframes: defects, inputs
 - v0.04, add more columns to prepare for visualization
 - v0.05, fix TVPlant column, "SO'EM" -> "SOEM"
+- v0.06, add an option to run `main.py` by using `main.bat` (Batch script)
 
 ## Design pattern
 
