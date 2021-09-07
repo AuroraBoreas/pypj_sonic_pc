@@ -13,7 +13,7 @@ goto :eof
 :main
 	call :copy_right
 	
-	set path="D:\pj_00_codelib\2019_pypj\20210805 WW_Pmod_SMLD_Control_System\main.py"
+	set path=".\main.py"
 	d:\DevEnv\WPy32-3741\python-3.7.4\python.exe %path%
 	
 	echo.
