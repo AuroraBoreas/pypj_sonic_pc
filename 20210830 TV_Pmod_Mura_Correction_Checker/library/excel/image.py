@@ -56,16 +56,19 @@ class MuraImageLoader:
     def _sort_images(self)->None:
         for root, _, files in os.walk(self._img_folder):
             for file in files:
-                if os.path.splitext(file)[-1] == self.img_ext:
+                if file.endswith(self.img_ext):
                     filepath = os.path.join(root, file)
+                    # logging.info(filepath)
                     if self.muradata896 in file.lower():
                         self._896.append(filepath)
                     if self.muradataresult896 in file.lower():
                         self._896R.append(filepath)
+        if not(len(self._896) == len(self._896R) and len(self._896) > 0 and len(self._896R) > 0):
+            raise ValueError("Before/After QTY::SRC_Images Not Match, _896 = {}, _896Result = {}".format(len(self._896), len(self._896R)))
 
     def _is_pmod_id_match(self, x:str, y:str)->bool:
         delimiter = '_'
-        idx_id = 2
+        idx_id    = 2
         return x.split(delimiter)[idx_id] == y.split(delimiter)[idx_id]
 
     def _export(self)->None:
@@ -73,39 +76,39 @@ class MuraImageLoader:
         i = j = self.dstStartRow
         tmp_img1 = 'tmp1.jpg'
         tmp_img2 = 'tmp2.jpg'
+
         with open_workbook(self._xl_template, self._dst_xl) as wb:
             ws = wb.worksheets[0]
-            if len(self._896) == len(self._896R) and len(self._896) > 0:
-                ubound = len(self._896)
-                for k in range(0, ubound):
-                    img_896 = self._896[k]
-                    img_896R = self._896R[k]
-                    if not self._is_pmod_id_match(img_896, img_896R):
-                        logging.info("PmodIDNotMatchError")
-                        break
-                    img = Image.open(img_896)
-                    width_percent = (self.width/float(img.size[idx_w]))
-                    hsize = int((float(img.size[idx_h])*float(width_percent)))
-                    img = img.resize((self.width, hsize), Image.ANTIALIAS)
-                    img.save(tmp_img1, quality=self.img_quality)
-                    img = openpyxl.drawing.image.Image(tmp_img1)
-                    dstCellAddress = f'{self.dstCellName}{i}'
-                    ws[dstCellAddress].value = os.path.split(img_896)[-1]
-                    dstCellAddress = f'{self.dstCellCol384}{i}'
-                    ws.add_image(img, dstCellAddress)
-                    i += 1
+            ub = len(self._896)
+            for k in range(0, ub):
+                img_896 = self._896[k]
+                img_896R = self._896R[k]
+                if not self._is_pmod_id_match(img_896, img_896R):
+                    raise FileNotFoundError(f"Pair {self.muradata896}:{self.muradataresult896}, PmodID Not Match by")
+                
+                img = Image.open(img_896)
+                width_percent = (self.width/float(img.size[idx_w]))
+                hsize = int((float(img.size[idx_h])*float(width_percent)))
+                img = img.resize((self.width, hsize), Image.ANTIALIAS)
+                img.save(tmp_img1, quality=self.img_quality)
+                img = openpyxl.drawing.image.Image(tmp_img1)
+                dstCellAddress = f'{self.dstCellName}{i}'
+                ws[dstCellAddress].value = os.path.split(img_896)[-1]
+                dstCellAddress = f'{self.dstCellCol384}{i}'
+                ws.add_image(img, dstCellAddress)
+                i += 1
 
-                    img = Image.open(img_896R)
-                    width_percent = (self.width/float(img.size[idx_w]))
-                    hsize = int((float(img.size[idx_h])*float(width_percent)))
-                    img = img.resize((self.width, hsize), Image.ANTIALIAS)
-                    img.save(tmp_img2, quality=self.img_quality)
-                    img = openpyxl.drawing.image.Image(tmp_img2)
-                    # dstCellAddress = f'{self.dstCellName}{i}'
-                    # ws[dstCellAddress].value = os.path.split(image)[-1]
-                    dstCellAddress = f'{self.dstCellCol640}{j}'
-                    ws.add_image(img, dstCellAddress)
-                    j += 1
+                img = Image.open(img_896R)
+                width_percent = (self.width/float(img.size[idx_w]))
+                hsize = int((float(img.size[idx_h])*float(width_percent)))
+                img = img.resize((self.width, hsize), Image.ANTIALIAS)
+                img.save(tmp_img2, quality=self.img_quality)
+                img = openpyxl.drawing.image.Image(tmp_img2)
+                # dstCellAddress = f'{self.dstCellName}{i}'
+                # ws[dstCellAddress].value = os.path.split(image)[-1]
+                dstCellAddress = f'{self.dstCellCol640}{j}'
+                ws.add_image(img, dstCellAddress)
+                j += 1
 
     def clean(self)->None:
         self._896.clear()
@@ -113,7 +116,9 @@ class MuraImageLoader:
 
     def work(self)->None:
         self._sort_images()
+        # print("Before Adj 896")
         # print(self._896)
+        # print("After Adj 896")
         # print(self._896R)
         self._export()
 

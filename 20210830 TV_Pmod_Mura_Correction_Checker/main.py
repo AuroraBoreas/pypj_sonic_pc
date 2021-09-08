@@ -16,22 +16,22 @@ def clean_dst_history(dstBinFolder:Path, dstImageFolder:Path):
             os.remove(os.path.join(root, file))
 
 def main():
-    srcBinFolder   = r'C:\Users\5106001995\Desktop\samples'
-    pmod_name      = "AG75_ITC(J)"
-    dstBinFolder   = "data"
-    dstImageFolder = "Images"
+    # srcBinFolder   = r'\\43.98.232.61\电气\XU_J\AG65_MURA'
+    pmod_name      = "AG65_ITC(CHN)"
+    # dstBinFolder   = "data"
+    # dstImageFolder = "Images"
 
-    clean_dst_history(dstBinFolder, dstImageFolder)
-    e1 = Extractor(srcBinFolder, dstBinFolder)
-    e1.copy()
+    # clean_dst_history(dstBinFolder, dstImageFolder)
+    # e1 = Extractor(srcBinFolder, dstBinFolder)
+    # e1.copy()
 
-    plr_exe        = r"D:\pj_00_codelib\2019_pypj\20210603 AG85_SET_LED_MURA_Soma\PLRLog.exe"
-    dstBinFolder   = "data"
-    img_path       = "img.bmp"
-    dstImageFolder = "Images"
+    # plr_exe        = "PLRLog.exe"
+    # dstBinFolder   = "data"
+    # img_path       = "img.bmp"
+    # dstImageFolder = "Images"
     
-    slc = SetLogConverter(plr_exe, dstBinFolder, img_path, dstImageFolder)
-    slc.to_image()
+    # slc = SetLogConverter(plr_exe, dstBinFolder, img_path, dstImageFolder)
+    # slc.to_image()
 
     template       = r'templates\Mura_List_Template.xlsx'
     dst_xl         = '{} {}_Mura_Image_List.xlsx'.format(datetime.date.today().strftime('%Y%m%d'), pmod_name)
