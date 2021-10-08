@@ -230,14 +230,12 @@ class PowerPointTemplate:
         _, path, *rest = self.args
         dirname = "{}_{}_{}_{}".format(*rest)
         dirname = "{} ".format(self.today) + dirname.replace(' ', '_')
-        subdir_data = os.path.join(dirname, 'data')
-        subdir_static = os.path.join(dirname, 'static')
-        if os.path.exists(subdir_data):
-            os.mkdir(subdir_data) # sub dir stores data
-        if os.path.exists(subdir_static):
-            os.mkdir(subdir_static) # subdir stores pics and videos
         dirpath = os.path.join(path, dirname)
+        subdir_data = os.path.join(dirpath, 'data')
+        subdir_static = os.path.join(dirpath, 'static')
         if not os.path.isdir(dirpath): os.makedirs(dirpath)
+        if not os.path.exists(subdir_data): os.mkdir(subdir_data) # sub dir stores data
+        if not os.path.exists(subdir_static): os.mkdir(subdir_static) # subdir stores pics and videos
         fname = "{}_{}_{}_{}.pptx".format(*rest) # YYYMMDD Pmod_Symp_Locality_Event
         fname = "{} ".format(self.today) + fname.replace(' ', '_')
         spath = os.path.join(dirpath, fname)
