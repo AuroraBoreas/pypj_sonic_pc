@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DevelopManual.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="ww-pmod-smld-quality-control-system">WW Pmod SMLD Quality Control System</h1>
+<p>This project builds, maintains a database, and monitors SSVE Pmod performance by week.</p>
+<p>It minimizes significant labor hours, eliminates human errors and speeds up the whole process.</p>
+<p>This project makes monitoring WW Pmod SMLD Quality in real time possible.</p>
+<h2 id="author">Author</h2>
+<p>SSVE TVQA member <code>@Zhang Liang</code>, 20210804</p>
+<h2 id="changelog">Changelog</h2>
+<ul>
+<li>v0.01, initial build</li>
+<li>v0.02, clean and format algorithms</li>
+<li>v0.03, change design pattern: split into two dataframes: defects, inputs</li>
+<li>v0.04, add more columns to prepare for visualization</li>
+<li>v0.05, fix TVPlant column, &quot;SO'EM&quot; -&gt; &quot;SOEM&quot;</li>
+<li>v0.06, add an option to run <code>main.py</code> by using <code>main.bat</code> (Batch script)</li>
+<li>v0.07, refactor the core using <code>Builder</code> design pattern</li>
+<li>v0.08, restructure the dependency structure (divide-and-conquer)</li>
+</ul>
+<h2 id="schema">Schema</h2>
+<img src="./static/design.png" alt="" width="600">
+<h2 id="project-structure">Project structure</h2>
+<pre class="hljs"><code><div>
+C:.
+│  .gitignore
+│  20210806 WW_Panel_SMLD_Database v0.02.pptx
+│  main.bat
+│  main.py
+│  requirements.txt
+│      
+├─data
+│  ├─CTTI
+│  │      【BOE OCL_FY21 75APH_APHB (SSVE) 】 SMLD Quality Data Workbook.xlsx
+│  │       ...
+│  │      
+│  ├─FBC
+│  │      【AUO OCL_FY21 AG (SSVE) 】 SMLD Quality_W49.xlsx
+│  │       ...
+│  │      
+│  ├─FSK
+│  │      FY21_Quality_Data_SSVE_week50.xlsx
+│  │      
+│  ├─INZ
+│  │      【AUO OCL_FY20 NH (SSV) 】 SMLD Quality Data Workbook.xlsx
+|  |       ...
+│  │      
+│  └─SOEM
+│          【AUO OCL_FY20 55, 65NH (SSV) 】 SMLD Quality Data Workbook.xlsx
+│          【AUO OCL_FY20 85NB (SSV) 】 SMLD Quality Data Workbook.xlsx
+|           ...
+│          
+├─docs
+│      design.png
+│      DevelopManual.html
+│      DevelopManual.md
+│      DevelopManual.pdf
+│      info.text
+│      performance.png
+│      smld_db.drawio
+│      smld_db.png
+│      SQL.png
+│      
+├─lib
+│  │  core.py
+│  │  __init__.py
+│  │  
+│  ├─config
+│  │      config.py
+│  │      setname_mapping.py
+│  │      __init__.py
+│  │      
+│  ├─query
+│  │      query.py
+│  │      __init__.py
+│  │      
+│  ├─smld
+│  │      smld.py
+│  │      __init__.py
+│  │      
+│  ├─utility
+│  │      types.py
+│  │      utils.py
+│  │      __init__.py
+│  │      
+│  └─vba
+│          caller.py
+│          SmldWrangler.xlsm
+│          __init__.py
+│          
+├─reports
+│      pmod_smld_viz_v0.09.xlsm
+│      
+└─test
+        cleaned_headers.py
+        df_replace.py
+        ext.py
+        field_names.py
+        mon.py
+
+</div></code></pre>
+<h2 id="design-pattern">Design pattern</h2>
+<p>There was an impact to performance when using Python to clean &quot;inputs&quot; data in source files;</p>
+<p>After built a VBA class API to preprocess the clean operation, the impact is alleviated;</p>
+<h3 id="pattern">Pattern</h3>
+<ul>
+<li>(Class) using <code>VBA</code> preprocess class API to do basic data cleaning;</li>
+<li>(Class) using <code>Python</code> + <code>Pandas</code> to build a DataFrame Merger API to wrangle the preprocessed source files with split control: &quot;defects&quot;, &quot;inputs&quot;;</li>
+<li>(Class) using <code>SQL</code> to control all data entries and poka-yoke duplicate entries;</li>
+<li>(Class) exports <code>SQL</code> database to excel &quot;pmod_smld.xlsx&quot; with unique columns for further data visualization;</li>
+<li>(Module) using <code>VBA</code> to visualise pmod smld data;</li>
+</ul>
+<img src="./static/smld_builder.png" alt="" width="600">
+<h3 id="performance">Performance</h3>
+<p>The average run time of whole process is around 3 minutes.</p>
+<ul>
+<li>preprocess           : 46.50 seconds</li>
+<li>python-&gt;SQL database : 137.16 seconds</li>
+<li>SQL query            : 1.19 seconds</li>
+</ul>
+<p>=&gt; Performance: 184 seconds</p>
+<img src="./static/performance.png" alt="" width="600">
+<h3 id="vba-preprocess-class-api">VBA preprocess class API</h3>
+<pre class="hljs"><code><div>
+<span class="hljs-keyword">Option</span> <span class="hljs-keyword">Explicit</span>
+
+<span class="hljs-keyword">Private</span> <span class="hljs-keyword">Sub</span> CPModWrangler()
+    <span class="hljs-keyword">Dim</span> FSO <span class="hljs-keyword">As</span> <span class="hljs-keyword">New</span> FileSystemObject
+    <span class="hljs-keyword">Dim</span> srcWB <span class="hljs-keyword">As</span> Workbook
+    <span class="hljs-keyword">Dim</span> plant <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>
+    <span class="hljs-keyword">Dim</span> rv <span class="hljs-keyword">As</span> Variant
+    <span class="hljs-keyword">Dim</span> cpw <span class="hljs-keyword">As</span> <span class="hljs-keyword">New</span> CPModWrangler
+    <span class="hljs-keyword">Dim</span> subDir <span class="hljs-keyword">As</span> Scripting.Folder
+    <span class="hljs-keyword">Dim</span> srcFile <span class="hljs-keyword">As</span> Scripting.File
+    <span class="hljs-keyword">Const</span> tmp_flag <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"~$"</span>
+    <span class="hljs-keyword">Const</span> xl_flag <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"xls"</span>
+    <span class="hljs-keyword">Dim</span> root <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>
+    root = FSO.GetParentFolderName(FSO.GetParentFolderName(ThisWorkbook.path)) &amp; Application.PathSeparator &amp; <span class="hljs-string">"data"</span>
+
+    <span class="hljs-keyword">If</span> root = vbNullString <span class="hljs-keyword">And</span> <span class="hljs-keyword">Not</span> FolderExists(root) <span class="hljs-keyword">Then</span>
+        MsgBox <span class="hljs-string">"DirNotFound"</span>, vbInformation, <span class="hljs-string">"NotFoundError"</span>
+        <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Sub</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    
+    FastMode <span class="hljs-literal">True</span>
+    <span class="hljs-comment">'On Error Resume Next</span>
+    <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> subDir <span class="hljs-keyword">In</span> FSO.GetFolder(root).SubFolders
+        <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> srcFile <span class="hljs-keyword">In</span> FSO.GetFolder(subDir).Files
+            <span class="hljs-keyword">If</span> InStr(srcFile.name, tmp_flag) &lt; <span class="hljs-number">1</span> <span class="hljs-keyword">And</span> InStr(srcFile.name, xl_flag) &gt; <span class="hljs-number">1</span> <span class="hljs-keyword">Then</span>
+                <span class="hljs-keyword">Set</span> srcWB = GetObject(srcFile)
+                rv = Split(srcWB.FullName, Application.PathSeparator)
+                plant = rv(UBound(rv) - <span class="hljs-number">1</span>)
+                cpw.init srcWB, plant
+                cpw.clean
+                <span class="hljs-keyword">Set</span> srcWB = <span class="hljs-literal">Nothing</span>
+            <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+        <span class="hljs-keyword">Next</span>
+    <span class="hljs-keyword">Next</span>
+    <span class="hljs-keyword">Set</span> FSO = <span class="hljs-literal">Nothing</span>
+    FastMode <span class="hljs-literal">False</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+</div></code></pre>
+<h3 id="python-dataframe-merger-api">Python DataFrame Merger API</h3>
+<p>Using Python to read all preprocessed files, and clean DataFrame further;</p>
+<pre class="hljs"><code><div>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+    smld = Smld(
+        fix_defects_setname=common_defects_setname, fix_defects_setname_mapping=common_defects_setname_mapping,
+        fix_inputs_modelname=common_inputs_modelname, fix_inputs_modelname_mapping=common_inputs_modelname_mapping,
+        fix_inputs_fy=common_inputs_fymod, fix_inputs_fy_mapping=common_inputs_fymod_mapping,
+    )
+
+    b = Builder(folder, db_web)
+    b.smld = smld
+    d = Director()
+    d.builder = b
+
+    logging.info(<span class="hljs-string">"start preprocess.."</span>)
+    <span class="hljs-keyword">try</span>:
+        caller.call_vba_macro(os.path.abspath(preprocess_xl), macro_name)
+        logging.info(<span class="hljs-string">"preprocess finished"</span>)
+        <span class="hljs-keyword">try</span>:
+            logging.info(<span class="hljs-string">"start Python -&gt; SQL.."</span>)
+            d.start()
+        <span class="hljs-keyword">except</span>:
+            logging.info(<span class="hljs-string">"PythonError: failed to merge source file"</span>)
+    <span class="hljs-keyword">except</span>:
+        logging.info(<span class="hljs-string">"VBAError: failed to clean source file"</span>)
+
+    <span class="hljs-keyword">if</span> os.path.exists(db_web):
+        ex = query.Exporter(db_web, dst_xl_web)
+        ex.work()
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">if</span> os.path.exists(db):
+            ex = query.Exporter(db, dst_xl)
+            ex.work()
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">raise</span> FileNotFoundError()
+
+</div></code></pre>
+<h2 id="usages">Usages</h2>
+<p>The project itself is a well-tested console application.</p>
+<h3 id="usage-1">Usage 1</h3>
+<p>User may utilize <code>Python</code> to interact with &quot;pmod_smld.db&quot;;</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> sqlite3
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dml</span><span class="hljs-params">(db:Path)</span>-&gt;<span class="hljs-keyword">None</span>:</span>
+    <span class="hljs-keyword">with</span> sqlite3.connect(db) <span class="hljs-keyword">as</span> conn:
+        cur = conn.cursor()
+        ...
+</div></code></pre>
+<h3 id="usage-2">Usage 2</h3>
+<p>User may write the following <code>command</code> to run this application if user is familiar with <code>Batch</code>;</p>
+<p>Either user may click &quot;main.bat&quot; to achieve same effect;</p>
+<pre class="hljs"><code><div>
+@echo off
+cd &quot;root of this procject directory&quot;
+python main.py
+
+</div></code></pre>
+<h3 id="usage-3">Usage 3</h3>
+<p>If user was familiar with <code>SQL</code>, user should use SQLite3 Studio to link &quot;pmod_smld.db&quot;.</p>
+<pre class="hljs"><code><div>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> defects
+<span class="hljs-keyword">WHERE</span> TVPlant = <span class="hljs-string">"FSK"</span> <span class="hljs-keyword">AND</span> ConfirmationWC = <span class="hljs-number">2132</span> <span class="hljs-keyword">AND</span> Classify = <span class="hljs-string">"Line"</span>
+<span class="hljs-keyword">LIMIT</span> <span class="hljs-number">10</span>;
+
+</div></code></pre>
+<img src=".\SQL.png" alt="" width="600">
+<h3 id="usage-4">Usage 4</h3>
+<p>If user was familar with <code>Excel</code>, user could use Excel application to manipulate data as well;</p>
+<pre class="hljs"><code><div>
+<span class="hljs-keyword">Public</span> <span class="hljs-keyword">Sub</span> load_src()
+    <span class="hljs-comment"><span class="hljs-doctag">'''</span> load source data from a given workbook @ZL, 20210825</span>
+    <span class="hljs-keyword">Dim</span> beg <span class="hljs-keyword">As</span> <span class="hljs-built_in">Single</span>: beg = Timer
+    
+    <span class="hljs-keyword">Dim</span> dstWB <span class="hljs-keyword">As</span> Workbook: <span class="hljs-keyword">Set</span> dstWB = ThisWorkbook
+    <span class="hljs-keyword">Dim</span> strSRC <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>: strSRC = GetFilePath(ThisWorkbook.path)
+    <span class="hljs-keyword">If</span> <span class="hljs-keyword">Not</span> FileExists(strSRC) <span class="hljs-keyword">Or</span> strSRC = vbNullString <span class="hljs-keyword">Then</span>
+        <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Sub</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    <span class="hljs-keyword">Dim</span> srcWB <span class="hljs-keyword">As</span> Workbook: <span class="hljs-keyword">Set</span> srcWB = GetObject(strSRC)
+    
+    <span class="hljs-keyword">Const</span> wsn_defects <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"defects"</span>
+    <span class="hljs-keyword">Const</span> wsn_inputs <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"inputs"</span>
+    
+    <span class="hljs-keyword">Dim</span> srcDefects <span class="hljs-keyword">As</span> Worksheet, srcInputs <span class="hljs-keyword">As</span> Worksheet
+    <span class="hljs-keyword">Dim</span> dstDefects <span class="hljs-keyword">As</span> Worksheet, dstInputs <span class="hljs-keyword">As</span> Worksheet
+    <span class="hljs-keyword">If</span> (<span class="hljs-keyword">Not</span> WSExists(srcWB, wsn_defects)) <span class="hljs-keyword">Or</span> (<span class="hljs-keyword">Not</span> WSExists(srcWB, wsn_inputs)) <span class="hljs-keyword">Then</span>
+        MsgBox <span class="hljs-string">"WSNotFoundError"</span>, vbInformation, <span class="hljs-string">"WorkSheetError"</span>
+        <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Sub</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    
+    <span class="hljs-keyword">Set</span> srcDefects = srcWB.Worksheets(wsn_defects)
+    <span class="hljs-keyword">Set</span> srcInputs = srcWB.Worksheets(wsn_inputs)
+    <span class="hljs-keyword">Set</span> dstDefects = dstWB.Worksheets(wsn_defects)
+    <span class="hljs-keyword">Set</span> dstInputs = dstWB.Worksheets(wsn_inputs)
+    
+    dstDefects.Cells(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>).Resize(srcDefects.UsedRange.Rows.Count, srcDefects.UsedRange.Columns.Count) = srcDefects.UsedRange.Value
+    dstInputs.Cells(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>).Resize(srcInputs.UsedRange.Rows.Count, srcInputs.UsedRange.Columns.Count) = srcInputs.UsedRange.Value
+    
+    <span class="hljs-keyword">Const</span> hiddenColumnDefects <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"V:AC"</span>
+    <span class="hljs-keyword">Const</span> hiddenColumnsInputs <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span> = <span class="hljs-string">"G:O"</span>
+    dstDefects.Columns(hiddenColumnDefects).EntireColumn.Hidden = <span class="hljs-literal">True</span>
+    dstInputs.Columns(hiddenColumnsInputs).EntireColumn.Hidden = <span class="hljs-literal">True</span>
+    
+    hidde_WS_OldColumns dstWB
+    
+    MsgBox <span class="hljs-string">"Successed. time lapsed(s): "</span> &amp; (Timer - beg), vbInformation, <span class="hljs-string">"Reload"</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+</div></code></pre>
+<h2 id="about">About</h2>
+<p>MIT License</p>
+<p>Copyright (c) 2021 ZL</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+
+</body>
+</html>
