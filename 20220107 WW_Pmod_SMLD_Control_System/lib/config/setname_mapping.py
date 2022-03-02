@@ -51,11 +51,28 @@ common_defects_setname_mapping.update(ctti_setname_mapping)
 
 common_inputs_modelname         = "ModelName"
 common_inputs_modelname_mapping = {
+    # FY21
     'YDBM075DCS02' : '75AR',
     '75NB BOE'     : '75NB',
     '75NXB CSOT'   : '75NXB',
     'SB2H'         : 'SB85',
     'SBL2'         : 'SBL49',
+    # FY22
+    'HDCO075MDS02' : '75FW',
+    'HDCO085MDU02' : '85FW',
+    'YDCS065MES02' : '65FM',
+    'YDCS075MES02' : '75FM',
+    'YDCS085MDU02' : '85FM',
+    'YDCV055DCS02' : '55FT',
+    'YDCV065DCS02' : '65FT',
+    'YDCM075DCS02' : '75FT',
+    'YDCV075DCS02' : '75FT',
+    'YDCM085DCU02' : '85FT',
+    'YDCM065CCS02' : '65FH',
+    'YDCM075CCS02' : '75FH',
+    'YDCM085CCU02' : '85FH',
+    'YSCM075CCO02' : '75FE',
+
 }
 
 common_inputs_fymod         = 'FY_mod'

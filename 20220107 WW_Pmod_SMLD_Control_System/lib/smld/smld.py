@@ -253,11 +253,12 @@ class Smld:
         self._dfInputs = df
 
     def clean(self, folder:Path)->None:
-        sheet_name:str = 'inputs'
+        sheetname_defects:str = 'InProcess Conf'
+        sheetname_inputs:str = 'inputs'
 
         for file in self._filter(folder):
-            tmp_dfDefects = pd.read_excel(file)
-            tmp_dfInput   = pd.read_excel(file, sheet_name=sheet_name)
+            tmp_dfDefects = pd.read_excel(file, sheet_name=sheetname_defects)
+            tmp_dfInput   = pd.read_excel(file, sheet_name=sheetname_inputs)
             self.df_defects.append(tmp_dfDefects)
             self.df_inputs.append(tmp_dfInput)
         self._clean_dfDefects(self.df_defects)
