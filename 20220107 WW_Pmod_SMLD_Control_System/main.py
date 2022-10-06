@@ -9,6 +9,8 @@ from lib.query import query
 from lib.config.config import (
     preprocess_xl,
     macro_name,
+    report_xl,
+    macro_name2,
     dst_xl,
     folder,
     db,
@@ -58,6 +60,7 @@ def main()->None:
             ex.work()
         else:
             raise FileNotFoundError()
+    caller.call_vba_macro(report_xl, macro_name2)
 
 if __name__ == "__main__":
     main()
